@@ -14,6 +14,15 @@ int random_number(int _min, int _max)
 	return distribution(generator);
 }
 
+Sprite* generate_sprite(Texture* _tex)
+{
+	Sprite* _s = new Sprite(*_tex);
+	Vector2u _half = _tex->getSize() / 2u;
+	_s->setOrigin((Vector2f)_half);
+
+	return _s;
+}
+
 void Timer::tick()
 {
 	current_time += TIME_PER_FRAME;

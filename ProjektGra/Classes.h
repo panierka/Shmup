@@ -8,8 +8,18 @@ using namespace std;
 // globalne
 
 const double TIME_PER_FRAME = 0.167;
+const Vector2u SCREEN_SIZE(1600u, 900u);
 
 //
+
+class InputAction
+{
+public:
+	Keyboard::Key key;
+	bool multi_press;
+	
+
+};
 
 class GameObject
 {
@@ -38,3 +48,5 @@ public:
 void print(string);
 
 int random_number(int, int);
+
+Sprite* generate_sprite(Texture*);

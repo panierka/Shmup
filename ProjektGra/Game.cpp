@@ -1,23 +1,49 @@
 #include"Classes.h"
 
 
-CircleShape kolo(50.0f);
+Sprite* pre_kolo;
 Color* colors;
 
 void test()
 {
-	kolo.setFillColor(colors[random_number(0, 5)]);
+	pre_kolo->setColor(colors[random_number(0, 5)]);
 }
+
+void test_r()
+{
+	pre_kolo->rotate(0.05f);
+}
+
+#pragma region > Controls <
+
+	
+
+
+	void controls_handle()
+	{
+		
+	}
+
+
+#pragma endregion
+
 
 int main()
 {
 	print("start");
-	RenderWindow window(VideoMode(200, 200), "POG");
-	kolo.setOrigin(Vector2f(50, 50));
-	kolo.setFillColor(Color::Red);
-	kolo.setPosition(Vector2f(100, 100));
+	RenderWindow window(VideoMode(SCREEN_SIZE.x, SCREEN_SIZE.y), "POG");
+
+	Texture t;
+	t.loadFromFile("../Assets/trollge.jpg");
+
+	pre_kolo = generate_sprite(&t);
+
+	//kolo.setOrigin(Vector2f(250, 50));
+	pre_kolo->setColor(Color::White);
+	pre_kolo->setPosition((Vector2f)SCREEN_SIZE / 2.f);
 	
-	Timer timer(2.5f, test, true);
+	Timer timer(30.f, test, true);
+	Timer timer1(TIME_PER_FRAME, test_r, true);
 
 	colors = new Color[6]
 	{
@@ -41,10 +67,12 @@ int main()
 		}
 
 		window.clear();
-		window.draw(kolo);
+
+		window.draw(*pre_kolo);
 		window.display();
 
 		timer.tick();
+		timer1.tick();
 
 		sleep(seconds(TIME_PER_FRAME));
 	}
