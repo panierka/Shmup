@@ -1,18 +1,32 @@
-#include<iostream>
-#include<SFML/Graphics.hpp>
+#include"Classes.h"
 
-using namespace sf;
+
+CircleShape kolo(50.0f);
+Color* colors;
+
+void test()
+{
+	kolo.setFillColor(colors[random_number(0, 5)]);
+}
 
 int main()
 {
-	std::cout << "Test" << std::endl;
-
-	std::cout << "Test2" << std::endl;
-	std::cout << "Test4" << std::endl;
-
 	RenderWindow window(VideoMode(200, 200), "POG");
-	CircleShape kolo(50.0f);
+	kolo.setOrigin(Vector2f(50, 50));
 	kolo.setFillColor(Color::Red);
+	kolo.setPosition(Vector2f(100, 100));
+	
+	Timer timer(2.5f, test, true);
+
+	colors = new Color[6]
+	{
+		Color::Red,
+		Color::Green,
+		Color::Blue,
+		Color::Yellow,
+		Color::Magenta,
+		Color::Cyan
+	};
 
 	while (window.isOpen())
 	{
@@ -28,5 +42,9 @@ int main()
 		window.clear();
 		window.draw(kolo);
 		window.display();
+
+		timer.tick();
+
+		sleep(seconds(TIME_PER_FRAME));
 	}
 }
