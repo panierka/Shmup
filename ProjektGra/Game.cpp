@@ -11,6 +11,7 @@ void test()
 
 int main()
 {
+	print("start");
 	RenderWindow window(VideoMode(200, 200), "POG");
 	kolo.setOrigin(Vector2f(50, 50));
 	kolo.setFillColor(Color::Red);
