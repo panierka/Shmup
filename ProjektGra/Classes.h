@@ -10,8 +10,9 @@ class Timer;
 
 // globalne
 
-const float TIME_PER_FRAME = 0.0167;
+const float TIME_PER_FRAME = 0.0167f;
 const Vector2u SCREEN_SIZE(1600u, 900u);
+const float ONE_UNIT_SIZE = 50.f;
 
 //
 
@@ -23,8 +24,10 @@ private:
 	// poruszanie siê
 
 	Vector2f direction;
+	float distance;
 	float travel_time;
 	bool continuous;
+	float time_spent_travelling{};
 
 public:
 	Vector2f position;
@@ -33,7 +36,7 @@ public:
 	GameObject(Vector2f, Sprite*, bool);
 
 	void SetPosition(Vector2f);
-	void SetMove(Vector2f, float);
+	void SetMove(Vector2f, float, float);
 	void ExecuteMove();
 };
 

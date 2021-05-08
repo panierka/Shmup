@@ -16,14 +16,10 @@ void test_r()
 
 #pragma region > Controls <
 
-	
-
-
 	void controls_handle()
 	{
 		
 	}
-
 
 #pragma endregion
 
@@ -32,21 +28,19 @@ int main()
 {
 	print("start");
 
-	RenderWindow window(VideoMode(SCREEN_SIZE.x, SCREEN_SIZE.y), "POG");
+	RenderWindow window(VideoMode(SCREEN_SIZE.x, SCREEN_SIZE.y), "POG", Style::Titlebar | Style::Close);
 
 	Texture t;
 	t.loadFromFile("../Assets/trollge.jpg");
 
 	pre_kolo = generate_sprite(&t);
-	GameObject g((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 900), pre_kolo, true);
+	GameObject g((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 900), pre_kolo, false);
 
-	//kolo.setOrigin(Vector2f(250, 50));
 	pre_kolo->setColor(Color::White);
-	//pre_kolo->setPosition((Vector2f)SCREEN_SIZE / 2.f);
 	
 	Timer timer(5.f, test, true);
 
-	//Timer timer1(TIME_PER_FRAME, test_r, true);
+	Timer timer1(TIME_PER_FRAME, test_r, true);
 
 	colors = new Color[6]
 	{
@@ -58,7 +52,7 @@ int main()
 		Color::Cyan
 	};
 
-	g.SetMove(Vector2f(0, 0.5f) * 100.f, 10);
+	g.SetMove(Vector2f(0, 1.f), 12.f, 10);
 
 	while (window.isOpen())
 	{

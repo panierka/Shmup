@@ -1,4 +1,4 @@
-#include"Classes.h";
+#include"Classes.h"
 #include<iostream> // debug only
 
 
@@ -44,11 +44,12 @@ void GameObject::SetPosition(Vector2f _pos)
 	sprite->setPosition(_pos);
 }
 
-void GameObject::SetMove(Vector2f v, float t)
+void GameObject::SetMove(Vector2f _direction, float _distance, float _time)
 {
-	v.y *= -1;
-	direction = v;
-	travel_time = t; 
+	_direction.y *= -1;
+	direction = _direction;
+	distance = _distance * ONE_UNIT_SIZE;
+	travel_time = _time;
 }
 
 void GameObject::ExecuteMove()
@@ -58,7 +59,17 @@ void GameObject::ExecuteMove()
 		return;
 	}
 
-	SetPosition(position + TIME_PER_FRAME * direction / travel_time);
+	SetPosition(position + TIME_PER_FRAME * direction * distance /( travel_time * magnitude(direction)));
+
+	if(!continuous)
+	{ 
+		time_spent_travelling += TIME_PER_FRAME;
+
+		if (time_spent_travelling >= travel_time)
+		{
+			direction = Vector2f(0, 0);
+		}
+	}
 }
 
 
