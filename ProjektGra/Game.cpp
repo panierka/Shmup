@@ -1,6 +1,5 @@
 #include"Classes.h"
 
-
 Sprite* test_sprite;
 Color* colors;
 
@@ -14,15 +13,37 @@ void test_r()
 	test_sprite->rotate(0.05f);
 }
 
-#pragma region > Controls <
+//int licznik{};
+bool pressed;
 
-	void controls_handle()
+void Keyboard1(Event* a, GameObject* b)
+{
+
+	if (a->type == Event::KeyPressed)
 	{
-		
+		if (a->key.code == Keyboard::D)
+		{
+			b->SetMove(Vector2f(3.f, 0), 0.1f, TIME_PER_FRAME);
+		}
+
+		if (a->key.code == Keyboard::P)
+		{
+			if (!pressed)
+			{
+				b->SetMove(Vector2f(0, 20.f), 0.1f, TIME_PER_FRAME);
+				pressed = true;
+			}
+		}
 	}
-
-#pragma endregion
-
+	
+	if(a->type == Event::KeyReleased)
+	{
+		if (a->key.code == Keyboard::P)
+		{
+			pressed = false;
+		}
+	}
+}
 
 int main()
 {
@@ -52,7 +73,7 @@ int main()
 		Color::Cyan
 	};
 
-	g.SetMove(Vector2f(0, 1.f), 12.f, 10);
+	//g.SetMove(Vector2f(0, 1.f), 12.f, 10);
 
 	while (window.isOpen())
 	{
@@ -63,6 +84,7 @@ int main()
 			{
 				window.close();
 			}
+			Keyboard1(&_event, &g);
 		}
 
 		window.clear();
