@@ -23,14 +23,18 @@ void Keyboard1(Event* a, GameObject* b)
 	{
 		if (a->key.code == Keyboard::D)
 		{
-			b->SetMove(Vector2f(3.f, 0), 0.1f, TIME_PER_FRAME);
+			b->SetMove(Vector2f(3.f, 0), 0.25f, TIME_PER_FRAME);
+		}
+		if (a->key.code == Keyboard::A)
+		{
+			b->SetMove(Vector2f(-3.f, 0), 0.25f, TIME_PER_FRAME);
 		}
 
 		if (a->key.code == Keyboard::P)
 		{
 			if (!pressed)
 			{
-				b->SetMove(Vector2f(0, 20.f), 0.1f, TIME_PER_FRAME);
+				b->SetMove(Vector2f(0, 20.f), 5.f, TIME_PER_FRAME);
 				pressed = true;
 			}
 		}
