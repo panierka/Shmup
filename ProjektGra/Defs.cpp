@@ -7,7 +7,7 @@ vector<Timer*> timers;
 template<typename T>
 T magnitude(Vector2<T> v)
 {
-	return sqrt(pow(v.x, 2) + pow(v.y, 2));
+	return static_cast<T>(sqrt(pow(v.x, 2) + pow(v.y, 2)));
 }
 
 void print(string _message)

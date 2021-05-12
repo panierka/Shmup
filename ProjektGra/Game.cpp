@@ -1,17 +1,17 @@
 #include"Classes.h"
 
 
-Sprite* pre_kolo;
+Sprite* test_sprite;
 Color* colors;
 
 void test()
 {
-	pre_kolo->setColor(colors[random_number(0, 5)]);
+	test_sprite->setColor(colors[random_number(0, 5)]);
 }
 
 void test_r()
 {
-	pre_kolo->rotate(0.05f);
+	test_sprite->rotate(0.05f);
 }
 
 #pragma region > Controls <
@@ -33,10 +33,10 @@ int main()
 	Texture t;
 	t.loadFromFile("../Assets/trollge.jpg");
 
-	pre_kolo = generate_sprite(&t);
-	GameObject g((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 900), pre_kolo, false);
+	test_sprite = generate_sprite(&t);
+	GameObject g((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 900), test_sprite, false);
 
-	pre_kolo->setColor(Color::White);
+	test_sprite->setColor(Color::White);
 	
 	Timer timer(5.f, test, true);
 
