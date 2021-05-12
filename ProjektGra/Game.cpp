@@ -3,17 +3,19 @@
 Sprite* test_sprite;
 Color* colors;
 
-void test()
+GameObject* player;
+
+void test() // U
 {
 	test_sprite->setColor(colors[random_number(0, 5)]);
 }
 
-void test_r()
+void test_r() // U
 {
 	test_sprite->rotate(0.05f);
 }
 
-//int licznik{};
+//int licznik{}; // U
 bool pressed;
 
 void Keyboard1(Event* a, GameObject* b)
@@ -23,18 +25,18 @@ void Keyboard1(Event* a, GameObject* b)
 	{
 		if (a->key.code == Keyboard::D)
 		{
-			b->SetMove(Vector2f(3.f, 0), 0.25f, TIME_PER_FRAME);
+			b->SetMove(Vector2f(3.f, 0), PLAYER_SPEED, TIME_PER_FRAME);
 		}
 		if (a->key.code == Keyboard::A)
 		{
-			b->SetMove(Vector2f(-3.f, 0), 0.25f, TIME_PER_FRAME);
+			b->SetMove(Vector2f(-3.f, 0), PLAYER_SPEED, TIME_PER_FRAME);
 		}
 
 		if (a->key.code == Keyboard::P)
 		{
 			if (!pressed)
 			{
-				b->SetMove(Vector2f(0, 20.f), 5.f, TIME_PER_FRAME);
+				b->SetMove(Vector2f(0, 20.f), 0.5f, TIME_PER_FRAME);
 				pressed = true;
 			}
 		}
@@ -56,16 +58,19 @@ int main()
 	RenderWindow window(VideoMode(SCREEN_SIZE.x, SCREEN_SIZE.y), "POG", Style::Titlebar | Style::Close);
 
 	Texture t;
-	t.loadFromFile("../Assets/trollge.jpg");
+	t.loadFromFile("../Assets/PlayerShip.png");
 
-	test_sprite = generate_sprite(&t);
-	GameObject g((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 900), test_sprite, false);
+	player = new GameObject((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 400), generate_sprite(&t), false);
 
-	test_sprite->setColor(Color::White);
+	//test_sprite->setColor(Color::White); // U
 	
-	Timer timer(5.f, test, true);
+	//Timer timer(5.f, test, true); // U
 
-	Timer timer1(TIME_PER_FRAME, test_r, true);
+	//Timer timer1(TIME_PER_FRAME, test_r, true); // U
+
+	/*Texture t_back;
+	t_back.loadFromFile("../Assets/Background.png");
+	Sprite background(t_back);*/
 
 	colors = new Color[6]
 	{
@@ -77,7 +82,7 @@ int main()
 		Color::Cyan
 	};
 
-	//g.SetMove(Vector2f(0, 1.f), 12.f, 10);
+	//g.SetMove(Vector2f(0, 1.f), 12.f, 10); // U
 
 	while (window.isOpen())
 	{
@@ -88,15 +93,15 @@ int main()
 			{
 				window.close();
 			}
-			Keyboard1(&_event, &g);
+			Keyboard1(&_event, player);
 		}
 
-		window.clear();
+		window.clear(Color(129, 57, 42, 255));
 
-		window.draw(*g.sprite);
+		window.draw(*player->sprite);
 		window.display();
 		
-		g.ExecuteMove();
+		player->ExecuteMove();
 		tick_timers();
 
 		sleep(seconds(TIME_PER_FRAME));
