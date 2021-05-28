@@ -18,38 +18,25 @@ void test_r() // U
 //int licznik{}; // U
 bool pressed;
 
-void Keyboard1(Event* a, GameObject* b)
+Vector2f next_move;
+
+void Keyboard1(GameObject* b)
 {
+	next_move = Vector2f(0, 0);
 
-	if (a->type == Event::KeyPressed)
+	if (Keyboard::isKeyPressed(Keyboard::A))
 	{
-		if (a->key.code == Keyboard::D)
-		{
-			b->SetMove(Vector2f(3.f, 0), PLAYER_SPEED, TIME_PER_FRAME);
-		}
-		if (a->key.code == Keyboard::A)
-		{
-			b->SetMove(Vector2f(-3.f, 0), PLAYER_SPEED, TIME_PER_FRAME);
-		}
+		next_move += Vector2f(-1, 0);
+	}
 
-		if (a->key.code == Keyboard::P)
-		{
-			if (!pressed)
-			{
-				b->SetMove(Vector2f(0, 20.f), 0.5f, TIME_PER_FRAME);
-				pressed = true;
-			}
-		}
-	}
-	
-	if(a->type == Event::KeyReleased)
+	if (Keyboard::isKeyPressed(Keyboard::D))
 	{
-		if (a->key.code == Keyboard::P)
-		{
-			pressed = false;
-		}
+		next_move += Vector2f(1, 0);
 	}
+
+	b->SetMove(next_move, PLAYER_SPEED, 1.f);
 }
+	
 
 int main()
 {
@@ -95,9 +82,9 @@ int main()
 			{
 				window.close();
 			}
-			Keyboard1(&_event, player);
 		}
 
+		Keyboard1(player);
 		//TIME_PER_FRAME = clock.restart().asSeconds();
 		//print(to_string(TIME_PER_FRAME));
 
@@ -105,7 +92,6 @@ int main()
 
 		window.draw(*player->sprite);
 		window.display();
-		
 		player->ExecuteMove();
 		tick_timers();
 
