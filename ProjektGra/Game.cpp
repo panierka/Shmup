@@ -15,8 +15,7 @@ void test_r() // U
 	test_sprite->rotate(0.05f);
 }
 
-//int licznik{}; // U
-bool pressed;
+bool pressed = true;
 
 Vector2f next_move;
 
@@ -33,7 +32,15 @@ void Keyboard1(GameObject* b)
 	{
 		next_move += Vector2f(1, 0);
 	}
-
+	if (!Keyboard::isKeyPressed(Keyboard::P))
+	{
+		pressed = true;
+	}
+	if (Keyboard::isKeyPressed(Keyboard::P) && pressed)
+	{
+		next_move += Vector2f(0, 1);
+		pressed = false;
+	}
 	b->SetMove(next_move, PLAYER_SPEED, 1.f);
 }
 	
