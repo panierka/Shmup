@@ -4,6 +4,7 @@
 
 vector<Timer*> timers;
 
+// funkcja do wyznaczania d³ugoœci wektorów
 template<typename T>
 T magnitude(Vector2<T> v)
 {
@@ -43,32 +44,37 @@ GameObject::~GameObject()
 
 }
 
+// odpowiednia pozycja dla obiektu w logice i sprite'a
 void GameObject::SetPosition(Vector2f _pos)
 {
 	position = _pos;
 	sprite->setPosition(_pos);
 }
 
+// ruch na podstawie kierunku, dystansu i czasu na jego przebycie
 void GameObject::SetMove(Vector2f _direction, float _distance, float _time)
 {
+	// y *= -1, ¿eby by³o zgodne z tradycyjnym uk³adem wspó³rzêdnych
 	_direction.y *= -1;
 	direction = _direction;
 	distance = _distance * ONE_UNIT_SIZE;
 	travel_time = _time;
 }
 
-void GameObject::ExecuteMove()
+// wykonanie siê ruchu
+void GameObject::ExecuteMove(float _deltaT)
 {
 	if (magnitude(direction) == 0)
 	{
 		return;
 	}
 
-	SetPosition(position + TIME_PER_FRAME * direction * distance /( travel_time * magnitude(direction)));
+	// nastêpuje tu równie¿ normalizowanie kierunku ruchu
+	SetPosition(position + _deltaT * direction * distance /( travel_time * magnitude(direction)));
 
 	if(!continuous)
 	{ 
-		time_spent_travelling += TIME_PER_FRAME;
+		time_spent_travelling += _deltaT;
 
 		if (time_spent_travelling >= travel_time)
 		{
@@ -78,9 +84,9 @@ void GameObject::ExecuteMove()
 }
 
 
-void Timer::tick()
+void Timer::tick(float _deltaT)
 {
-	current_time += TIME_PER_FRAME;
+	current_time += _deltaT;
 
 	if (current_time >= max_time)
 	{
@@ -113,10 +119,10 @@ Timer::~Timer()
 
 }
 
-void tick_timers()
+void tick_timers(float _deltaT)
 {
 	for (Timer* _timer : timers)
 	{
-		_timer->tick();
+		_timer->tick(_deltaT);
 	}
 }

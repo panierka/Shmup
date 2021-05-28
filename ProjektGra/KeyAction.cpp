@@ -1,8 +1,8 @@
 #include "KeyAction.h"
 #include<iostream>
 
-
-const float PLAYER_SPEED = 0.105f;
+// prêdkoœæ gracza wyra¿ona w jednostkach gry na sekundê
+const float PLAYER_SPEED = 1.85f;
 
 void KeyAction::Perform()
 {

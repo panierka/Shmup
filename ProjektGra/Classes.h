@@ -8,17 +8,15 @@ using namespace std;
 
 class Timer;
 
-// globalne
+// "globalne"
 
-const float TIME_PER_FRAME = 0.016f;
-
-const Vector2u SCREEN_SIZE(700u, 950u);
-const float ONE_UNIT_SIZE = 50.f;
+const Vector2u SCREEN_SIZE(700u, 950u); // ekran w pikselach
+const float ONE_UNIT_SIZE = 50.f; // jedna jednostka rozmiaru
 
 //
 
 
-
+// podstawowy obiekt istniej¹cy w grze: porusza siê i ma jak¹œ grafikê
 class GameObject
 {
 private:
@@ -39,7 +37,7 @@ public:
 
 	void SetPosition(Vector2f);
 	void SetMove(Vector2f, float, float);
-	void ExecuteMove();
+	void ExecuteMove(float);
 };
 
 class Player : GameObject
@@ -48,6 +46,7 @@ public:
 	Vector2f next_move;
 };
 
+// pomocniczy czasomierz, do aktywowania periodycznych zdarzeñ
 class Timer
 {
 private:
@@ -61,16 +60,20 @@ private:
 	size_t timers_index;
 
 public:
-	void tick();
+	void tick(float _deltaT);
 	Timer();
 	Timer(float, void (*)(), bool);
 	~Timer();
 };
 
+// pomocnicza funkcja do szybkiego i sformatowanego wypisywania w konsoli
 void print(string);
 
-int random_number(int, int);
+// pomocnicza funkcja generuj¹ca liczbê z zakresu [min, max]
+int random_number(int min, int max);
 
+// stworzenie sprite'a i wyœrodkowanie pivotu
 Sprite* generate_sprite(Texture*);
 
-void tick_timers();
+// globalny przeskok w czasomierzach
+void tick_timers(float);
