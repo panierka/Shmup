@@ -84,6 +84,8 @@ int main()
 
 	//g.SetMove(Vector2f(0, 1.f), 12.f, 10); // U
 
+	Clock clock;
+
 	while (window.isOpen())
 	{
 		Event _event;
@@ -96,6 +98,9 @@ int main()
 			Keyboard1(&_event, player);
 		}
 
+		//TIME_PER_FRAME = clock.restart().asSeconds();
+		//print(to_string(TIME_PER_FRAME));
+
 		window.clear(Color(129, 57, 42, 255));
 
 		window.draw(*player->sprite);
@@ -104,6 +109,6 @@ int main()
 		player->ExecuteMove();
 		tick_timers();
 
-		sleep(seconds(TIME_PER_FRAME));
+		//sleep(seconds(TIME_PER_FRAME));
 	}
 }
