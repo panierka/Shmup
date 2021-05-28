@@ -27,10 +27,16 @@
     <ClCompile Include="Tools.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="KeyAction.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="KeyAction.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
     <ClInclude Include="Classes.h">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

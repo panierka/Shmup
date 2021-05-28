@@ -1,4 +1,5 @@
 #include"Classes.h"
+#include"KeyAction.h"
 
 Sprite* test_sprite;
 Color* colors;
@@ -17,8 +18,7 @@ void test_r() // U
 
 bool pressed = true;
 
-Vector2f next_move;
-
+/*
 void Keyboard1(GameObject* b)
 {
 	next_move = Vector2f(0, 0);
@@ -43,7 +43,7 @@ void Keyboard1(GameObject* b)
 	}
 	b->SetMove(next_move, PLAYER_SPEED, 1.f);
 }
-	
+*/	
 
 int main()
 {
@@ -77,8 +77,10 @@ int main()
 	};
 
 	//g.SetMove(Vector2f(0, 1.f), 12.f, 10); // U
+	
+	InputHandler input(player);
 
-	Clock clock;
+	//Clock clock;
 
 	while (window.isOpen())
 	{
@@ -91,7 +93,10 @@ int main()
 			}
 		}
 
-		Keyboard1(player);
+		//Keyboard1(player);
+		
+		input.check_input();
+
 		//TIME_PER_FRAME = clock.restart().asSeconds();
 		//print(to_string(TIME_PER_FRAME));
 

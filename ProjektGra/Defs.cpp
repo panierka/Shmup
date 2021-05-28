@@ -38,6 +38,11 @@ GameObject::GameObject(Vector2f v, Sprite* s, bool b) :
 	SetPosition(v);
 }
 
+GameObject::~GameObject()
+{
+
+}
+
 void GameObject::SetPosition(Vector2f _pos)
 {
 	position = _pos;

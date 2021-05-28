@@ -10,11 +10,10 @@ class Timer;
 
 // globalne
 
-static float TIME_PER_FRAME = 0.016f;
+const float TIME_PER_FRAME = 0.016f;
 
 const Vector2u SCREEN_SIZE(700u, 950u);
 const float ONE_UNIT_SIZE = 50.f;
-const float PLAYER_SPEED = 0.145f;
 
 //
 
@@ -36,10 +35,17 @@ public:
 	Sprite* sprite;
 
 	GameObject(Vector2f, Sprite*, bool);
+	~GameObject();
 
 	void SetPosition(Vector2f);
 	void SetMove(Vector2f, float, float);
 	void ExecuteMove();
+};
+
+class Player : GameObject
+{
+public:
+	Vector2f next_move;
 };
 
 class Timer
