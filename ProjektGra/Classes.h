@@ -10,11 +10,11 @@ class Timer;
 
 // globalne
 
-static float TIME_PER_FRAME = 0.000379f;
+static float TIME_PER_FRAME = 0.016f;
 
 const Vector2u SCREEN_SIZE(700u, 950u);
 const float ONE_UNIT_SIZE = 50.f;
-const float PLAYER_SPEED = 0.085f;
+const float PLAYER_SPEED = 0.145f;
 
 //
 
