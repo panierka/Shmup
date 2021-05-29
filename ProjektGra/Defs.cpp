@@ -126,3 +126,18 @@ void tick_timers(float _deltaT)
 		_timer->tick(_deltaT);
 	}
 }
+
+void Character::take_hit(int _amount)
+{
+	current_health -= _amount;
+
+	if (current_health <= 0)
+	{
+		death();
+	}
+}
+
+void Character::death()
+{
+
+}

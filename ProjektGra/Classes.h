@@ -19,6 +19,10 @@ const float ONE_UNIT_SIZE = 50.f; // jedna jednostka rozmiaru
 // podstawowy obiekt istniej¹cy w grze: porusza siê i ma jak¹œ grafikê
 class GameObject
 {
+public:
+	Vector2f position;
+	Sprite* sprite;
+
 private:
 	// poruszanie siê
 
@@ -29,9 +33,6 @@ private:
 	float time_spent_travelling{};
 
 public:
-	Vector2f position;
-	Sprite* sprite;
-
 	GameObject(Vector2f, Sprite*, bool);
 	~GameObject();
 
@@ -40,10 +41,42 @@ public:
 	void ExecuteMove(float);
 };
 
-class Player : GameObject
+// gameobject oddzia³uj¹cy na inne i z animacj¹
+class PhysicalObject : GameObject
 {
+	
+};
+
+// pocisk
+class Projectile : PhysicalObject 
+{
+private:
+	int damage;
+	bool enemy; // jeœli nie wrogi, to gracza
+};
+
+// o. fiz. ze zdrowiem i zdolnoœci¹ strzelania 
+class Character : PhysicalObject
+{
+private:
+	int max_health;
+	int current_health;
+
 public:
-	Vector2f next_move;
+	void take_hit(int _amount);
+	virtual void death();
+};
+
+// postaæ z cechami typowymi dla gracza
+class Player : Character
+{
+	
+};
+
+// postaæ z cechami typowymi dla wroga
+class Enemy : Character
+{
+	
 };
 
 // pomocniczy czasomierz, do aktywowania periodycznych zdarzeñ

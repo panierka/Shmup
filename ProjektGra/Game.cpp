@@ -12,7 +12,7 @@ int main()
 
 	// wczytanie tekstur gracza i stworzenie jego obiektu
 	Texture t;
-	t.loadFromFile("../Assets/PlayerShip.png");
+	t.loadFromFile("../Assets/Player.png");
 	player = new GameObject((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 400), generate_sprite(&t), false);
 
 
@@ -37,7 +37,7 @@ int main()
 				window.close();
 			}
 		}
-
+		
 		// dynamiczne kalkulowanie realnego delta t miêdzy kolejnymi klatkami z "wyg³adzaniem"
 		_frame_time = clock.restart().asSeconds();
 		_accumulator += _frame_time;
