@@ -135,21 +135,18 @@ PhysicalObject::PhysicalObject(Vector2f v, Sprite* s, bool b):
 
 void PhysicalObject::animation()
 {
-	Texture te;
-	te.loadFromFile("../Assets/Player-Spritesheet.png");
-	int Coordinatesx[8] = { 0, 100, 200, 300, 100, 200, 300, 0 };
-	int Coordinatesy[8] = { 0, 0, 0, 0, 100, 100, 100, 200 };
-	for (int i = 0; i < 8; i++)
+	int Index[8] = { 0, 1, 2, 3 };
+	int X[8] = { 4, 4, 4, 4 };
+	for (int i = 0; i < 4; i++)
 	{
-		Sprite sprite1(te, IntRect(Coordinatesx[i], Coordinatesy[i], 100, 100));
-		tab[i] = sprite1;
-		tab[i].setTextureRect(IntRect(Coordinatesx[i], Coordinatesy[i], 100, 100));
+		Vector2i v = get_vector_by_uindex(Index[i], X[i]);
+		s.setTextureRect(IntRect(v * 100, Vector2i(100, 100)));
 	}
+}
 
-	/*for (int i = 0; i < 4; i++)
-	{
-		tab[i].setTextureRect()
-	}*/
+Vector2i PhysicalObject:: get_vector_by_uindex(int _index, int _max_x)
+{
+	return Vector2i(_index % _max_x, _index / _max_x);
 }
 
 void Character::take_hit(int _amount)

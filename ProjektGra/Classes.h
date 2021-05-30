@@ -48,7 +48,7 @@ public:
 	PhysicalObject(Vector2f v, Sprite* s, bool b);
 	Sprite tab[8]{};
 	void animation();
-
+	Vector2i get_vector_by_uindex(int _index, int _max_x);
 };
 
 // pocisk

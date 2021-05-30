@@ -4,10 +4,6 @@
 Player* player;
 
 
-Vector2i get_vector_by_uindex(int _index, int _max_x, int _max_y)
-{
-	return Vector2i(_index % _max_x, _index / _max_y);
-}
 
 int main()
 {
@@ -21,9 +17,6 @@ int main()
 	t.loadFromFile("../Assets/Player-Spritesheet.png");
 	player = new Player((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 400), generate_sprite(&t), false);
 
-	Vector2i v = get_vector_by_uindex(5, 4, 3);
-
-	player->sprite->setTextureRect(IntRect(v * 100, Vector2i(100, 100)));
 
 
 	// inicjalizacja dodatkowych komponentów
