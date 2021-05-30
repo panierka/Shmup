@@ -18,10 +18,10 @@ private:
 
 	unsigned int current_frame;
 
-	Timer* timer;
-
 public:
 	PhysicalObject* obj;
+	bool idle;
+	Timer* timer;
 
 	//float frames_per_second;
 	

@@ -183,9 +183,11 @@ void PhysicalObject::change_sprite(int _index)
 	sprite->setTextureRect(IntRect(v * frame_size, frame_size));
 }
 
-void PhysicalObject::call_animation(int i)
+void PhysicalObject::call_animation(int j)
 {
-	animations[i]->call();
+	animations[0]->timer->stop();
+
+	animations[j]->call();
 }
 
 Character::Character(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
