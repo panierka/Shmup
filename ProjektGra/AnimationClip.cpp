@@ -10,6 +10,7 @@ void AnimationClip::function()
 	}
 	else
 	{
+		timer->stop();
 		obj->call_animation(0);
 	}
 }

@@ -20,8 +20,9 @@ int main()
 	t.loadFromFile("../Assets/Player-Spritesheet.png");
 	player = new Player((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 400), generate_sprite(&t), false, Vector2i(100, 100));
 
-	player->animations = new AnimationClip*[1];
+	player->animations = new AnimationClip*[2];
 	player->animations[0] = new AnimationClip(0, 4, 12, player);
+	player->animations[1] = new AnimationClip(5, 4, 12, player);
 
 
 	// inicjalizacja dodatkowych komponentów
@@ -32,7 +33,7 @@ int main()
 	float _frame_time = clock.getElapsedTime().asSeconds();
 	//float _dt = 0.01f;
 	//float _accumulator = 0.f;
-	
+
 	window.setFramerateLimit(60);
 
 	// pêtla programu
@@ -70,6 +71,5 @@ int main()
 		// wykonanie siê obliczeñ czasomierzy i fizyki
 		player->ExecuteMove(_frame_time);
 		tick_timers(_frame_time);
-		print(to_string(_frame_time));
 	}
 }

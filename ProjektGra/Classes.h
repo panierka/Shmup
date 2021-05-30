@@ -124,6 +124,8 @@ public:
 	void start();
 	void pause();
 
+	void stop();
+
 	~Timer();
 };
 

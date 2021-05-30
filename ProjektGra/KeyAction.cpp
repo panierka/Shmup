@@ -29,6 +29,7 @@ KeyAction::~KeyAction()
 }
 
 Vector2f InputHandler::next_move = Vector2f(0, 0);
+Player* InputHandler::player = nullptr;
 
 
 void InputHandler::check_input()
@@ -57,9 +58,9 @@ InputHandler::InputHandler(Player* _player)
 			next_move += Vector2f(1, 0);
 		}));
 
-	defined_actions.push_back(new KeyAction(Keyboard::P, false, []()
+	defined_actions.push_back(new KeyAction(Keyboard::K, false, []()
 		{
-			next_move += Vector2f(0, 1);
+			player->call_animation(1);
 		}));
 }
 

@@ -23,7 +23,7 @@ class InputHandler
 {
 private:
 	std::vector<KeyAction*> defined_actions;
-	Player* player;
+	static Player* player;
 	static Vector2f next_move;
 
 public:

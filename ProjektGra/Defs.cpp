@@ -125,6 +125,12 @@ void Timer::pause()
 	paused = true;
 }
 
+void Timer::stop()
+{
+	paused = true;
+	current_time = 0;
+}
+
 Timer::~Timer()
 {
 
