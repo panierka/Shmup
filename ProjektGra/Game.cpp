@@ -3,7 +3,10 @@
 
 Player* player;
 
+void a()
+{
 
+}
 
 int main()
 {
@@ -15,8 +18,10 @@ int main()
 	// wczytanie tekstur gracza i stworzenie jego obiektu
 	Texture t;
 	t.loadFromFile("../Assets/Player-Spritesheet.png");
-	player = new Player((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 400), generate_sprite(&t), false);
+	player = new Player((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 400), generate_sprite(&t), false, Vector2i(100, 100));
 
+	player->animations = new AnimationClip*[1];
+	player->animations[0] = new AnimationClip(0, 4, 6, player);
 
 
 	// inicjalizacja dodatkowych komponentów

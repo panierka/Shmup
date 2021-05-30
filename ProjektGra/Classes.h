@@ -3,10 +3,13 @@
 #include<SFML/Graphics.hpp>
 #include<vector>
 #include<random>
+#include "AnimationClip.h"
 using namespace sf;
 using namespace std;
 
+class Callable;
 class Timer;
+class AnimationClip;
 
 // "globalne"
 
@@ -41,14 +44,28 @@ public:
 	void ExecuteMove(float);
 };
 
+Vector2i operator*(Vector2i, Vector2i);
+Vector2i operator/(Vector2i, Vector2i);
+
 // gameobject oddzia³uj¹cy na inne i z animacj¹
 class PhysicalObject : public GameObject
 {
 public:
-	PhysicalObject(Vector2f v, Sprite* s, bool b);
-	Sprite tab[8]{};
+	AnimationClip** animations;
+
+private:
+
+	Vector2i texture_size;
+	Vector2i frame_size;
+	int texture_coords_size_x;
+
+public:
+	PhysicalObject(Vector2f v, Sprite* s, bool b, Vector2i);
+
 	void animation();
-	Vector2i get_vector_by_uindex(int _index, int _max_x);
+
+	void change_sprite(int);
+	void call_animation(int);
 };
 
 // pocisk
@@ -67,7 +84,7 @@ private:
 	int current_health;
 
 public:
-	Character(Vector2f v, Sprite* s, bool b):PhysicalObject(v, s, b){}
+	Character(Vector2f v, Sprite* s, bool b, Vector2i);
 	void take_hit(int _amount);
 	virtual void death();
 };
@@ -76,7 +93,7 @@ public:
 class Player : public Character
 {
 public:
-	Player(Vector2f v, Sprite* s, bool b) :Character(v, s, b){}
+	Player(Vector2f v, Sprite* s, bool b, Vector2i);
 };
 
 // postaæ z cechami typowymi dla wroga
@@ -89,19 +106,24 @@ class Enemy : public Character
 class Timer
 {
 private:
+	bool paused{};
+
 	float max_time;
 	float current_time;
 
 	bool reset;
 
-	void (*function)();
+	Callable* call;
 
 	size_t timers_index;
 
 public:
 	void tick(float _deltaT);
-	Timer();
-	Timer(float, void (*)(), bool);
+	Timer(float, Callable*, bool);
+
+	void start();
+	void pause();
+
 	~Timer();
 };
 

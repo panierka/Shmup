@@ -86,12 +86,17 @@ void GameObject::ExecuteMove(float _deltaT)
 
 void Timer::tick(float _deltaT)
 {
+	if (paused)
+	{
+		return;
+	}
+
 	current_time += _deltaT;
 
 	if (current_time >= max_time)
 	{
 		current_time = 0;
-		function();
+		call->function();
 
 		if (!reset)
 		{
@@ -101,17 +106,23 @@ void Timer::tick(float _deltaT)
 	}
 }
 
-Timer::Timer():
-	max_time(1), current_time(0),  function(nullptr), reset(false), timers_index(-1)
-{
-	print("ERROR: pusty timer, tak nie wolno");
-}
-
-Timer::Timer(float _time, void (*f)(), bool _reset):
-	max_time(_time), current_time(0), function(f), reset(_reset) 
+Timer::Timer(float _time, Callable* _call, bool _reset):
+	max_time(_time), current_time(0), call(_call), reset(_reset) 
 {
 	timers_index = timers.size();
 	timers.push_back(this);
+
+	start();
+}
+
+void Timer::start()
+{
+	paused = false;
+}
+
+void Timer::pause()
+{
+	paused = true;
 }
 
 Timer::~Timer()
@@ -127,27 +138,55 @@ void tick_timers(float _deltaT)
 	}
 }
 
-PhysicalObject::PhysicalObject(Vector2f v, Sprite* s, bool b):
-	GameObject(v, s, b), tab{}
+Vector2i operator*(Vector2i u, Vector2i v)
 {
-	animation();
+	return Vector2i(u.x * v.x, u.y * v.y);
+}
+
+Vector2i operator/(Vector2i u, Vector2i v)
+{
+	return Vector2i(u.x / v.x, u.y / v.y);
+}
+
+PhysicalObject::PhysicalObject(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
+	GameObject(v, s, b), frame_size(_frame_size)
+{
+	texture_size = Vector2i(sprite->getTexture()->getSize());
+
+	texture_coords_size_x = (texture_size / frame_size).x;
+	
+	// inicjowanie animacji?
 }
 
 void PhysicalObject::animation()
 {
-	int Index[8] = { 0, 1, 2, 3 };
+	/*int Index[8] = { 0, 1, 2, 3 };
 	int X[8] = { 4, 4, 4, 4 };
 	for (int i = 0; i < 4; i++)
 	{
 		Vector2i v = get_vector_by_uindex(Index[i], X[i]);
-		s.setTextureRect(IntRect(v * 100, Vector2i(100, 100)));
-	}
+		sprite->setTextureRect(IntRect(v * 100, Vector2i(100, 100)));
+	}*/
 }
 
-Vector2i PhysicalObject:: get_vector_by_uindex(int _index, int _max_x)
+
+void PhysicalObject::change_sprite(int _index)
 {
-	return Vector2i(_index % _max_x, _index / _max_x);
+	Vector2i v(_index % texture_coords_size_x, _index / texture_coords_size_x);
+
+	sprite->setTextureRect(IntRect(v * frame_size, frame_size));
 }
+
+void PhysicalObject::call_animation(int i)
+{
+	animations[i]->call();
+}
+
+Character::Character(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
+	PhysicalObject(v, s, b, _frame_size) {}
+
+Player::Player(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
+	Character(v, s, b, _frame_size) {}
 
 void Character::take_hit(int _amount)
 {
