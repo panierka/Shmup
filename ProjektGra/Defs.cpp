@@ -130,10 +130,10 @@ void tick_timers(float _deltaT)
 PhysicalObject::PhysicalObject(Vector2f v, Sprite* s, bool b):
 	GameObject(v, s, b), tab{}
 {
-	animation(tab);
+	animation();
 }
 
-void PhysicalObject::animation(Sprite* _tab)
+void PhysicalObject::animation()
 {
 	Texture te;
 	te.loadFromFile("../Assets/Player-Spritesheet.png");

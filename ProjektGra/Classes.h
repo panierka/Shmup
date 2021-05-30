@@ -47,7 +47,7 @@ class PhysicalObject : public GameObject
 public:
 	PhysicalObject(Vector2f v, Sprite* s, bool b);
 	Sprite tab[8]{};
-	void animation(Sprite* tab);
+	void animation();
 
 };
 
