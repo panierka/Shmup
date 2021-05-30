@@ -1,7 +1,7 @@
 #include"Classes.h"
 #include"KeyAction.h"
 
-GameObject* player;
+Player* player;
 
 int main()
 {

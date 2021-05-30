@@ -23,12 +23,12 @@ class InputHandler
 {
 private:
 	std::vector<KeyAction*> defined_actions;
-	GameObject* player;
+	Player* player;
 	static Vector2f next_move;
 
 public:
 
-	InputHandler(GameObject*);
+	InputHandler(Player*);
 	~InputHandler();
 
 

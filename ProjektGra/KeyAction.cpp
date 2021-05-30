@@ -43,7 +43,7 @@ void InputHandler::check_input()
 	player->SetMove(next_move, PLAYER_SPEED, 1.f);
 }
 
-InputHandler::InputHandler(GameObject* _player)
+InputHandler::InputHandler(Player* _player)
 { 
 	player = _player;
 

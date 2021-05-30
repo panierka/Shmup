@@ -42,35 +42,17 @@ public:
 };
 
 // gameobject oddzia³uj¹cy na inne i z animacj¹
-class PhysicalObject : GameObject
+class PhysicalObject : public GameObject
 {
 public:
-	PhysicalObject(Vector2f v, Sprite* s, bool b):GameObject(v, s, b)
-	{
-		animation(*tab);
-	}
-	Sprite* tab[8];
-	void animation(Sprite* tab)
-	{
-		Texture te;
-		te.loadFromFile("../Assets/Player-Spritesheet");
-		int Coordinatesx[8] = { 0, 100, 200, 300, 100, 200, 300, 0 };
-		int Coordinatesy[8] = { 0, 0, 0, 0, 100, 100, 100, 200 };
-		for (int i = 0; i < 8; i++)
-		{
-			Sprite sprite1(te, IntRect(Coordinatesx[i], Coordinatesy[i], 100, 100));
-			tab[i] = sprite1;
-			tab[i].setTextureRect(IntRect(Coordinatesx[i], Coordinatesy[i], 100, 100));
-		}
-		/*for (int i = 0; i < 4; i++)
-		{
-			tab[i].setTextureRect()
-		}*/
-	}
+	PhysicalObject(Vector2f v, Sprite* s, bool b);
+	Sprite* tab[8]{};
+	void animation(Sprite* tab);
+
 };
 
 // pocisk
-class Projectile : PhysicalObject 
+class Projectile : public PhysicalObject
 {
 private:
 	int damage;
@@ -78,7 +60,7 @@ private:
 };
 
 // o. fiz. ze zdrowiem i zdolnoœci¹ strzelania 
-class Character : PhysicalObject
+class Character : public PhysicalObject
 {
 private:
 	int max_health;
@@ -91,14 +73,14 @@ public:
 };
 
 // postaæ z cechami typowymi dla gracza
-class Player : Character
+class Player : public Character
 {
 public:
 	Player(Vector2f v, Sprite* s, bool b) :Character(v, s, b){}
 };
 
 // postaæ z cechami typowymi dla wroga
-class Enemy : Character
+class Enemy : public Character
 {
 	
 };

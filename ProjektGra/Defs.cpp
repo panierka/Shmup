@@ -127,6 +127,31 @@ void tick_timers(float _deltaT)
 	}
 }
 
+PhysicalObject::PhysicalObject(Vector2f v, Sprite* s, bool b):
+	GameObject(v, s, b)
+{
+	animation(*tab);
+}
+
+void PhysicalObject::animation(Sprite* tab)
+{
+	Texture te;
+	te.loadFromFile("../Assets/Player-Spritesheet.png");
+	int Coordinatesx[8] = { 0, 100, 200, 300, 100, 200, 300, 0 };
+	int Coordinatesy[8] = { 0, 0, 0, 0, 100, 100, 100, 200 };
+	for (int i = 0; i < 8; i++)
+	{
+		Sprite sprite1(te, IntRect(Coordinatesx[i], Coordinatesy[i], 100, 100));
+		tab[i] = sprite1;
+		tab[i].setTextureRect(IntRect(Coordinatesx[i], Coordinatesy[i], 100, 100));
+	}
+
+	/*for (int i = 0; i < 4; i++)
+	{
+		tab[i].setTextureRect()
+	}*/
+}
+
 void Character::take_hit(int _amount)
 {
 	current_health -= _amount;
