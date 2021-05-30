@@ -13,7 +13,7 @@ int main()
 	// wczytanie tekstur gracza i stworzenie jego obiektu
 	Texture t;
 	t.loadFromFile("../Assets/Player.png");
-	player = new GameObject((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 400), generate_sprite(&t), false);
+	player = new Player((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 400), generate_sprite(&t), false);
 
 
 	// inicjalizacja dodatkowych komponentów

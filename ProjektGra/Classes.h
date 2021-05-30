@@ -44,7 +44,29 @@ public:
 // gameobject oddzia³uj¹cy na inne i z animacj¹
 class PhysicalObject : GameObject
 {
-	
+public:
+	PhysicalObject(Vector2f v, Sprite* s, bool b):GameObject(v, s, b)
+	{
+		animation(*tab);
+	}
+	Sprite* tab[8];
+	void animation(Sprite* tab)
+	{
+		Texture te;
+		te.loadFromFile("../Assets/Player-Spritesheet");
+		int Coordinatesx[8] = { 0, 100, 200, 300, 100, 200, 300, 0 };
+		int Coordinatesy[8] = { 0, 0, 0, 0, 100, 100, 100, 200 };
+		for (int i = 0; i < 8; i++)
+		{
+			Sprite sprite1(te, IntRect(Coordinatesx[i], Coordinatesy[i], 100, 100));
+			tab[i] = sprite1;
+			tab[i].setTextureRect(IntRect(Coordinatesx[i], Coordinatesy[i], 100, 100));
+		}
+		/*for (int i = 0; i < 4; i++)
+		{
+			tab[i].setTextureRect()
+		}*/
+	}
 };
 
 // pocisk
@@ -63,6 +85,7 @@ private:
 	int current_health;
 
 public:
+	Character(Vector2f v, Sprite* s, bool b):PhysicalObject(v, s, b){}
 	void take_hit(int _amount);
 	virtual void death();
 };
@@ -70,7 +93,8 @@ public:
 // postaæ z cechami typowymi dla gracza
 class Player : Character
 {
-	
+public:
+	Player(Vector2f v, Sprite* s, bool b) :Character(v, s, b){}
 };
 
 // postaæ z cechami typowymi dla wroga
