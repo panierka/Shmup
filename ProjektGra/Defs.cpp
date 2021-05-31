@@ -163,6 +163,8 @@ PhysicalObject::PhysicalObject(Vector2f v, Sprite* s, bool b, Vector2i _frame_si
 	texture_size = Vector2i(sprite->getTexture()->getSize());
 
 	texture_coords_size_x = (texture_size / frame_size).x;
+
+	sprite->setTextureRect(IntRect(_frame_size, Vector2i(0, 0)));
 	
 	// inicjowanie animacji?
 }
