@@ -53,6 +53,8 @@ class PhysicalObject : public GameObject
 public:
 	AnimationClip** animations;
 	bool ready_to_action;
+	// 0 - nic, 1 - gracz, 2 - pocisk gracza, 3 - pocisk wroga, 4 - wróg
+	int collision_marker;
 
 private:
 
@@ -62,9 +64,7 @@ private:
 
 public:
 	PhysicalObject(Vector2f v, Sprite* s, bool b, Vector2i);
-
-	void animation();
-
+	void collide(PhysicalObject& physical_object);
 	void change_sprite(int);
 	void call_animation(int);
 };
@@ -94,13 +94,15 @@ public:
 class Player : public Character
 {
 public:
+	int collision_marker;
 	Player(Vector2f v, Sprite* s, bool b, Vector2i);
 };
 
 // postaæ z cechami typowymi dla wroga
 class Enemy : public Character
 {
-	
+public:
+	int collision_marker;
 };
 
 // pomocniczy czasomierz, do aktywowania periodycznych zdarzeñ
@@ -129,7 +131,6 @@ public:
 
 	~Timer();
 };
-
 // pomocnicza funkcja do szybkiego i sformatowanego wypisywania w konsoli
 void print(string);
 

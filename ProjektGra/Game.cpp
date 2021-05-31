@@ -2,6 +2,7 @@
 #include"KeyAction.h"
 
 Player* player;
+Player* player1;
 
 void a()
 {
@@ -16,10 +17,11 @@ int main()
 	RenderWindow window(VideoMode(SCREEN_SIZE.x, SCREEN_SIZE.y), "Gra", Style::Titlebar | Style::Close);
 
 	// wczytanie tekstur gracza i stworzenie jego obiektu
-	Texture t;
+	Texture t, t1;
 	t.loadFromFile("../Assets/Player-Spritesheet.png");
+	t1.loadFromFile("../Assets/Player.png");
 	player = new Player((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 450), generate_sprite(&t), false, Vector2i(100, 100));
-
+	player1 = new Player((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 450), generate_sprite(&t1), false, Vector2i(100, 100));
 	player->animations = new AnimationClip*[2];
 
 	player->animations[0] = new AnimationClip(0, 4, 10, player, true);
@@ -67,6 +69,7 @@ int main()
 		// wyœwietlanie poprawnych informacji na ekranie
 		window.clear(Color(129, 57, 42, 255));
 		window.draw(*player->sprite);
+		window.draw(*player1->sprite);
 		window.display();
 
 		// wykonanie siê obliczeñ czasomierzy i fizyki

@@ -158,7 +158,7 @@ Vector2i operator/(Vector2i u, Vector2i v)
 }
 
 PhysicalObject::PhysicalObject(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
-	GameObject(v, s, b), frame_size(_frame_size), ready_to_action(true)
+	GameObject(v, s, b), frame_size(_frame_size), ready_to_action(true), collision_marker(0)
 {
 	texture_size = Vector2i(sprite->getTexture()->getSize());
 
@@ -168,18 +168,6 @@ PhysicalObject::PhysicalObject(Vector2f v, Sprite* s, bool b, Vector2i _frame_si
 	
 	// inicjowanie animacji?
 }
-
-void PhysicalObject::animation()
-{
-	/*int Index[8] = { 0, 1, 2, 3 };
-	int X[8] = { 4, 4, 4, 4 };
-	for (int i = 0; i < 4; i++)
-	{
-		Vector2i v = get_vector_by_uindex(Index[i], X[i]);
-		sprite->setTextureRect(IntRect(v * 100, Vector2i(100, 100)));
-	}*/
-}
-
 
 void PhysicalObject::change_sprite(int _index)
 {
@@ -199,7 +187,7 @@ Character::Character(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
 	PhysicalObject(v, s, b, _frame_size) {}
 
 Player::Player(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
-	Character(v, s, b, _frame_size) {}
+	Character(v, s, b, _frame_size), collision_marker(1) {}
 
 void Character::take_hit(int _amount)
 {
@@ -214,4 +202,29 @@ void Character::take_hit(int _amount)
 void Character::death()
 {
 
+}
+
+void PhysicalObject::collide(PhysicalObject &physical_object)
+{
+	FloatRect participant1 = sprite->getGlobalBounds();
+	FloatRect participant2 = physical_object.sprite->getGlobalBounds();
+
+	if (participant1.intersects(participant2))
+	{
+		switch (physical_object.collision_marker)
+		{
+		case (1): // gracz
+			print("kolizja");
+			break;
+		case (2): // pocisk gracza
+			print("kolizja");
+			break;
+		case (3): // pocisk wroga
+			print("kolizja");
+			break;
+		case (4): // wróg
+			print("kolizja");
+			break;
+		}
+	}
 }
