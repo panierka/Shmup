@@ -2,9 +2,8 @@
 
 void AnimationClip::function()
 {
-	current_frame++;
-	print(to_string(current_frame));
-
+	current_frame++;;
+	
 	if (current_frame < frames)
 	{
 		obj->change_sprite(starting_index + current_frame);
@@ -26,13 +25,15 @@ void AnimationClip::function()
 
 void AnimationClip::call()
 {
+	obj->ready_to_action = idle;
+
 	current_frame = 0;
 	obj->change_sprite(0);
 	timer->start();
 }
 
-AnimationClip::AnimationClip(int s_i, int f, float _fps, PhysicalObject* o):
-	starting_index(s_i), frames(f), current_frame(0), obj(o), idle(false)
+AnimationClip::AnimationClip(int s_i, int f, float _fps, PhysicalObject* o, bool _idle):
+	starting_index(s_i), frames(f), current_frame(0), obj(o), idle(_idle)
 {
-	timer = new Timer(1 / _fps, this, true);
+	timer = new Timer(1 / _fps, this, true, !_idle);
 }

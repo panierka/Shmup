@@ -52,6 +52,7 @@ class PhysicalObject : public GameObject
 {
 public:
 	AnimationClip** animations;
+	bool ready_to_action;
 
 private:
 
@@ -119,7 +120,7 @@ private:
 
 public:
 	void tick(float _deltaT);
-	Timer(float, Callable*, bool);
+	Timer(float, Callable*, bool, bool _start_paused);
 
 	void start();
 	void pause();

@@ -22,9 +22,8 @@ int main()
 
 	player->animations = new AnimationClip*[2];
 
-	player->animations[0] = new AnimationClip(0, 4, 10, player);
-	player->animations[0]->idle = true;
-	player->animations[1] = new AnimationClip(5, 4, 18, player);
+	player->animations[0] = new AnimationClip(0, 4, 10, player, true);
+	player->animations[1] = new AnimationClip(5, 4, 18, player, false);
 
 
 	// inicjalizacja dodatkowych komponentów

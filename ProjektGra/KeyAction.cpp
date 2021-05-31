@@ -60,7 +60,10 @@ InputHandler::InputHandler(Player* _player)
 
 	defined_actions.push_back(new KeyAction(Keyboard::K, false, []()
 		{
-			player->call_animation(1);
+			if (player->ready_to_action)
+			{
+				player->call_animation(1);
+			}
 		}));
 }
 

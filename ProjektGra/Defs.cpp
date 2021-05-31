@@ -106,13 +106,16 @@ void Timer::tick(float _deltaT)
 	}
 }
 
-Timer::Timer(float _time, Callable* _call, bool _reset):
-	max_time(_time), current_time(0), call(_call), reset(_reset) 
+Timer::Timer(float _time, Callable* _call, bool _reset, bool _start_paused) :
+	max_time(_time), current_time(0), call(_call), reset(_reset), paused(true)
 {
 	timers_index = timers.size();
 	timers.push_back(this);
 
-	start();
+	if (!_start_paused)
+	{
+		start();
+	}
 }
 
 void Timer::start()
@@ -155,7 +158,7 @@ Vector2i operator/(Vector2i u, Vector2i v)
 }
 
 PhysicalObject::PhysicalObject(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
-	GameObject(v, s, b), frame_size(_frame_size)
+	GameObject(v, s, b), frame_size(_frame_size), ready_to_action(true)
 {
 	texture_size = Vector2i(sprite->getTexture()->getSize());
 

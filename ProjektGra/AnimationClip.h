@@ -29,7 +29,7 @@ public:
 	virtual void function();
 
 public:
-	AnimationClip(int s_i, int f, float _fps, PhysicalObject*);
+	AnimationClip(int s_i, int f, float _fps, PhysicalObject*, bool);
 
 	void call();
 };
