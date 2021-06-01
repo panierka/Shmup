@@ -37,6 +37,7 @@ GameObject::GameObject(Vector2f v, Sprite* s, bool b) :
 	sprite(s), continuous(b)
 {
 	SetPosition(v);
+	Engine::objects.push_back(this);
 }
 
 GameObject::~GameObject()
@@ -164,7 +165,9 @@ PhysicalObject::PhysicalObject(Vector2f v, Sprite* s, bool b, Vector2i _frame_si
 
 	texture_coords_size_x = (texture_size / frame_size).x;
 
-	sprite->setTextureRect(IntRect(_frame_size, Vector2i(0, 0)));
+	sprite->setTextureRect(IntRect(Vector2i(0, 0), frame_size));
+
+	Engine::phy_objects.push_back(this);
 	
 	// inicjowanie animacji?
 }
@@ -187,7 +190,11 @@ Character::Character(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
 	PhysicalObject(v, s, b, _frame_size) {}
 
 Player::Player(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
-	Character(v, s, b, _frame_size), collision_marker(1) {}
+	Character(v, s, b, _frame_size), collision_marker(1) 
+{
+	facing_direction_y = 1;
+	projectile_collision_mask = 2;
+}
 
 void Character::take_hit(int _amount)
 {
@@ -202,6 +209,14 @@ void Character::take_hit(int _amount)
 void Character::death()
 {
 
+}
+
+void Character::Shoot(int _sprite_index, Vector2i _frame, int _damage, float _start_angle, float _angle_diff, int _bullets_count)
+{
+	for (int i = 0; i < _bullets_count; i++)
+	{
+		Projectile* p = new Projectile(position, generate_sprite(&textures[_sprite_index]), _frame, _damage, _start_angle + i * _angle_diff, bullet_velocity_mod, projectile_collision_mask, facing_direction_y);
+	}
 }
 
 void PhysicalObject::collide(PhysicalObject &physical_object)
@@ -227,4 +242,18 @@ void PhysicalObject::collide(PhysicalObject &physical_object)
 			break;
 		}
 	}
+}
+
+Enemy::Enemy(Vector2f pos, Sprite* s, bool b, Vector2i frame):
+	Character(pos, s, b, frame), collision_marker(4)
+{
+	facing_direction_y = -1;
+	projectile_collision_mask = 3;
+}
+
+Projectile::Projectile(Vector2f pos, Sprite* s, Vector2i _frame, int _damage, float _rotation, float _spd_mod, int _coll_mask, int _dir):
+	PhysicalObject(pos, s, true, _frame), damage(_damage)
+{
+	double proper_angle = _rotation / 57.3;
+	SetMove(Vector2f(-_dir * sin(proper_angle), _dir * cos(proper_angle)), 1.f, _spd_mod * base_velocity);
 }

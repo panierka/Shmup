@@ -3,6 +3,7 @@
 #include<SFML/Graphics.hpp>
 #include<vector>
 #include<random>
+#include "Engine.h"
 #include "AnimationClip.h"
 using namespace sf;
 using namespace std;
@@ -10,6 +11,7 @@ using namespace std;
 class Callable;
 class Timer;
 class AnimationClip;
+class Engine;
 
 // "globalne"
 
@@ -74,7 +76,11 @@ class Projectile : public PhysicalObject
 {
 private:
 	int damage;
-	bool enemy; // jeœli nie wrogi, to gracza
+	
+	const float base_velocity = 10.f;
+	
+public:
+	Projectile(Vector2f pos, Sprite* s, Vector2i _frame, int _damage, float _rotation, float _spd_mod, int _coll_mask, int _dir);
 };
 
 // o. fiz. ze zdrowiem i zdolnoœci¹ strzelania 
@@ -83,11 +89,22 @@ class Character : public PhysicalObject
 private:
 	int max_health;
 	int current_health;
+	Texture* textures;
+
+public:
+	float bullet_velocity_mod = 1.f;
+
+protected:
+	int facing_direction_y{};
+	int projectile_collision_mask;
 
 public:
 	Character(Vector2f v, Sprite* s, bool b, Vector2i);
 	void take_hit(int _amount);
 	virtual void death();
+
+protected:
+	void Shoot(int _sprite_index, Vector2i _frame, int _damage, float _start_angle, float _angle_diff, int _bullets_count);
 };
 
 // postaæ z cechami typowymi dla gracza
@@ -95,6 +112,8 @@ class Player : public Character
 {
 public:
 	int collision_marker;
+
+public:
 	Player(Vector2f v, Sprite* s, bool b, Vector2i);
 };
 
@@ -103,6 +122,9 @@ class Enemy : public Character
 {
 public:
 	int collision_marker;
+
+public:
+	Enemy(Vector2f pos, Sprite* s, bool b, Vector2i frame);
 };
 
 // pomocniczy czasomierz, do aktywowania periodycznych zdarzeñ

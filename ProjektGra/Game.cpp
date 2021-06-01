@@ -21,21 +21,20 @@ int main()
 	t.loadFromFile("../Assets/Player-Spritesheet.png");
 	t1.loadFromFile("../Assets/Player.png");
 	player = new Player((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 450), generate_sprite(&t), false, Vector2i(100, 100));
-	player1 = new Player((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 450), generate_sprite(&t1), false, Vector2i(100, 100));
 	player->animations = new AnimationClip*[2];
 
 	player->animations[0] = new AnimationClip(0, 4, 10, player, true);
 	player->animations[1] = new AnimationClip(5, 4, 18, player, false);
 
-
+	Enemy* e = new Enemy((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 450), generate_sprite(&t), false, Vector2i(100, 100));
+		
 	// inicjalizacja dodatkowych komponentów
 	InputHandler input(player);
+	Engine engine(&window);
 
 	// inicjalizacja zmiennych do kalkulowania czasu miêdzy klatkami
 	Clock clock;
 	float _frame_time = clock.getElapsedTime().asSeconds();
-	//float _dt = 0.01f;
-	//float _accumulator = 0.f;
 
 	window.setFramerateLimit(60);
 
@@ -55,25 +54,14 @@ int main()
 		// dynamiczne kalkulowanie realnego delta t miêdzy kolejnymi klatkami z "wyg³adzaniem"
 		_frame_time = clock.restart().asSeconds();
 
-		/*_accumulator += _frame_time;
-
-		while (_accumulator > _dt)
-		{
-			_accumulator -= _dt;
-			_frame_time += _dt;
-		}*/
-
 		// sprawdzenie akcji gracza
 		input.check_input();
 
 		// wyœwietlanie poprawnych informacji na ekranie
-		window.clear(Color(129, 57, 42, 255));
-		window.draw(*player->sprite);
-		window.draw(*player1->sprite);
-		window.display();
 
-		// wykonanie siê obliczeñ czasomierzy i fizyki
-		player->ExecuteMove(_frame_time);
+		engine.update(_frame_time);
+
+		// wykonanie siê obliczeñ czasomierzy
 		tick_timers(_frame_time);
 	}
 }
