@@ -27,7 +27,11 @@ int main()
 	player->animations[0] = new AnimationClip(0, 4, 10, player, true);
 	player->animations[1] = new AnimationClip(5, 4, 18, player, false);
 
+	player->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
+
 	Enemy* e = new Enemy((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, 450), generate_sprite(&t), false, Vector2i(100, 100));
+
+	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
 
 	// inicjalizacja dodatkowych komponentów
 	InputHandler input(player);

@@ -172,6 +172,12 @@ PhysicalObject::PhysicalObject(Vector2f v, Sprite* s, bool b, Vector2i _frame_si
 	Engine::phy_objects.push_back(this);
 }
 
+void PhysicalObject::create_collider(Vector2f _offset, Vector2f _size)
+{
+	collider = new FloatRect(Vector2f(0, 0), _size);
+	offset = _offset;
+}
+
 void PhysicalObject::change_sprite(int _index)
 {
 	Vector2i v(_index % texture_coords_size_x, _index / texture_coords_size_x);
@@ -184,6 +190,14 @@ void PhysicalObject::call_animation(int j)
 	animations[0]->timer->stop();
 
 	animations[j]->call();
+}
+
+void PhysicalObject::SetPosition(Vector2f _position)
+{
+	GameObject::SetPosition(_position);
+
+	collider->left = position.x + offset.x;
+	collider->top = position.y - offset.y;  // ???????????????????
 }
 
 Character::Character(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
@@ -220,14 +234,16 @@ void Character::shoot(int _sprite_index, Vector2i _frame, int _damage, float _st
 	}
 }
 
-void PhysicalObject::collide(PhysicalObject *physical_object)
-{
-	FloatRect participant1 = sprite->getGlobalBounds();
-	FloatRect participant2 = physical_object->sprite->getGlobalBounds();
 
-	if (participant1.intersects(participant2))
+void PhysicalObject::collide(PhysicalObject *coll)
+{
+
+	//FloatRect participant1 = collider->getGlobalBounds();
+	//FloatRect participant2 = coll->collider->getGlobalBounds();
+
+	if (collider->intersects(*coll->collider))
 	{
-		switch (physical_object->collision_marker)
+		switch (coll->collision_marker)
 		{
 		case (1): // gracz
 			print("kolizja");

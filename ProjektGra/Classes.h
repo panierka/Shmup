@@ -41,7 +41,7 @@ public:
 	GameObject(Vector2f, Sprite*, bool);
 	~GameObject();
 
-	void SetPosition(Vector2f);
+	virtual void SetPosition(Vector2f);
 	void SetMove(Vector2f, float, float);
 	void ExecuteMove(float);
 };
@@ -55,8 +55,11 @@ class PhysicalObject : public GameObject
 public:
 	AnimationClip** animations;
 	bool ready_to_action;
+
 	// 0 - nic, 1 - gracz, 2 - pocisk gracza, 3 - pocisk wroga, 4 - wróg
 	int collision_marker;
+	FloatRect* collider;
+	Vector2f offset;
 
 private:
 
@@ -66,9 +69,14 @@ private:
 
 public:
 	PhysicalObject(Vector2f v, Sprite* s, bool b, Vector2i);
+
+	void create_collider(Vector2f _offset, Vector2f _size);
 	void collide(PhysicalObject* physical_object);
+
 	void change_sprite(int);
 	void call_animation(int);
+
+	void SetPosition(Vector2f);
 };
 
 // pocisk
