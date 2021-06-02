@@ -21,13 +21,13 @@ int main()
 	Texture t, t1;
 	t.loadFromFile("../Assets/Player-Spritesheet.png");
 	t1.loadFromFile("../Assets/PlayerShip.png");
-	player = new Player((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 375), generate_sprite(&t, Vector2f(50.f, 50.f)), false, Vector2i(100, 100));
+	player = new Player((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 375), generate_sprite(&t, Vector2f(40.f, 40.f)), false, Vector2i(100, 100));
 	player->animations = new AnimationClip*[2];
 
 	player->animations[0] = new AnimationClip(0, 4, 10, player, true);
 	player->animations[1] = new AnimationClip(5, 4, 18, player, false);
 
-	player->create_collider(Vector2f(0.f, 15.f), Vector2f(40.f, 40.f));
+	player->create_collider(Vector2f(10.f, 23.f), Vector2f(36.f, 40.f));
 
 	Enemy* e = new Enemy((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, 375), generate_sprite(&t1), false, Vector2i(50, 50));
 

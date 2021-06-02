@@ -41,9 +41,11 @@ public:
 	GameObject(Vector2f, Sprite*, bool);
 	~GameObject();
 
-	virtual void SetPosition(Vector2f);
-	void SetMove(Vector2f, float, float);
-	void ExecuteMove(float);
+	virtual void set_position(Vector2f);
+	virtual Vector2f handle_borders(Vector2f);
+
+	void set_move(Vector2f, float, float);
+	void execute_move(float);
 };
 
 Vector2i operator*(Vector2i, Vector2i);
@@ -76,7 +78,7 @@ public:
 	void change_sprite(int);
 	void call_animation(int);
 
-	void SetPosition(Vector2f);
+	void set_position(Vector2f);
 };
 
 // pocisk
@@ -120,6 +122,8 @@ class Player : public Character
 {
 public:
 	Player(Vector2f v, Sprite* s, bool b, Vector2i);
+
+	Vector2f handle_borders(Vector2f);
 };
 
 // postaæ z cechami typowymi dla wroga
@@ -141,7 +145,7 @@ private:
 	bool reset;
 
 	Callable* call;
-
+	
 	size_t timers_index;
 
 public:

@@ -13,7 +13,7 @@ void Engine::update(float dt)
 
 	for (auto target : objects)
 	{
-		target->ExecuteMove(dt);
+		target->execute_move(dt);
 	}
 
 	for (int i = 0; i < phy_objects.size(); i++)
@@ -32,7 +32,7 @@ void Engine::update(float dt)
 		window->draw(*target->sprite);
 	}
 
-	/*
+	
 	for (auto target : phy_objects)
 	{
 
@@ -40,11 +40,11 @@ void Engine::update(float dt)
 		r.setSize(Vector2f(target->collider->width, target->collider->height));
 		r.setOrigin(Vector2f(target->collider->width, target->collider->height) / 2.f);
 		r.setPosition(Vector2f(target->collider->left, target->collider->top));
-		r.setFillColor(Color::Green);
+		r.setFillColor(Color::Color(0, 255, 0, 100));
 
 		window->draw(r);
 	}
-	*/
+	
 
 	window->display();
 }

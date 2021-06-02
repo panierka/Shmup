@@ -41,7 +41,7 @@ void InputHandler::check_input()
 		a->Perform();
 	}
 
-	player->SetMove(next_move, PLAYER_SPEED, 1.f);
+	player->set_move(next_move, PLAYER_SPEED, 1.f);
 }
 
 InputHandler::InputHandler(Player* _player)

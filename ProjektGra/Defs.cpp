@@ -40,7 +40,7 @@ Sprite* generate_sprite(Texture* _tex)
 GameObject::GameObject(Vector2f v, Sprite* s, bool b) :
 	sprite(s), continuous(b)
 {
-	SetPosition(v);
+	set_position(v);
 	Engine::objects.push_back(this);
 }
 
@@ -50,14 +50,19 @@ GameObject::~GameObject()
 }
 
 // odpowiednia pozycja dla obiektu w logice i sprite'a
-void GameObject::SetPosition(Vector2f _pos)
+void GameObject::set_position(Vector2f _pos)
 {
-	position = _pos;
-	sprite->setPosition(_pos);
+	position = handle_borders(_pos);
+	sprite->setPosition(position);
+}
+
+Vector2f GameObject::handle_borders(Vector2f _pos)
+{
+	return _pos;
 }
 
 // ruch na podstawie kierunku, dystansu i czasu na jego przebycie
-void GameObject::SetMove(Vector2f _direction, float _distance, float _time)
+void GameObject::set_move(Vector2f _direction, float _distance, float _time)
 {
 	// y *= -1, ¿eby by³o zgodne z tradycyjnym uk³adem wspó³rzêdnych
 	_direction.y *= -1;
@@ -67,7 +72,7 @@ void GameObject::SetMove(Vector2f _direction, float _distance, float _time)
 }
 
 // wykonanie siê ruchu
-void GameObject::ExecuteMove(float _deltaT)
+void GameObject::execute_move(float _deltaT)
 {
 	if (magnitude(direction) == 0)
 	{
@@ -75,7 +80,7 @@ void GameObject::ExecuteMove(float _deltaT)
 	}
 
 	// nastêpuje tu równie¿ normalizowanie kierunku ruchu
-	SetPosition(position + _deltaT * direction * distance /( travel_time * magnitude(direction)));
+	set_position(position + _deltaT * direction * distance /( travel_time * magnitude(direction)));
 
 	if(!continuous)
 	{ 
@@ -196,10 +201,10 @@ void PhysicalObject::call_animation(int j)
 	animations[j]->call();
 }
 
-void PhysicalObject::SetPosition(Vector2f _position)
+void PhysicalObject::set_position(Vector2f _position)
 {
-	GameObject::SetPosition(_position);
-
+	GameObject::set_position(_position);
+	
 	collider->left = position.x + offset.x;
 	collider->top = position.y + offset.y;  // ???????????????????
 }
@@ -213,6 +218,23 @@ Player::Player(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
 	collision_marker = 1;
 	facing_direction_y = 1;
 	projectile_collision_mask = 2;
+}
+
+Vector2f Player::handle_borders(Vector2f _pos)
+{
+	float _off0 = collider->width / 2.f - offset.x;
+	float _off = collider->width / 2.f + offset.x;
+
+	if (_pos.x - _off0 < 0)
+	{
+		_pos.x = _off0;
+	}
+	else if (_pos.x + _off > SCREEN_SIZE.x)
+	{
+		_pos.x = -_off + SCREEN_SIZE.x;
+	}
+
+	return _pos;
 }
 
 void Character::take_hit(int _amount)
@@ -279,5 +301,5 @@ Projectile::Projectile(Vector2f pos, Sprite* s, Vector2i _frame, int _damage, fl
 	PhysicalObject(pos, s, true, _frame), damage(_damage)
 {
 	double proper_angle = _rotation / 57.3;
-	SetMove(Vector2f(-_dir * sin(proper_angle), _dir * cos(proper_angle)), 1.f, _spd_mod * base_velocity);
+	set_move(Vector2f(-_dir * sin(proper_angle), _dir * cos(proper_angle)), 1.f, _spd_mod * base_velocity);
 }
