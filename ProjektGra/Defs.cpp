@@ -24,13 +24,17 @@ int random_number(int _min, int _max)
 	return distribution(generator);
 }
 
-Sprite* generate_sprite(Texture* _tex)
+Sprite* generate_sprite(Texture* _tex, Vector2f _origin)
 {
 	Sprite* _s = new Sprite(*_tex);
-	Vector2u _half = _tex->getSize() / 2u;
-	_s->setOrigin((Vector2f)_half);
+	_s->setOrigin(_origin);
 
 	return _s;
+}
+
+Sprite* generate_sprite(Texture* _tex)
+{
+	return generate_sprite(_tex, static_cast<Vector2f>(_tex->getSize() / 2u));
 }
 
 GameObject::GameObject(Vector2f v, Sprite* s, bool b) :
@@ -174,8 +178,8 @@ PhysicalObject::PhysicalObject(Vector2f v, Sprite* s, bool b, Vector2i _frame_si
 
 void PhysicalObject::create_collider(Vector2f _offset, Vector2f _size)
 {
-	collider = new FloatRect(Vector2f(0, 0), _size);
 	offset = _offset;
+	collider = new FloatRect(position + offset, _size);
 }
 
 void PhysicalObject::change_sprite(int _index)
@@ -197,7 +201,7 @@ void PhysicalObject::SetPosition(Vector2f _position)
 	GameObject::SetPosition(_position);
 
 	collider->left = position.x + offset.x;
-	collider->top = position.y - offset.y;  // ???????????????????
+	collider->top = position.y + offset.y;  // ???????????????????
 }
 
 Character::Character(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):

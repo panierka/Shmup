@@ -162,6 +162,7 @@ void print(string);
 int random_number(int min, int max);
 
 // stworzenie sprite'a i wyœrodkowanie pivotu
+Sprite* generate_sprite(Texture* _tex, Vector2f _origin);
 Sprite* generate_sprite(Texture*);
 
 // globalny przeskok w czasomierzach

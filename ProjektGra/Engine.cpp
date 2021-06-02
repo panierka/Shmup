@@ -32,5 +32,19 @@ void Engine::update(float dt)
 		window->draw(*target->sprite);
 	}
 
+	/*
+	for (auto target : phy_objects)
+	{
+
+		RectangleShape r;
+		r.setSize(Vector2f(target->collider->width, target->collider->height));
+		r.setOrigin(Vector2f(target->collider->width, target->collider->height) / 2.f);
+		r.setPosition(Vector2f(target->collider->left, target->collider->top));
+		r.setFillColor(Color::Green);
+
+		window->draw(r);
+	}
+	*/
+
 	window->display();
 }
