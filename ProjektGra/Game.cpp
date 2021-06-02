@@ -1,5 +1,6 @@
 #include"Classes.h"
 #include"KeyAction.h"
+#include<iostream>
 
 Player* player;
 Player* player1;
@@ -37,8 +38,6 @@ int main()
 	float _frame_time = clock.getElapsedTime().asSeconds();
 
 	window.setFramerateLimit(60);
-
-	print(to_string(Engine::phy_objects[0]->collision_marker));
 
 	// pêtla programu
 	while (window.isOpen())

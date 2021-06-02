@@ -57,7 +57,6 @@ public:
 	bool ready_to_action;
 	// 0 - nic, 1 - gracz, 2 - pocisk gracza, 3 - pocisk wroga, 4 - wróg
 	int collision_marker;
-	PhysicalObject** my_pointer;
 
 private:
 
@@ -105,15 +104,12 @@ public:
 	virtual void death();
 
 protected:
-	void Shoot(int _sprite_index, Vector2i _frame, int _damage, float _start_angle, float _angle_diff, int _bullets_count);
+	void shoot(int _sprite_index, Vector2i _frame, int _damage, float _start_angle, float _angle_diff, int _bullets_count);
 };
 
 // postaæ z cechami typowymi dla gracza
 class Player : public Character
 {
-public:
-	int collision_marker;
-
 public:
 	Player(Vector2f v, Sprite* s, bool b, Vector2i);
 };
@@ -121,9 +117,6 @@ public:
 // postaæ z cechami typowymi dla wroga
 class Enemy : public Character
 {
-public:
-	int collision_marker;
-
 public:
 	Enemy(Vector2f pos, Sprite* s, bool b, Vector2i frame);
 };

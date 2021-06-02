@@ -168,6 +168,8 @@ PhysicalObject::PhysicalObject(Vector2f v, Sprite* s, bool b, Vector2i _frame_si
 	sprite->setTextureRect(IntRect(Vector2i(0, 0), frame_size));
 
 	// inicjowanie animacji?
+
+	Engine::phy_objects.push_back(this);
 }
 
 void PhysicalObject::change_sprite(int _index)
@@ -188,12 +190,11 @@ Character::Character(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
 	PhysicalObject(v, s, b, _frame_size) {}
 
 Player::Player(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
-	Character(v, s, b, _frame_size), collision_marker(1) 
+	Character(v, s, b, _frame_size)
 {
+	collision_marker = 1;
 	facing_direction_y = 1;
 	projectile_collision_mask = 2;
-
-	Engine::phy_objects.push_back(this);
 }
 
 void Character::take_hit(int _amount)
@@ -208,10 +209,10 @@ void Character::take_hit(int _amount)
 
 void Character::death()
 {
-
+	
 }
 
-void Character::Shoot(int _sprite_index, Vector2i _frame, int _damage, float _start_angle, float _angle_diff, int _bullets_count)
+void Character::shoot(int _sprite_index, Vector2i _frame, int _damage, float _start_angle, float _angle_diff, int _bullets_count)
 {
 	for (int i = 0; i < _bullets_count; i++)
 	{
@@ -247,13 +248,11 @@ void PhysicalObject::collide(PhysicalObject *physical_object)
 }
 
 Enemy::Enemy(Vector2f pos, Sprite* s, bool b, Vector2i frame):
-	Character(pos, s, b, frame), collision_marker(4)
+	Character(pos, s, b, frame)
 {
+	collision_marker = 4;
 	facing_direction_y = -1;
 	projectile_collision_mask = 3;
-
-	print(to_string(this->collision_marker));
-	Engine::phy_objects.push_back(this);
 }
 
 Projectile::Projectile(Vector2f pos, Sprite* s, Vector2i _frame, int _damage, float _rotation, float _spd_mod, int _coll_mask, int _dir):
