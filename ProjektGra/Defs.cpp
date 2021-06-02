@@ -219,14 +219,14 @@ void Character::Shoot(int _sprite_index, Vector2i _frame, int _damage, float _st
 	}
 }
 
-void PhysicalObject::collide(PhysicalObject &physical_object)
+void PhysicalObject::collide(PhysicalObject *physical_object)
 {
 	FloatRect participant1 = sprite->getGlobalBounds();
-	FloatRect participant2 = physical_object.sprite->getGlobalBounds();
+	FloatRect participant2 = physical_object->sprite->getGlobalBounds();
 
 	if (participant1.intersects(participant2))
 	{
-		switch (physical_object.collision_marker)
+		switch (physical_object->collision_marker)
 		{
 		case (1): // gracz
 			print("kolizja");

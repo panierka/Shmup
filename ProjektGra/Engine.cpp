@@ -18,7 +18,16 @@ void Engine::update(float dt)
 		target->ExecuteMove(dt);
 		window->draw(*target->sprite);
 	}
-
+	for (int i = 0; i < phy_objects.size(); i++)
+	{
+		for (int j = 0; j < phy_objects.size(); j++)
+		{
+			if (i != j)
+			{
+				phy_objects[i]->collide(phy_objects[j]);
+			}
+		}
+	}
 	window->display();
 
 

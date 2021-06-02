@@ -66,7 +66,7 @@ private:
 
 public:
 	PhysicalObject(Vector2f v, Sprite* s, bool b, Vector2i);
-	void collide(PhysicalObject& physical_object);
+	void collide(PhysicalObject* physical_object);
 	void change_sprite(int);
 	void call_animation(int);
 };
