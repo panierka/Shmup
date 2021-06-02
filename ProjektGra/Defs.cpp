@@ -167,8 +167,6 @@ PhysicalObject::PhysicalObject(Vector2f v, Sprite* s, bool b, Vector2i _frame_si
 
 	sprite->setTextureRect(IntRect(Vector2i(0, 0), frame_size));
 
-	Engine::phy_objects.push_back(this);
-	
 	// inicjowanie animacji?
 }
 
@@ -194,6 +192,8 @@ Player::Player(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
 {
 	facing_direction_y = 1;
 	projectile_collision_mask = 2;
+
+	Engine::phy_objects.push_back(this);
 }
 
 void Character::take_hit(int _amount)
@@ -240,6 +240,8 @@ void PhysicalObject::collide(PhysicalObject *physical_object)
 		case (4): // wróg
 			print("kolizja");
 			break;
+		default:
+			break;
 		}
 	}
 }
@@ -249,6 +251,9 @@ Enemy::Enemy(Vector2f pos, Sprite* s, bool b, Vector2i frame):
 {
 	facing_direction_y = -1;
 	projectile_collision_mask = 3;
+
+	print(to_string(this->collision_marker));
+	Engine::phy_objects.push_back(this);
 }
 
 Projectile::Projectile(Vector2f pos, Sprite* s, Vector2i _frame, int _damage, float _rotation, float _spd_mod, int _coll_mask, int _dir):

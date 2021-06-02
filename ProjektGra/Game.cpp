@@ -26,8 +26,8 @@ int main()
 	player->animations[0] = new AnimationClip(0, 4, 10, player, true);
 	player->animations[1] = new AnimationClip(5, 4, 18, player, false);
 
-	Enemy* e = new Enemy((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 450), generate_sprite(&t), false, Vector2i(100, 100));
-		
+	Enemy* e = new Enemy((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, 450), generate_sprite(&t), false, Vector2i(100, 100));
+
 	// inicjalizacja dodatkowych komponentów
 	InputHandler input(player);
 	Engine engine(&window);
@@ -37,6 +37,8 @@ int main()
 	float _frame_time = clock.getElapsedTime().asSeconds();
 
 	window.setFramerateLimit(60);
+
+	print(to_string(Engine::phy_objects[0]->collision_marker));
 
 	// pêtla programu
 	while (window.isOpen())
@@ -50,7 +52,7 @@ int main()
 				window.close();
 			}
 		}
-		
+
 		// dynamiczne kalkulowanie realnego delta t miêdzy kolejnymi klatkami z "wyg³adzaniem"
 		_frame_time = clock.restart().asSeconds();
 

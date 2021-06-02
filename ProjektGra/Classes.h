@@ -57,6 +57,7 @@ public:
 	bool ready_to_action;
 	// 0 - nic, 1 - gracz, 2 - pocisk gracza, 3 - pocisk wroga, 4 - wróg
 	int collision_marker;
+	PhysicalObject** my_pointer;
 
 private:
 
