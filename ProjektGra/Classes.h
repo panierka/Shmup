@@ -58,7 +58,7 @@ Vector2i operator/(Vector2i, Vector2i);
 class PhysicalObject : public GameObject
 {
 public:
-	AnimationClip** animations;
+	std::vector<AnimationClip*> animations{};
 	bool ready_to_action;
 
 	// 0 - nic, 1 - gracz, 2 - pocisk gracza, 3 - pocisk wroga, 4 - wróg

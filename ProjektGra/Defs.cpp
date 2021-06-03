@@ -150,6 +150,8 @@ void Timer::stop()
 Timer::~Timer()
 {
 	timers.erase(std::remove(timers.begin(), timers.end(), this));
+	
+	print("usunieto timer");
 }
 
 void tick_timers(float _deltaT)
@@ -191,7 +193,13 @@ PhysicalObject::~PhysicalObject()
 	Engine::phy_objects.erase(std::remove(Engine::phy_objects.begin(), Engine::phy_objects.end(), this));
 
 	delete collider;
-	delete[] animations;
+	
+	for (auto e : animations)
+	{
+		delete e;
+	}
+
+	animations.clear();
 }
 
 void PhysicalObject::create_collider(Vector2f _offset, Vector2f _size)
@@ -274,9 +282,7 @@ void Character::shoot(int _sprite_index, Vector2i _frame, int _damage, float _st
 
 		cout << projectile_collision_mask << endl;
 
-		p->animations = new AnimationClip * [1];
-
-		p->animations[0] = new AnimationClip(0, 4, 24, p, true);
+		p->animations.push_back(new AnimationClip(0, 4, 24, p, true));
 
 		p->create_collider(Vector2f(0.f, 0.f), Vector2f(_frame));
 	}
