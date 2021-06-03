@@ -46,7 +46,11 @@ GameObject::GameObject(Vector2f v, Sprite* s, bool b) :
 
 GameObject::~GameObject()
 {
+	print("DTOR");
 
+	Engine::objects.erase(std::remove(Engine::objects.begin(), Engine::objects.end(), this));
+
+	delete sprite;
 }
 
 // odpowiednia pozycja dla obiektu w logice i sprite'a
@@ -181,6 +185,16 @@ PhysicalObject::PhysicalObject(Vector2f v, Sprite* s, bool b, Vector2i _frame_si
 	Engine::phy_objects.push_back(this);
 }
 
+PhysicalObject::~PhysicalObject()
+{
+	print("PO: DTOR");
+
+	Engine::phy_objects.erase(std::remove(Engine::phy_objects.begin(), Engine::phy_objects.end(), this));
+
+	delete collider;
+	delete[] animations;
+}
+
 void PhysicalObject::create_collider(Vector2f _offset, Vector2f _size)
 {
 	offset = _offset;
@@ -218,6 +232,7 @@ Player::Player(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
 	collision_marker = 1;
 	facing_direction_y = 1;
 	projectile_collision_mask = 2;
+	bullet_velocity_mod = 1.5f;
 }
 
 Vector2f Player::handle_borders(Vector2f _pos)
@@ -256,7 +271,15 @@ void Character::shoot(int _sprite_index, Vector2i _frame, int _damage, float _st
 {
 	for (int i = 0; i < _bullets_count; i++)
 	{
-		Projectile* p = new Projectile(position, generate_sprite(&textures[_sprite_index]), _frame, _damage, _start_angle + i * _angle_diff, bullet_velocity_mod, projectile_collision_mask, facing_direction_y);
+		Projectile* p = new Projectile(position, generate_sprite(textures[_sprite_index], Vector2f(12.f, 25.f)), _frame, _damage, _start_angle + i * _angle_diff, bullet_velocity_mod, projectile_collision_mask, facing_direction_y);
+
+		cout << projectile_collision_mask << endl;
+
+		p->animations = new AnimationClip * [1];
+
+		p->animations[0] = new AnimationClip(0, 4, 24, p, true);
+
+		p->create_collider(Vector2f(0.f, 0.f), Vector2f(_frame));
 	}
 }
 
@@ -272,16 +295,16 @@ void PhysicalObject::collide(PhysicalObject *coll)
 		switch (coll->collision_marker)
 		{
 		case (1): // gracz
-			print("kolizja");
+			print("kolizja - gracz");
 			break;
 		case (2): // pocisk gracza
-			print("kolizja");
+			print("kolizja - pocisk gracza");
 			break;
 		case (3): // pocisk wroga
-			print("kolizja");
+			print("kolizja - pocisk przeciwnika");
 			break;
 		case (4): // wróg
-			print("kolizja");
+			print("kolizja - przeciwnik");
 			break;
 		default:
 			break;
@@ -297,9 +320,22 @@ Enemy::Enemy(Vector2f pos, Sprite* s, bool b, Vector2i frame):
 	projectile_collision_mask = 3;
 }
 
-Projectile::Projectile(Vector2f pos, Sprite* s, Vector2i _frame, int _damage, float _rotation, float _spd_mod, int _coll_mask, int _dir):
+Projectile::Projectile(Vector2f pos, Sprite* s, Vector2i _frame, int _damage, float _rotation, float _spd_mod, int _coll_mask, int _dir) :
 	PhysicalObject(pos, s, true, _frame), damage(_damage)
 {
+	collision_marker = _coll_mask;
 	double proper_angle = _rotation / 57.3;
-	set_move(Vector2f(-_dir * sin(proper_angle), _dir * cos(proper_angle)), 1.f, _spd_mod * base_velocity);
+	set_move(Vector2f(-_dir * sin(proper_angle), _dir * cos(proper_angle)), _spd_mod * base_velocity, 1.f);
+}
+
+Vector2f Projectile::handle_borders(Vector2f _pos)
+{
+	if (-_pos.x > BULLET_BOUNDS_SIZE.x || -_pos.y > BULLET_BOUNDS_SIZE.y || _pos.x > SCREEN_SIZE.x + BULLET_BOUNDS_SIZE.x || _pos.y > SCREEN_SIZE.y + BULLET_BOUNDS_SIZE.y)
+	{
+		print("DEATH DEATH DEATH");
+		//delete this;
+		PhysicalObject::~PhysicalObject();
+	}
+
+	return _pos;
 }

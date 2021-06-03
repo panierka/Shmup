@@ -5,6 +5,8 @@
 #include<random>
 #include "Engine.h"
 #include "AnimationClip.h"
+#include<algorithm>
+
 using namespace sf;
 using namespace std;
 
@@ -16,6 +18,7 @@ class Engine;
 // "globalne"
 
 const Vector2u SCREEN_SIZE(700u, 950u); // ekran w pikselach
+const Vector2u BULLET_BOUNDS_SIZE(50u, 50u);
 const float ONE_UNIT_SIZE = 50.f; // jedna jednostka rozmiaru
 
 //
@@ -71,6 +74,7 @@ private:
 
 public:
 	PhysicalObject(Vector2f v, Sprite* s, bool b, Vector2i);
+	~PhysicalObject();
 
 	void create_collider(Vector2f _offset, Vector2f _size);
 	void collide(PhysicalObject* physical_object);
@@ -91,6 +95,7 @@ private:
 	
 public:
 	Projectile(Vector2f pos, Sprite* s, Vector2i _frame, int _damage, float _rotation, float _spd_mod, int _coll_mask, int _dir);
+	Vector2f handle_borders(Vector2f);
 };
 
 // o. fiz. ze zdrowiem i zdolnoœci¹ strzelania 
@@ -99,10 +104,10 @@ class Character : public PhysicalObject
 private:
 	int max_health;
 	int current_health;
-	Texture* textures;
 
 public:
 	float bullet_velocity_mod = 1.f;
+	Texture** textures;
 
 protected:
 	int facing_direction_y{};
@@ -112,8 +117,6 @@ public:
 	Character(Vector2f v, Sprite* s, bool b, Vector2i);
 	void take_hit(int _amount);
 	virtual void death();
-
-protected:
 	void shoot(int _sprite_index, Vector2i _frame, int _damage, float _start_angle, float _angle_diff, int _bullets_count);
 };
 
