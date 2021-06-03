@@ -30,6 +30,7 @@ public:
 
 public:
 	AnimationClip(int s_i, int f, float _fps, PhysicalObject*, bool);
+	~AnimationClip();
 
 	void call();
 };

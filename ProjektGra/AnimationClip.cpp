@@ -32,6 +32,12 @@ void AnimationClip::call()
 	timer->start();
 }
 
+AnimationClip::~AnimationClip()
+{
+	obj = nullptr;
+	delete timer;
+}
+
 AnimationClip::AnimationClip(int s_i, int f, float _fps, PhysicalObject* o, bool _idle):
 	starting_index(s_i), frames(f), current_frame(0), obj(o), idle(_idle)
 {

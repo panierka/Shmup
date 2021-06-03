@@ -114,7 +114,6 @@ void Timer::tick(float _deltaT)
 
 		if (!reset)
 		{
-			timers.erase(timers.begin() + timers_index);
 			delete this;
 		}
 	}
@@ -150,7 +149,7 @@ void Timer::stop()
 
 Timer::~Timer()
 {
-
+	timers.erase(std::remove(timers.begin(), timers.end(), this));
 }
 
 void tick_timers(float _deltaT)
