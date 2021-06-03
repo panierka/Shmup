@@ -3,12 +3,6 @@
 #include<iostream>
 
 Player* player;
-Player* player1;
-
-void a()
-{
-
-}
 
 int main()
 {
