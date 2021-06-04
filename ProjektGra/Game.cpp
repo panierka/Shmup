@@ -23,9 +23,7 @@ int main()
 
 	player->create_collider(Vector2f(0.f, 14.f), Vector2f(36.f, 40.f));
 
-	player->textures = new Texture * [1];
-
-	player->textures[0] = new Texture(t2);
+	player->textures.push_back(new Texture(t2));
 
 	Enemy* e = new Enemy((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(&t1, Vector2f(62.f, 62.f)), false, Vector2i(125, 125));
 

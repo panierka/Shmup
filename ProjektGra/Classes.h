@@ -14,6 +14,7 @@ class Callable;
 class Timer;
 class AnimationClip;
 class Engine;
+class BlinkEffect;
 
 // "globalne"
 
@@ -49,6 +50,8 @@ public:
 
 	void set_move(Vector2f, float, float);
 	void execute_move(float);
+
+	virtual void render(RenderWindow*);
 };
 
 Vector2i operator*(Vector2i, Vector2i);
@@ -107,7 +110,8 @@ private:
 
 public:
 	float bullet_velocity_mod = 1.f;
-	Texture** textures;
+	std::vector<Texture*> textures;
+	BlinkEffect* effect;
 
 protected:
 	int facing_direction_y{};
@@ -115,9 +119,13 @@ protected:
 
 public:
 	Character(Vector2f v, Sprite* s, bool b, Vector2i);
+	~Character();
+
 	void take_hit(int _amount);
 	virtual void death();
 	void shoot(int _sprite_index, Vector2i _frame, int _damage, float _start_angle, float _angle_diff, int _bullets_count);
+
+	virtual void render(RenderWindow*);
 };
 
 // postaæ z cechami typowymi dla gracza

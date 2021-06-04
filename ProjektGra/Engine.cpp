@@ -1,15 +1,20 @@
 #include "Engine.h"
 
+Shader Engine::shader{};
 
 Engine::Engine(RenderWindow* w) :
-	window(w) {}
+	window(w) 
+{
+	shader.loadFromFile("../Assets/effect_shader.frag", Shader::Fragment);
+	shader.setUniform("flashColor", Glsl::Vec4(1, 1, 1, 1));
+}
 
 std::vector<GameObject*> Engine::objects{};
 std::vector<PhysicalObject*> Engine::phy_objects{};
 
 void Engine::update(float dt)
 {
-	window->clear(Color(129, 57, 42, 255));
+	window->clear(Color(73, 84, 123, 255));
 
 	for (auto target : objects)
 	{
@@ -29,7 +34,7 @@ void Engine::update(float dt)
 
 	for (auto target : objects)
 	{
-		window->draw(*target->sprite);
+		target->render(window);
 	}
 
 	//

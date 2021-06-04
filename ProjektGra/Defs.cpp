@@ -97,6 +97,11 @@ void GameObject::execute_move(float _deltaT)
 	}
 }
 
+void GameObject::render(RenderWindow* w)
+{
+	w->draw(*sprite);
+}
+
 
 void Timer::tick(float _deltaT)
 {
@@ -231,7 +236,22 @@ void PhysicalObject::set_position(Vector2f _position)
 }
 
 Character::Character(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
-	PhysicalObject(v, s, b, _frame_size) {}
+	PhysicalObject(v, s, b, _frame_size) 
+{
+	effect = new BlinkEffect(this);
+}
+
+Character::~Character()
+{
+	delete effect;
+
+	for (auto t : textures)
+	{
+		delete t;
+	}
+
+	textures.clear();
+}
 
 Player::Player(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
 	Character(v, s, b, _frame_size)
@@ -286,6 +306,13 @@ void Character::shoot(int _sprite_index, Vector2i _frame, int _damage, float _st
 
 		p->create_collider(Vector2f(0.f, 0.f), Vector2f(_frame));
 	}
+}
+
+void Character::render(RenderWindow* w)
+{
+	Engine::shader.setUniform("tint", effect->tint_value);
+
+	w->draw(*sprite, &Engine::shader);
 }
 
 

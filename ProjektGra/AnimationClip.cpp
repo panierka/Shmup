@@ -43,3 +43,32 @@ AnimationClip::AnimationClip(int s_i, int f, float _fps, PhysicalObject* o, bool
 {
 	timer = new Timer(1 / _fps, this, true, !_idle);
 }
+
+BlinkEffect::BlinkEffect(Character* g) :
+	tint_value(0.f)
+{
+	g->effect = this;
+	timer = new Timer(0.1f, this, false, false);
+}
+
+BlinkEffect::~BlinkEffect()
+{
+	delete timer;
+}
+
+void BlinkEffect::activate()
+{
+	timer->start();
+	tint_value = 1.f;
+}
+
+void BlinkEffect::function()
+{
+	timer->stop();
+	tint_value = 0.f;
+}
+
+Callable::~Callable()
+{
+	
+}

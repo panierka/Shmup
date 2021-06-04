@@ -3,11 +3,27 @@
 
 class Timer;
 class PhysicalObject;
+class Character;
 
 class Callable
 {
 public:
 	virtual void function() = 0;
+
+	virtual ~Callable();
+};
+
+class BlinkEffect : public Callable
+{
+public:
+	Timer* timer;
+	float tint_value;
+
+	BlinkEffect(Character*);
+	~BlinkEffect();
+	void activate();
+
+	virtual void function();
 };
 
 class AnimationClip : public Callable
