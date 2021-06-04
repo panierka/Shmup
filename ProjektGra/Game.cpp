@@ -41,8 +41,12 @@ int main()
 	Clock clock;
 	float _frame_time = clock.getElapsedTime().asSeconds();
 
+	Music music;
+	music.openFromFile("../Assets/Sounds/Soundtrack.wav");
+	music.setLoop(true);
+	music.setVolume(10);
+	music.play();
 	window.setFramerateLimit(60);
-
 	// pêtla programu
 	while (window.isOpen())
 	{
@@ -54,8 +58,8 @@ int main()
 			{
 				window.close();
 			}
-		}
 
+		}
 		// dynamiczne kalkulowanie realnego delta t miêdzy kolejnymi klatkami z "wyg³adzaniem"
 		_frame_time = clock.restart().asSeconds();
 
@@ -68,6 +72,7 @@ int main()
 
 		// wykonanie siê obliczeñ czasomierzy
 		tick_timers(_frame_time);
+
 	}
 
 	for (std::size_t i = 0; i < Engine::objects.size(); i++)
