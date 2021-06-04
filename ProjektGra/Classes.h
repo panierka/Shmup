@@ -80,7 +80,7 @@ public:
 	~PhysicalObject();
 
 	void create_collider(Vector2f _offset, Vector2f _size);
-	void collide(PhysicalObject* physical_object);
+	virtual void collide(PhysicalObject* physical_object);
 
 	void change_sprite(int);
 	void call_animation(int);
@@ -93,12 +93,15 @@ class Projectile : public PhysicalObject
 {
 private:
 	int damage;
+	int target_collision_mask;
 	
 	const float base_velocity = 10.f;
 	
 public:
 	Projectile(Vector2f pos, Sprite* s, Vector2i _frame, int _damage, float _rotation, float _spd_mod, int _coll_mask, int _dir);
 	Vector2f handle_borders(Vector2f);
+
+	virtual void collide(PhysicalObject* coll);
 };
 
 // o. fiz. ze zdrowiem i zdolnoœci¹ strzelania 
@@ -142,6 +145,8 @@ class Enemy : public Character
 {
 public:
 	Enemy(Vector2f pos, Sprite* s, bool b, Vector2i frame);
+
+	virtual void collide(PhysicalObject* coll);
 };
 
 // pomocniczy czasomierz, do aktywowania periodycznych zdarzeñ

@@ -283,6 +283,10 @@ void Character::take_hit(int _amount)
 {
 	current_health -= _amount;
 
+	effect->activate();
+
+	return;
+
 	if (current_health <= 0)
 	{
 		death();
@@ -299,8 +303,6 @@ void Character::shoot(int _sprite_index, Vector2i _frame, int _damage, float _st
 	for (int i = 0; i < _bullets_count; i++)
 	{
 		Projectile* p = new Projectile(position, generate_sprite(textures[_sprite_index], Vector2f(12.f, 25.f)), _frame, _damage, _start_angle + i * _angle_diff, bullet_velocity_mod, projectile_collision_mask, facing_direction_y);
-
-		cout << projectile_collision_mask << endl;
 
 		p->animations.push_back(new AnimationClip(0, 4, 24, p, true));
 
@@ -352,12 +354,38 @@ Enemy::Enemy(Vector2f pos, Sprite* s, bool b, Vector2i frame):
 	projectile_collision_mask = 3;
 }
 
+void Enemy::collide(PhysicalObject* coll)
+{
+	if (collider->intersects(*coll->collider))
+	{
+		switch (coll->collision_marker)
+		{
+		case (1): // gracz
+			print("kolizja - gracz");
+			break;
+		case (2): // pocisk gracza
+			print("kolizja - pocisk gracza");
+			break;
+		case (3): // pocisk wroga
+			print("kolizja - pocisk przeciwnika");
+			break;
+		case (4): // wróg
+			print("kolizja - przeciwnik");
+			break;
+		default:
+			break;
+		}
+	}
+}
+
 Projectile::Projectile(Vector2f pos, Sprite* s, Vector2i _frame, int _damage, float _rotation, float _spd_mod, int _coll_mask, int _dir) :
 	PhysicalObject(pos, s, true, _frame), damage(_damage)
 {
 	collision_marker = _coll_mask;
 	double proper_angle = _rotation / 57.3;
 	set_move(Vector2f(-_dir * sin(proper_angle), _dir * cos(proper_angle)), _spd_mod * base_velocity, 1.f);
+
+	target_collision_mask = _coll_mask == 2 ? 4 : 1;
 }
 
 Vector2f Projectile::handle_borders(Vector2f _pos)
@@ -370,4 +398,17 @@ Vector2f Projectile::handle_borders(Vector2f _pos)
 	}
 
 	return _pos;
+}
+
+void Projectile::collide(PhysicalObject* coll)
+{
+	if (collider->intersects(*coll->collider))
+	{
+		if (coll->collision_marker == target_collision_mask)
+		{
+			static_cast<Character*>(coll)->take_hit(damage);
+
+			delete this;
+		}
+	}
 }

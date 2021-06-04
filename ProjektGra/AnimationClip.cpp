@@ -48,7 +48,7 @@ BlinkEffect::BlinkEffect(Character* g) :
 	tint_value(0.f)
 {
 	g->effect = this;
-	timer = new Timer(0.1f, this, false, false);
+	timer = new Timer(0.15f, this, true, false);
 }
 
 BlinkEffect::~BlinkEffect()
@@ -58,14 +58,14 @@ BlinkEffect::~BlinkEffect()
 
 void BlinkEffect::activate()
 {
-	timer->start();
 	tint_value = 1.f;
+	timer->start();
 }
 
 void BlinkEffect::function()
 {
-	timer->stop();
 	tint_value = 0.f;
+	timer->stop();
 }
 
 Callable::~Callable()
