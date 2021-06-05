@@ -469,3 +469,17 @@ void BackgroundMusic::set_volume(int volume_level)
 	volume = volume_level;
 	music->setVolume(volume);
 }
+Sounds::Sounds()
+{
+
+}
+Sounds::~Sounds()
+{
+
+}
+void Sounds::play(string soundname)
+{
+	Sound* sound = new Sound();
+	sound->setBuffer(*buffers[soundname]);
+	sound->play();
+}

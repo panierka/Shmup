@@ -193,6 +193,19 @@ public:
 	void start();
 	void pause();
 };
+
+class Sounds
+{
+public:
+	map<string, SoundBuffer*> buffers;
+private:
+	Sound* sound;
+public:
+	Sounds();
+	~Sounds();
+	void play(string soundname);
+
+};
 // pomocnicza funkcja do szybkiego i sformatowanego wypisywania w konsoli
 void print(string);
 

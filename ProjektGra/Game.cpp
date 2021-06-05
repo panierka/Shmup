@@ -42,8 +42,12 @@ int main()
 	// inicjalizacja zmiennych do kalkulowania czasu miêdzy klatkami
 	Clock clock;
 	float _frame_time = clock.getElapsedTime().asSeconds();
+	Sounds sound1;
+	sound1.buffers["pogchamp"] = new SoundBuffer();
+	sound1.buffers["pogchamp"]->loadFromFile("../Assets/Sounds/Soundtrack.wav");
 
-	BackgroundMusic background;
+	sound1.play("pogchamp");
+	/*BackgroundMusic background;*/
 
 	window.setFramerateLimit(60);
 	// pêtla programu
@@ -71,7 +75,6 @@ int main()
 
 		// wykonanie siê obliczeñ czasomierzy
 		tick_timers(_frame_time);
-
 	}
 
 	for (std::size_t i = 0; i < Engine::objects.size(); i++)
