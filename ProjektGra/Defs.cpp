@@ -314,13 +314,16 @@ void Character::death()
 
 void Character::shoot(int _sprite_index, Vector2i _frame, int _damage, float _start_angle, float _angle_diff, int _bullets_count)
 {
-	for (int i = 0; i < _bullets_count; i++)
+	for (int i = 0; i < _bullets_count; ++i)
 	{
-		Projectile* p = new Projectile(position, generate_sprite(textures[_sprite_index], Vector2f(12.f, 25.f)), _frame, _damage, _start_angle + i * _angle_diff, bullet_velocity_mod, projectile_collision_mask, facing_direction_y);
+		float _angle = _start_angle + i * _angle_diff;
+		Projectile* p = new Projectile(position, generate_sprite(textures[_sprite_index], Vector2f(12.f, 25.f)), _frame, _damage, _angle, bullet_velocity_mod, projectile_collision_mask, facing_direction_y);
 
 		p->animations.push_back(new AnimationClip(0, 4, 24, p, true));
 
 		p->create_collider(Vector2f(0.f, 0.f), Vector2f(_frame));
+
+		p->sprite->setRotation(-_angle);
 	}
 }
 
@@ -415,8 +418,8 @@ Projectile::Projectile(Vector2f pos, Sprite* s, Vector2i _frame, int _damage, fl
 	PhysicalObject(pos, s, true, _frame), damage(_damage)
 {
 	collision_marker = _coll_mask;
-	double proper_angle = _rotation / 57.3;
-	set_move(Vector2f(-_dir * sin(proper_angle), _dir * cos(proper_angle)), _spd_mod * base_velocity, 1.f);
+	float proper_angle = _rotation / 57.3f;
+	set_move(Vector2f(-_dir * sin(proper_angle), _dir * cos(proper_angle)), _spd_mod * base_velocity, 1.f, false);
 
 	target_collision_mask = _coll_mask == 2 ? 4 : 1;
 }
