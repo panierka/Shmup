@@ -42,9 +42,7 @@ int main()
 	Clock clock;
 	float _frame_time = clock.getElapsedTime().asSeconds();
 
-	sound1.buffers["pogchamp"] = new SoundBuffer();
-	sound1.buffers["pogchamp"]->loadFromFile("../Assets/Sounds/Soundtrack.wav");
-	sound1.volume["pogchamp"] = 20;
+	sound1.add_sound("pogchamp", "../Assets/Sounds/Soundtrack.wav", 20);
 
 	//sound1.play_sound("pogchamp");
 	/*BackgroundMusic background;*/

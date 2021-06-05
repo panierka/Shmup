@@ -31,4 +31,5 @@ public:
 	Sounds();
 	~Sounds();
 	void play_sound(string soundname);
+	void add_sound(string soundname, string file_path, int volume);
 };
