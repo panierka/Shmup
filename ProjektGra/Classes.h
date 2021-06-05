@@ -7,6 +7,7 @@
 #include "Engine.h"
 #include "AnimationClip.h"
 #include<algorithm>
+#include "SoundEffects.h"
 
 using namespace sf;
 using namespace std;
@@ -16,7 +17,6 @@ class Timer;
 class AnimationClip;
 class Engine;
 class BlinkEffect;
-
 // "globalne"
 
 const Vector2u SCREEN_SIZE(700u, 950u); // ekran w pikselach
@@ -24,7 +24,7 @@ const Vector2u BULLET_BOUNDS_SIZE(50u, 50u);
 const float ONE_UNIT_SIZE = 50.f; // jedna jednostka rozmiaru
 
 //
-
+Sounds sound1;
 
 // podstawowy obiekt istniej¹cy w grze: porusza siê i ma jak¹œ grafikê
 class GameObject
@@ -181,31 +181,6 @@ public:
 	~Timer();
 };
 
-class BackgroundMusic
-{
-private:
-	int volume = 10;
-	Music* music;
-public:
-	BackgroundMusic();
-	~BackgroundMusic();
-	void set_volume(int volume);
-	void start();
-	void pause();
-};
-
-class Sounds
-{
-public:
-	map<string, SoundBuffer*> buffers;
-private:
-	Sound* sound;
-public:
-	Sounds();
-	~Sounds();
-	void play(string soundname);
-
-};
 // pomocnicza funkcja do szybkiego i sformatowanego wypisywania w konsoli
 void print(string);
 

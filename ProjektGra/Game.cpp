@@ -38,15 +38,13 @@ int main()
 	// inicjalizacja dodatkowych komponentów
 	InputHandler input(player);
 	Engine engine(&window);
-
 	// inicjalizacja zmiennych do kalkulowania czasu miêdzy klatkami
 	Clock clock;
 	float _frame_time = clock.getElapsedTime().asSeconds();
-	Sounds sound1;
 	sound1.buffers["pogchamp"] = new SoundBuffer();
 	sound1.buffers["pogchamp"]->loadFromFile("../Assets/Sounds/Soundtrack.wav");
 
-	sound1.play("pogchamp");
+	sound1.play_sound("pogchamp");
 	/*BackgroundMusic background;*/
 
 	window.setFramerateLimit(60);
