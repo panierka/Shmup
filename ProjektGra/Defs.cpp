@@ -446,6 +446,7 @@ void Projectile::collide(PhysicalObject* coll)
 
 BackgroundMusic::BackgroundMusic()
 {
+	music = new Music();
 	music->openFromFile("../Assets/Sounds/Soundtrack.wav");
 	music->setLoop(true);
 	music->setVolume(volume);
