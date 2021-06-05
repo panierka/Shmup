@@ -74,7 +74,7 @@ void GameObject::set_move(Vector2f _direction, float _distance, float _time)
 void GameObject::set_move(Vector2f _direction, float _distance, float _time, bool norm)
 {
 	// y *= -1, ¿eby by³o zgodne z tradycyjnym uk³adem wspó³rzêdnych
-	_direction.y *= -1;
+	_direction.y *= -1.f;
 	direction = _direction;
 	distance = _distance * ONE_UNIT_SIZE;
 	travel_time = _time;
@@ -85,18 +85,18 @@ void GameObject::set_move(Vector2f _direction, float _distance, float _time, boo
 // wykonanie siê ruchu
 void GameObject::execute_move(float _deltaT)
 {
-	if (magnitude(direction) == 0)
+	float mag = magnitude<float>(direction);
+
+	if (mag == 0)
 	{
 		return;
 	}
 
 	// nastêpuje tu równie¿ normalizowanie kierunku ruchu
 
-	Vector2f _delta = position + _deltaT * direction * distance;
+	float mod = normalize ? (travel_time * mag): 1.f;
 
-	float mod = normalize ? (travel_time * magnitude(direction)) : 1.f;
-
-	set_position(_delta / mod);
+	set_position(position + _deltaT * direction * distance / mod);
 
 	if(!continuous)
 	{ 

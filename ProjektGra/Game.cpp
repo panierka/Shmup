@@ -32,7 +32,7 @@ int main()
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
 
-	e->set_move(Vector2f(1, -0.25f), 2, 1, false);
+	e->set_move(Vector2f(1.f, -0.25f), 2.5f, 1, true);
 
 
 	// inicjalizacja dodatkowych komponentów
