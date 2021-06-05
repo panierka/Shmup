@@ -24,6 +24,7 @@ class Sounds
 {
 public:
 	map<string, SoundBuffer*> buffers;
+	map<string, int> volume;
 private:
 	Sound* sound;
 public:

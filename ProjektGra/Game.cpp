@@ -44,6 +44,7 @@ int main()
 
 	sound1.buffers["pogchamp"] = new SoundBuffer();
 	sound1.buffers["pogchamp"]->loadFromFile("../Assets/Sounds/Soundtrack.wav");
+	sound1.volume["pogchamp"] = 20;
 
 	//sound1.play_sound("pogchamp");
 	/*BackgroundMusic background;*/

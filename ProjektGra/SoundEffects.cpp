@@ -43,5 +43,6 @@ void Sounds::play_sound(string soundname)
 	// ? 
 	Sound* sound = new Sound();
 	sound->setBuffer(*buffers[soundname]);
+	sound->setVolume(volume[soundname]);
 	sound->play();
 }
