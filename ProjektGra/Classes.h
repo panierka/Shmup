@@ -33,14 +33,16 @@ public:
 	Vector2f position;
 	Sprite* sprite;
 
+protected:
+	Vector2f direction;
+
 private:
 	// poruszanie siê
-
-	Vector2f direction;
 	float distance;
 	float travel_time;
 	bool continuous;
 	float time_spent_travelling{};
+	bool normalize;
 
 public:
 	GameObject(Vector2f, Sprite*, bool);
@@ -49,7 +51,8 @@ public:
 	virtual void set_position(Vector2f);
 	virtual Vector2f handle_borders(Vector2f);
 
-	void set_move(Vector2f, float, float);
+	void set_move(Vector2f dir, float s, float t);
+	void set_move(Vector2f dir, float s, float t, bool norm);
 	void execute_move(float);
 
 	virtual void render(RenderWindow*);
@@ -100,7 +103,7 @@ private:
 	
 public:
 	Projectile(Vector2f pos, Sprite* s, Vector2i _frame, int _damage, float _rotation, float _spd_mod, int _coll_mask, int _dir);
-	Vector2f handle_borders(Vector2f);
+	virtual Vector2f handle_borders(Vector2f);
 
 	virtual void collide(PhysicalObject* coll);
 };
@@ -138,7 +141,7 @@ class Player : public Character
 public:
 	Player(Vector2f v, Sprite* s, bool b, Vector2i);
 
-	Vector2f handle_borders(Vector2f);
+	virtual Vector2f handle_borders(Vector2f);
 };
 
 // postaæ z cechami typowymi dla wroga
@@ -148,6 +151,7 @@ public:
 	Enemy(Vector2f pos, Sprite* s, bool b, Vector2i frame);
 
 	virtual void collide(PhysicalObject* coll);
+	virtual Vector2f handle_borders(Vector2f);
 };
 
 // pomocniczy czasomierz, do aktywowania periodycznych zdarzeñ

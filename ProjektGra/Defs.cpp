@@ -68,11 +68,18 @@ Vector2f GameObject::handle_borders(Vector2f _pos)
 // ruch na podstawie kierunku, dystansu i czasu na jego przebycie
 void GameObject::set_move(Vector2f _direction, float _distance, float _time)
 {
+	set_move(_direction, _distance, _time, true);
+}
+
+void GameObject::set_move(Vector2f _direction, float _distance, float _time, bool norm)
+{
 	// y *= -1, ¿eby by³o zgodne z tradycyjnym uk³adem wspó³rzêdnych
 	_direction.y *= -1;
 	direction = _direction;
 	distance = _distance * ONE_UNIT_SIZE;
 	travel_time = _time;
+
+	normalize = norm;
 }
 
 // wykonanie siê ruchu
@@ -84,7 +91,12 @@ void GameObject::execute_move(float _deltaT)
 	}
 
 	// nastêpuje tu równie¿ normalizowanie kierunku ruchu
-	set_position(position + _deltaT * direction * distance /( travel_time * magnitude(direction)));
+
+	Vector2f _delta = position + _deltaT * direction * distance;
+
+	float mod = normalize ? (travel_time * magnitude(direction)) : 1.f;
+
+	set_position(_delta / mod);
 
 	if(!continuous)
 	{ 
@@ -376,6 +388,25 @@ void Enemy::collide(PhysicalObject* coll)
 			break;
 		}
 	}
+}
+
+Vector2f Enemy::handle_borders(Vector2f _pos)
+{
+	float _off0 = collider->width / 2.f - offset.x;
+	float _off = collider->width / 2.f + offset.x;
+
+	if (_pos.x - _off0 < 0)
+	{
+		_pos.x = _off0;
+		direction.x = 1;
+	}
+	else if (_pos.x + _off > SCREEN_SIZE.x)
+	{
+		_pos.x = -_off + SCREEN_SIZE.x;
+		direction.x = -1;
+	}
+
+	return _pos;
 }
 
 Projectile::Projectile(Vector2f pos, Sprite* s, Vector2i _frame, int _damage, float _rotation, float _spd_mod, int _coll_mask, int _dir) :

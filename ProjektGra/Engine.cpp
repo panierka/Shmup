@@ -25,6 +25,12 @@ void Engine::update(float dt)
 	{
 		for (int j = 0; j < phy_objects.size(); j++)
 		{
+			if (phy_objects.size() <= i || phy_objects.size() <= j)
+			{
+				print("zly zakres");
+				continue;
+			}
+
 			if (i != j)
 			{
 				phy_objects[i]->collide(phy_objects[j]);

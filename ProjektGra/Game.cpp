@@ -25,12 +25,14 @@ int main()
 
 	player->textures.push_back(new Texture(t2));
 
-	Enemy* e = new Enemy((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(&t1, Vector2f(62.f, 62.f)), false, Vector2i(125, 125));
+	Enemy* e = new Enemy((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(&t1, Vector2f(62.f, 62.f)), true, Vector2i(125, 125));
 
 	e->animations.push_back(new AnimationClip(0, 4, 10, e, true));
 	e->animations.push_back(new AnimationClip(6, 3, 16, e, false));
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
+
+	e->set_move(Vector2f(1, -0.25f), 2, 1, false);
 
 
 	// inicjalizacja dodatkowych komponentów
