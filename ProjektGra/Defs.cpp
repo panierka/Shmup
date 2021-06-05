@@ -4,6 +4,8 @@
 
 vector<Timer*> timers;
 
+Sounds sound1{};
+
 // funkcja do wyznaczania d³ugoœci wektorów
 template<typename T>
 T magnitude(Vector2<T> v)

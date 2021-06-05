@@ -41,10 +41,11 @@ int main()
 	// inicjalizacja zmiennych do kalkulowania czasu miêdzy klatkami
 	Clock clock;
 	float _frame_time = clock.getElapsedTime().asSeconds();
+
 	sound1.buffers["pogchamp"] = new SoundBuffer();
 	sound1.buffers["pogchamp"]->loadFromFile("../Assets/Sounds/Soundtrack.wav");
 
-	sound1.play_sound("pogchamp");
+	//sound1.play_sound("pogchamp");
 	/*BackgroundMusic background;*/
 
 	window.setFramerateLimit(60);

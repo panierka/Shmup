@@ -24,7 +24,7 @@ const Vector2u BULLET_BOUNDS_SIZE(50u, 50u);
 const float ONE_UNIT_SIZE = 50.f; // jedna jednostka rozmiaru
 
 //
-Sounds sound1;
+extern Sounds sound1;
 
 // podstawowy obiekt istniej¹cy w grze: porusza siê i ma jak¹œ grafikê
 class GameObject

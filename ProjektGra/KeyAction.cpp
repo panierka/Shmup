@@ -62,6 +62,7 @@ InputHandler::InputHandler(Player* _player)
 		{
 			if (player->ready_to_action)
 			{
+				sound1.play_sound("pogchamp");
 				player->call_animation(1);
 				player->shoot(0, Vector2i(25, 50), 10, 0, 0, 1);
 			}
