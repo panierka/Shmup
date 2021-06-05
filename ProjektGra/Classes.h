@@ -180,6 +180,19 @@ public:
 
 	~Timer();
 };
+
+class BackgroundMusic
+{
+private:
+	int volume = 10;
+	Music* music;
+public:
+	BackgroundMusic();
+	~BackgroundMusic();
+	void set_volume(int volume);
+	void start();
+	void pause();
+};
 // pomocnicza funkcja do szybkiego i sformatowanego wypisywania w konsoli
 void print(string);
 

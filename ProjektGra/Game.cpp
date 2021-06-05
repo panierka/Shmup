@@ -43,11 +43,8 @@ int main()
 	Clock clock;
 	float _frame_time = clock.getElapsedTime().asSeconds();
 
-	Music music;
-	music.openFromFile("../Assets/Sounds/Soundtrack.wav");
-	music.setLoop(true);
-	music.setVolume(10);
-	music.play();
+	BackgroundMusic background;
+
 	window.setFramerateLimit(60);
 	// pêtla programu
 	while (window.isOpen())

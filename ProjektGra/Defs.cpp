@@ -443,3 +443,28 @@ void Projectile::collide(PhysicalObject* coll)
 		}
 	}
 }
+
+BackgroundMusic::BackgroundMusic()
+{
+	music->openFromFile("../Assets/Sounds/Soundtrack.wav");
+	music->setLoop(true);
+	music->setVolume(volume);
+	start();
+}
+BackgroundMusic::~BackgroundMusic()
+{
+
+}
+void BackgroundMusic::start()
+{
+	music->play();
+}
+void BackgroundMusic::pause()
+{
+	music->pause();
+}
+void BackgroundMusic::set_volume(int volume_level)
+{
+	volume = volume_level;
+	music->setVolume(volume);
+}
