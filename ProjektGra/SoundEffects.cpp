@@ -46,3 +46,9 @@ void Sounds::play_sound(string soundname)
 	sound->setVolume(volume[soundname]);
 	sound->play();
 }
+void Sounds::add_sound(string soundname, string file_path, int sound_volume)
+{
+	buffers[soundname] = new SoundBuffer();
+	buffers[soundname]->loadFromFile(file_path);
+	volume[soundname] = sound_volume;
+}
