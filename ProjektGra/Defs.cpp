@@ -59,6 +59,7 @@ GameObject::~GameObject()
 void GameObject::set_position(Vector2f _pos)
 {
 	position = handle_borders(_pos);
+
 	sprite->setPosition(position);
 }
 
@@ -87,6 +88,12 @@ void GameObject::set_move(Vector2f _direction, float _distance, float _time, boo
 // wykonanie siê ruchu
 void GameObject::execute_move(float _deltaT)
 {
+	if (destroy_this)
+	{
+		delete this;
+		return;
+	}
+
 	float mag = magnitude<float>(direction);
 
 	if (mag == 0)
@@ -314,9 +321,9 @@ void Character::death()
 
 void Character::shoot(int _sprite_index, Vector2i _frame, int _damage, float _start_angle, float _angle_diff, int _bullets_count)
 {
-	for (int i = 0; i < _bullets_count; ++i)
+	for (int i = 0; i < _bullets_count; i++)
 	{
-		float _angle = _start_angle + i * _angle_diff;
+		float _angle = _start_angle + (i * _angle_diff);
 		Projectile* p = new Projectile(position, generate_sprite(textures[_sprite_index], Vector2f(12.f, 25.f)), _frame, _damage, _angle, bullet_velocity_mod, projectile_collision_mask, facing_direction_y);
 
 		p->animations.push_back(new AnimationClip(0, 4, 24, p, true));
@@ -424,13 +431,19 @@ Projectile::Projectile(Vector2f pos, Sprite* s, Vector2i _frame, int _damage, fl
 	target_collision_mask = _coll_mask == 2 ? 4 : 1;
 }
 
+Projectile::~Projectile()
+{
+	print("PROJ: DTOR");
+}
+
 Vector2f Projectile::handle_borders(Vector2f _pos)
 {
 	if (-_pos.x > BULLET_BOUNDS_SIZE.x || -_pos.y > BULLET_BOUNDS_SIZE.y || _pos.x > SCREEN_SIZE.x + BULLET_BOUNDS_SIZE.x || _pos.y > SCREEN_SIZE.y + BULLET_BOUNDS_SIZE.y)
 	{
 		print("DEATH DEATH DEATH");
-		//delete this;
-		PhysicalObject::~PhysicalObject();
+		
+		destroy_this = true;
+		//PhysicalObject::~PhysicalObject();
 	}
 
 	return _pos;

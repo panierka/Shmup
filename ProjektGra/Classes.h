@@ -36,6 +36,8 @@ public:
 protected:
 	Vector2f direction;
 
+	bool destroy_this = false;
+
 private:
 	// poruszanie siê
 	float distance;
@@ -46,7 +48,7 @@ private:
 
 public:
 	GameObject(Vector2f, Sprite*, bool);
-	~GameObject();
+	virtual ~GameObject();
 
 	virtual void set_position(Vector2f);
 	virtual Vector2f handle_borders(Vector2f);
@@ -81,7 +83,7 @@ private:
 
 public:
 	PhysicalObject(Vector2f v, Sprite* s, bool b, Vector2i);
-	~PhysicalObject();
+	virtual ~PhysicalObject();
 
 	void create_collider(Vector2f _offset, Vector2f _size);
 	virtual void collide(PhysicalObject* physical_object);
@@ -98,11 +100,12 @@ class Projectile : public PhysicalObject
 private:
 	int damage;
 	int target_collision_mask;
-	
+
 	const float base_velocity = 10.f;
 	
 public:
 	Projectile(Vector2f pos, Sprite* s, Vector2i _frame, int _damage, float _rotation, float _spd_mod, int _coll_mask, int _dir);
+	~Projectile();
 	virtual Vector2f handle_borders(Vector2f);
 
 	virtual void collide(PhysicalObject* coll);
