@@ -27,11 +27,12 @@ const float ONE_UNIT_SIZE = 50.f; // jedna jednostka rozmiaru
 extern Sounds sound1;
 
 // podstawowy obiekt istniej¹cy w grze: porusza siê i ma jak¹œ grafikê
-class GameObject
+class GameObject: public std::enable_shared_from_this<GameObject>
 {
 public:
 	Vector2f position;
 	Sprite* sprite;
+	std::shared_ptr<GameObject> shared_this = nullptr;
 
 protected:
 	Vector2f direction;
@@ -49,6 +50,8 @@ private:
 public:
 	GameObject(Vector2f, Sprite*, bool);
 	virtual ~GameObject();
+
+	virtual void start();
 
 	virtual void set_position(Vector2f);
 	virtual Vector2f handle_borders(Vector2f);
@@ -84,9 +87,10 @@ private:
 public:
 	PhysicalObject(Vector2f v, Sprite* s, bool b, Vector2i);
 	virtual ~PhysicalObject();
+	virtual void start();
 
 	void create_collider(Vector2f _offset, Vector2f _size);
-	virtual void collide(PhysicalObject* physical_object);
+	virtual void collide(std::shared_ptr<PhysicalObject> physical_object);
 
 	void change_sprite(int);
 	void call_animation(int);

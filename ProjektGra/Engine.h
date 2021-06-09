@@ -11,8 +11,8 @@ class PhysicalObject;
 class Engine
 {
 public:
-	static std::vector<GameObject*> objects;
-	static std::vector<PhysicalObject*> phy_objects;
+	static std::vector<std::shared_ptr<GameObject>> objects;
+	static std::vector<std::shared_ptr<PhysicalObject>> phy_objects;
 	static Shader shader;
 	
 private:

@@ -2,7 +2,7 @@
 #include"KeyAction.h"
 #include<iostream>
 
-Player* player;
+std::shared_ptr<Player> player;
 
 int main()
 {
@@ -16,7 +16,9 @@ int main()
 	t.loadFromFile("../Assets/Player-Spritesheet.png");
 	t1.loadFromFile("../Assets/Enemy-Fly.png");
 	t2.loadFromFile("../Assets/Player-Projectile.png");
-	player = new Player((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 375), generate_sprite(&t, Vector2f(50.f, 50.f)), false, Vector2i(100, 100));
+
+
+	player = make_shared<Player>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 375), generate_sprite(&t, Vector2f(50.f, 50.f)), false, Vector2i(100, 100));
 
 	player->animations.push_back(new AnimationClip(0, 4, 10, player, true));
 	player->animations.push_back(new AnimationClip(5, 4, 18, player, false));
@@ -25,7 +27,9 @@ int main()
 
 	player->textures.push_back(new Texture(t2));
 
-	Enemy* e = new Enemy((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(&t1, Vector2f(62.f, 62.f)), true, Vector2i(125, 125));
+	player->start();
+
+	std::shared_ptr<Enemy> e = make_shared <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(&t1, Vector2f(62.f, 62.f)), true, Vector2i(125, 125));
 
 	e->animations.push_back(new AnimationClip(0, 4, 10, e, true));
 	e->animations.push_back(new AnimationClip(6, 3, 16, e, false));
@@ -34,9 +38,11 @@ int main()
 
 	e->set_move(Vector2f(1.f, -0.25f), 2.5f, 1, true);
 
+	e->start();
+
 
 	// inicjalizacja dodatkowych komponentów
-	InputHandler input(player);
+	InputHandler input(player.get());
 	Engine engine(&window);
 	// inicjalizacja zmiennych do kalkulowania czasu miêdzy klatkami
 	Clock clock;
@@ -77,7 +83,7 @@ int main()
 
 	for (std::size_t i = 0; i < Engine::objects.size(); i++)
 	{
-		delete Engine::objects[i];
+		Engine::objects[i].reset();
 	}
 
 	print("");

@@ -9,8 +9,8 @@ Engine::Engine(RenderWindow* w) :
 	shader.setUniform("flashColor", Glsl::Vec4(1, 1, 1, 1));
 }
 
-std::vector<GameObject*> Engine::objects{};
-std::vector<PhysicalObject*> Engine::phy_objects{};
+std::vector<std::shared_ptr<GameObject>> Engine::objects{};
+std::vector<std::shared_ptr<PhysicalObject>> Engine::phy_objects{};
 
 void Engine::update(float dt)
 {
