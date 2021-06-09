@@ -336,7 +336,7 @@ void Character::shoot(int _sprite_index, Vector2i _frame, int _damage, float _st
 		float _angle = _start_angle + (i * _angle_diff);
 		std::shared_ptr<Projectile> p = make_shared<Projectile>(position, generate_sprite(textures[_sprite_index], Vector2f(12.f, 25.f)), _frame, _damage, _angle, bullet_velocity_mod, projectile_collision_mask, facing_direction_y);
 
-		p->animations.push_back(new AnimationClip(0, 4, 24, p, true));
+		//p->animations.push_back(new AnimationClip(0, 4, 24, p, true));
 
 		p->create_collider(Vector2f(0.f, 0.f), Vector2f(_frame));
 

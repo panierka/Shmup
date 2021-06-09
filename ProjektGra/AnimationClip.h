@@ -35,7 +35,7 @@ private:
 	unsigned int current_frame;
 
 public:
-	std::shared_ptr<PhysicalObject> obj;
+	const std::shared_ptr<PhysicalObject>& obj;
 	bool idle;
 	Timer* timer;
 
@@ -45,7 +45,7 @@ public:
 	virtual void function();
 
 public:
-	AnimationClip(int s_i, int f, float _fps, std::shared_ptr<PhysicalObject>, bool);
+	AnimationClip(int s_i, int f, float _fps, const std::shared_ptr<PhysicalObject>&, bool);
 	~AnimationClip();
 
 	void call();
