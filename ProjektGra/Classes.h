@@ -112,7 +112,7 @@ public:
 	~Projectile();
 	virtual Vector2f handle_borders(Vector2f);
 
-	virtual void collide(PhysicalObject* coll);
+	virtual void collide(shared_ptr<PhysicalObject>);
 };
 
 // o. fiz. ze zdrowiem i zdolnoœci¹ strzelania 
@@ -157,7 +157,7 @@ class Enemy : public Character
 public:
 	Enemy(Vector2f pos, Sprite* s, bool b, Vector2i frame);
 
-	virtual void collide(PhysicalObject* coll);
+	virtual void collide(shared_ptr<PhysicalObject>);
 	virtual Vector2f handle_borders(Vector2f);
 };
 

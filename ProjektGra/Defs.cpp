@@ -95,10 +95,10 @@ void GameObject::execute_move(float _deltaT)
 {
 	if (destroy_this)
 	{
-		shared_from_this().reset();
+		shared_this.reset();
 		return;
 	}
-
+	
 	float mag = magnitude<float>(direction);
 
 	if (mag == 0)
@@ -390,7 +390,7 @@ Enemy::Enemy(Vector2f pos, Sprite* s, bool b, Vector2i frame):
 	projectile_collision_mask = 3;
 }
 
-void Enemy::collide(PhysicalObject* coll)
+void Enemy::collide(shared_ptr<PhysicalObject> coll)
 {
 	if (collider->intersects(*coll->collider))
 	{
@@ -461,13 +461,13 @@ Vector2f Projectile::handle_borders(Vector2f _pos)
 	return _pos;
 }
 
-void Projectile::collide(PhysicalObject* coll)
+void Projectile::collide(shared_ptr<PhysicalObject> coll)
 {
 	if (collider->intersects(*coll->collider))
 	{
 		if (coll->collision_marker == target_collision_mask)
 		{
-			static_cast<Character*>(coll)->take_hit(damage);
+			std::dynamic_pointer_cast<Character>(coll)->take_hit(damage);
 
 			destroy_this = true;
 		}
