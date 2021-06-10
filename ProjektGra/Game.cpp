@@ -2,7 +2,7 @@
 #include"KeyAction.h"
 #include<iostream>
 
-std::shared_ptr<Player> player;
+//Player& player = Player();
 
 int main()
 {
@@ -18,31 +18,36 @@ int main()
 	t2.loadFromFile("../Assets/Player-Projectile.png");
 
 
-	player = make_shared<Player>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 375), generate_sprite(&t, Vector2f(50.f, 50.f)), false, Vector2i(100, 100));
+	std::unique_ptr<Player> _player = make_unique<Player>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 375), generate_sprite(&t, Vector2f(50.f, 50.f)), false, Vector2i(100, 100));
 
-	player->animations.push_back(new AnimationClip(0, 4, 10, player, true));
-	player->animations.push_back(new AnimationClip(5, 4, 18, player, false));
+	_player->animations.push_back(new AnimationClip(0, 4, 10, *_player, true));
+	_player->animations.push_back(new AnimationClip(5, 4, 18, *_player, false));
 
-	player->create_collider(Vector2f(0.f, 14.f), Vector2f(36.f, 40.f));
+	_player->create_collider(Vector2f(0.f, 14.f), Vector2f(36.f, 40.f));
 
-	player->textures.push_back(new Texture(t2));
+	_player->textures.push_back(new Texture(t2));
 
-	player->start();
+	//_player->start();
 
-	std::shared_ptr<Enemy> e = make_shared <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(&t1, Vector2f(62.f, 62.f)), true, Vector2i(125, 125));
+	Engine::objects.push_back(std::move(_player));
+	//player = *_player;
 
-	e->animations.push_back(new AnimationClip(0, 4, 10, e, true));
-	e->animations.push_back(new AnimationClip(6, 3, 16, e, false));
+	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(&t1, Vector2f(62.f, 62.f)), true, Vector2i(125, 125));
+
+	e->animations.push_back(new AnimationClip(0, 4, 10, *e, true));
+	e->animations.push_back(new AnimationClip(6, 3, 16, *e, false));
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
 
 	e->set_move(Vector2f(1.f, -0.25f), 2.5f, 1, true);
 
-	e->start();
+	//e->start();
 
+	Engine::objects.push_back(std::move(e));
+	
 
 	// inicjalizacja dodatkowych komponentów
-	InputHandler input(player.get());
+	InputHandler input(dynamic_cast<Player*>(Engine::objects[0].get()));
 	Engine engine(&window);
 	// inicjalizacja zmiennych do kalkulowania czasu miêdzy klatkami
 	Clock clock;
@@ -81,10 +86,10 @@ int main()
 		tick_timers(_frame_time);
 	}
 
-	for (std::size_t i = 0; i < Engine::objects.size(); i++)
+	/*for (std::size_t i = 0; i < Engine::objects.size(); i++)
 	{
 		Engine::objects[i].reset();
-	}
+	}*/
 
 	print("");
 	print("koniec");

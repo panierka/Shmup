@@ -90,7 +90,7 @@ public:
 	virtual void start();
 
 	void create_collider(Vector2f _offset, Vector2f _size);
-	virtual void collide(std::shared_ptr<PhysicalObject> physical_object);
+	virtual void collide(std::unique_ptr<PhysicalObject>& physical_object);
 
 	void change_sprite(int);
 	void call_animation(int);
@@ -112,7 +112,7 @@ public:
 	~Projectile();
 	virtual Vector2f handle_borders(Vector2f);
 
-	virtual void collide(shared_ptr<PhysicalObject>);
+	virtual void collide(unique_ptr<PhysicalObject>&);
 };
 
 // o. fiz. ze zdrowiem i zdolnoœci¹ strzelania 
@@ -157,7 +157,7 @@ class Enemy : public Character
 public:
 	Enemy(Vector2f pos, Sprite* s, bool b, Vector2i frame);
 
-	virtual void collide(shared_ptr<PhysicalObject>);
+	virtual void collide(unique_ptr<PhysicalObject>&);
 	virtual Vector2f handle_borders(Vector2f);
 };
 

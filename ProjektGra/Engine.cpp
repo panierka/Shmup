@@ -9,23 +9,22 @@ Engine::Engine(RenderWindow* w) :
 	shader.setUniform("flashColor", Glsl::Vec4(1, 1, 1, 1));
 }
 
-std::vector<std::shared_ptr<GameObject>> Engine::objects{};
-std::vector<std::shared_ptr<PhysicalObject>> Engine::phy_objects{};
+std::vector<std::unique_ptr<PhysicalObject>> Engine::objects{};
 
 void Engine::update(float dt)
 {
 	window->clear(Color(73, 84, 123, 255));
 
-	for (auto target : objects)
+	for (int i = 0; i < objects.size(); i++)
 	{
-		target->execute_move(dt);
+		objects[i]->execute_move(dt);
 	}
 
-	for (int i = 0; i < phy_objects.size(); i++)
+	for (int i = 0; i < objects.size(); i++)
 	{
-		for (int j = 0; j < phy_objects.size(); j++)
+		for (int j = 0; j < objects.size(); j++)
 		{
-			if (phy_objects.size() <= i || phy_objects.size() <= j)
+			if (objects.size() <= i || objects.size() <= j)
 			{
 				print("zly zakres");
 				continue;
@@ -33,14 +32,14 @@ void Engine::update(float dt)
 
 			if (i != j)
 			{
-				phy_objects[i]->collide(phy_objects[j]);
+				objects[i]->collide(objects[j]);
 			}
 		}
 	}
 
-	for (auto target : objects)
+	for (int i = 0; i < objects.size(); i++)
 	{
-		target->render(window);
+		objects[i]->render(window);
 	}
 
 	//

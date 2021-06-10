@@ -40,7 +40,7 @@ Sprite* generate_sprite(Texture* _tex)
 }
 
 GameObject::GameObject(Vector2f v, Sprite* s, bool b) :
-	sprite(s), continuous(b)
+	sprite(s), continuous(b), direction(0, 0)
 {
 	set_position(v);
 }
@@ -49,7 +49,7 @@ GameObject::~GameObject()
 {
 	print("DTOR");
 
-	Engine::objects.erase(std::remove(Engine::objects.begin(), Engine::objects.end(), shared_from_this()));
+	//Engine::objects.erase(std::remove(Engine::objects.begin(), Engine::objects.end(), shared_from_this()));
 
 	delete sprite;
 }
@@ -57,7 +57,7 @@ GameObject::~GameObject()
 void GameObject::start()
 {
 	shared_this = shared_from_this();
-	Engine::objects.push_back(shared_this);
+	//Engine::objects.push_back(shared_this);
 }
 
 // odpowiednia pozycja dla obiektu w logice i sprite'a
@@ -82,8 +82,8 @@ void GameObject::set_move(Vector2f _direction, float _distance, float _time)
 void GameObject::set_move(Vector2f _direction, float _distance, float _time, bool norm)
 {
 	// y *= -1, ¿eby by³o zgodne z tradycyjnym uk³adem wspó³rzêdnych
-	_direction.y *= -1.f;
 	direction = _direction;
+	direction.y *= -1.f;
 	distance = _distance * ONE_UNIT_SIZE;
 	travel_time = _time;
 
@@ -219,7 +219,7 @@ PhysicalObject::~PhysicalObject()
 {
 	print("PO: DTOR");
 
-	Engine::phy_objects.erase(std::remove(Engine::phy_objects.begin(), Engine::phy_objects.end(), std::dynamic_pointer_cast<PhysicalObject>(shared_from_this())));
+	//Engine::phy_objects.erase(std::remove(Engine::phy_objects.begin(), Engine::phy_objects.end(), std::dynamic_pointer_cast<PhysicalObject>(shared_from_this())));
 
 	delete collider;
 	
@@ -235,7 +235,7 @@ void PhysicalObject::start()
 {
 	GameObject::start();
 
-	Engine::phy_objects.push_back(std::dynamic_pointer_cast<PhysicalObject>(shared_this));
+	//Engine::phy_objects.push_back(std::dynamic_pointer_cast<PhysicalObject>(shared_this));
 }
 
 void PhysicalObject::create_collider(Vector2f _offset, Vector2f _size)
@@ -334,7 +334,7 @@ void Character::shoot(int _sprite_index, Vector2i _frame, int _damage, float _st
 	for (int i = 0; i < _bullets_count; i++)
 	{
 		float _angle = _start_angle + (i * _angle_diff);
-		std::shared_ptr<Projectile> p = make_shared<Projectile>(position, generate_sprite(textures[_sprite_index], Vector2f(12.f, 25.f)), _frame, _damage, _angle, bullet_velocity_mod, projectile_collision_mask, facing_direction_y);
+		std::unique_ptr<Projectile> p = make_unique<Projectile>(position, generate_sprite(textures[_sprite_index], Vector2f(12.f, 25.f)), _frame, _damage, _angle, bullet_velocity_mod, projectile_collision_mask, facing_direction_y);
 
 		//p->animations.push_back(new AnimationClip(0, 4, 24, p, true));
 
@@ -342,7 +342,9 @@ void Character::shoot(int _sprite_index, Vector2i _frame, int _damage, float _st
 
 		p->sprite->setRotation(-_angle);
 
-		p->start();
+		//p->start();
+
+		Engine::objects.push_back(std::move(p));
 	}
 }
 
@@ -354,7 +356,7 @@ void Character::render(RenderWindow* w)
 }
 
 
-void PhysicalObject::collide(std::shared_ptr<PhysicalObject> coll)
+void PhysicalObject::collide(std::unique_ptr<PhysicalObject>& coll)
 {
 
 	//FloatRect participant1 = collider->getGlobalBounds();
@@ -390,7 +392,7 @@ Enemy::Enemy(Vector2f pos, Sprite* s, bool b, Vector2i frame):
 	projectile_collision_mask = 3;
 }
 
-void Enemy::collide(shared_ptr<PhysicalObject> coll)
+void Enemy::collide(unique_ptr<PhysicalObject>& coll)
 {
 	if (collider->intersects(*coll->collider))
 	{
@@ -461,13 +463,15 @@ Vector2f Projectile::handle_borders(Vector2f _pos)
 	return _pos;
 }
 
-void Projectile::collide(shared_ptr<PhysicalObject> coll)
+void Projectile::collide(unique_ptr<PhysicalObject>& coll)
 {
 	if (collider->intersects(*coll->collider))
 	{
 		if (coll->collision_marker == target_collision_mask)
 		{
-			std::dynamic_pointer_cast<Character>(coll)->take_hit(damage);
+			//std::dynamic_pointer_cast<Character>(coll)->take_hit(damage);
+
+			dynamic_cast<Character*>(coll.get())->take_hit(damage);
 
 			destroy_this = true;
 		}
