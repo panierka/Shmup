@@ -95,7 +95,10 @@ void GameObject::execute_move(float _deltaT)
 {
 	if (destroy_this)
 	{
-		shared_this.reset();
+		//shared_this.reset();
+
+		destroy();
+
 		return;
 	}
 	
@@ -126,6 +129,11 @@ void GameObject::execute_move(float _deltaT)
 void GameObject::render(RenderWindow* w)
 {
 	w->draw(*sprite);
+}
+
+void GameObject::destroy()
+{
+
 }
 
 
@@ -264,6 +272,19 @@ void PhysicalObject::set_position(Vector2f _position)
 	
 	collider->left = position.x + offset.x;
 	collider->top = position.y + offset.y;  // ???????????????????
+}
+
+void PhysicalObject::destroy()
+{
+	for (auto it = begin(Engine::objects); it != end(Engine::objects); ++it) 
+	{
+		if (it->get() == this)
+		{
+			it->reset();
+			Engine::objects.erase(it);
+			return;
+		}
+	}
 }
 
 Character::Character(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
@@ -477,3 +498,5 @@ void Projectile::collide(unique_ptr<PhysicalObject>& coll)
 		}
 	}
 }
+
+

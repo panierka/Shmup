@@ -61,6 +61,7 @@ public:
 	void execute_move(float);
 
 	virtual void render(RenderWindow*);
+	virtual void destroy();
 };
 
 Vector2i operator*(Vector2i, Vector2i);
@@ -96,6 +97,7 @@ public:
 	void call_animation(int);
 
 	void set_position(Vector2f);
+	virtual void destroy();
 };
 
 // pocisk
