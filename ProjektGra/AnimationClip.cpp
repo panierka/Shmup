@@ -71,3 +71,27 @@ Callable::~Callable()
 {
 	
 }
+
+AttackTimer::AttackTimer(float _time, Enemy& _me) :
+	me(_me)
+{
+	if (me.attacks.size() > 0)
+	{
+		timer = new Timer(_time, this, true, false);
+	}
+	else
+	{
+		print("brak zdefiniowanych atakow u przeciwnika");
+	}
+}
+
+AttackTimer::~AttackTimer()
+{
+	delete timer;
+}
+
+void AttackTimer::function()
+{
+	int _random_attack_index = random_number(0, me.attacks.size() - 1);
+	me.attacks[_random_attack_index](me);
+}

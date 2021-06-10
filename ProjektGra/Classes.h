@@ -22,6 +22,7 @@ class BlinkEffect;
 const Vector2u SCREEN_SIZE(700u, 950u); // ekran w pikselach
 const Vector2u BULLET_BOUNDS_SIZE(50u, 50u);
 const float ONE_UNIT_SIZE = 50.f; // jedna jednostka rozmiaru
+const float RAD2DEG = 1 / 57.3f;
 
 //
 extern Sounds sound1;
@@ -157,10 +158,15 @@ public:
 class Enemy : public Character
 {
 public:
+	std::vector<void(*)(Enemy&)> attacks;
+
+public:
 	Enemy(Vector2f pos, Sprite* s, bool b, Vector2i frame);
 
 	virtual void collide(unique_ptr<PhysicalObject>&);
 	virtual Vector2f handle_borders(Vector2f);
+
+	float angle_to_player();
 };
 
 // pomocniczy czasomierz, do aktywowania periodycznych zdarzeñ

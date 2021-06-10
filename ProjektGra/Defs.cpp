@@ -357,7 +357,7 @@ void Character::shoot(int _sprite_index, Vector2i _frame, int _damage, float _st
 		float _angle = _start_angle + (i * _angle_diff);
 		std::unique_ptr<Projectile> p = make_unique<Projectile>(position, generate_sprite(textures[_sprite_index], Vector2f(12.f, 25.f)), _frame, _damage, _angle, bullet_velocity_mod, projectile_collision_mask, facing_direction_y);
 
-		//p->animations.push_back(new AnimationClip(0, 4, 24, p, true));
+		p->animations.push_back(new AnimationClip(0, 4, 24, *p, true));
 
 		p->create_collider(Vector2f(0.f, 0.f), Vector2f(_frame));
 
@@ -456,11 +456,19 @@ Vector2f Enemy::handle_borders(Vector2f _pos)
 	return _pos;
 }
 
+float Enemy::angle_to_player()
+{
+	Vector2f diff = position - Engine::objects[0]->position;
+	
+
+	return atan2f(-diff.x, -diff.y) / RAD2DEG;
+}
+
 Projectile::Projectile(Vector2f pos, Sprite* s, Vector2i _frame, int _damage, float _rotation, float _spd_mod, int _coll_mask, int _dir) :
 	PhysicalObject(pos, s, true, _frame), damage(_damage)
 {
 	collision_marker = _coll_mask;
-	float proper_angle = _rotation / 57.3f;
+	float proper_angle = _rotation * RAD2DEG;
 	set_move(Vector2f(-_dir * sin(proper_angle), _dir * cos(proper_angle)), _spd_mod * base_velocity, 1.f, false);
 
 	target_collision_mask = _coll_mask == 2 ? 4 : 1;

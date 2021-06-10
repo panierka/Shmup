@@ -39,7 +39,19 @@ int main()
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
 
+	e->textures.push_back(new Texture(t2));
+
 	e->set_move(Vector2f(1.f, -0.25f), 2.5f, 1, true);
+
+	void (*f)(Enemy&) = [](Enemy& e)
+	{	float angle = e.angle_to_player();
+		e.shoot(0, Vector2i(25, 50), 10, angle, 0, 1);
+		print(to_string(angle));
+	};
+
+	e->attacks.push_back(f);
+
+	AttackTimer* at1 = new AttackTimer(1.f, *e);
 
 	//e->start();
 

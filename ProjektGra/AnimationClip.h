@@ -4,6 +4,7 @@
 class Timer;
 class PhysicalObject;
 class Character;
+class Enemy;
 
 class Callable
 {
@@ -22,6 +23,19 @@ public:
 	BlinkEffect(Character*);
 	~BlinkEffect();
 	void activate();
+
+	virtual void function();
+};
+
+class AttackTimer : public Callable
+{
+public:
+	Timer* timer;
+	Enemy& me;
+
+public:
+	AttackTimer(float _time, Enemy& _me);
+	~AttackTimer();
 
 	virtual void function();
 };
