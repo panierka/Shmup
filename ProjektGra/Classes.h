@@ -161,6 +161,8 @@ public:
 	Player(Vector2f v, Sprite* s, bool b, Vector2i);
 	void setHP(int _amount);
 	virtual Vector2f handle_borders(Vector2f);
+
+	virtual void death();
 };
 
 // postaæ z cechami typowymi dla wroga
@@ -178,6 +180,7 @@ public:
 	virtual Vector2f handle_borders(Vector2f);
 
 	float angle_to_player();
+	virtual void death();
 };
 
 // pomocniczy czasomierz, do aktywowania periodycznych zdarzeñ

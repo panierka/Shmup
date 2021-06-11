@@ -26,6 +26,14 @@ int main()
 	t.loadFromFile("../Assets/Player.png");
 	t2.loadFromFile("../Assets/Player-Projectile.png");
 
+#pragma region > Inicj. Tekstur <
+
+	update_texture_atlas("player", "Player");
+	update_texture_atlas("fly", "Fly");
+	update_texture_atlas("player-bullet", "Player-Projectile");
+	update_texture_atlas("enemy-bullet", "Enemy-Bullet");
+
+#pragma endregion
 
 
 	std::unique_ptr<Player> _player = make_unique<Player>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 375), generate_sprite(&t, Vector2f(50.f, 50.f)), false, Vector2i(100, 100));
@@ -37,7 +45,7 @@ int main()
 
 	_player->textures.push_back(new Texture(t2));
 
-	_player->set_max_health(500);
+	_player->set_max_health(60);
 
 	//_player->start();
 
@@ -48,7 +56,7 @@ int main()
 
 	t1.loadFromFile("../Assets/Fly.png");
 	t3.loadFromFile("../Assets/Enemy-Bullet.png");
-
+	
 	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(&t1, Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
 
 	e->animations.push_back(new AnimationClip(0, 3, 12, *e, true));
@@ -57,9 +65,9 @@ int main()
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
 
 	e->textures.push_back(new Texture(t3));
-
+	
 	e->set_move(Vector2f(1.f, -0.25f), 3.75f, 1, true);
-
+	
 	void (*f)(Enemy&) = [](Enemy& e)
 	{	float angle = e.angle_to_player();
 		e.call_animation(1);
@@ -69,6 +77,8 @@ int main()
 	e->attacks.push_back(f);
 
 	e->bullet_velocity_mod = 0.95f;
+	
+	e->set_max_health(25);
 
 	AttackTimer* at1 = new AttackTimer(1.f, *e);
 

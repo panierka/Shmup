@@ -352,6 +352,11 @@ void Player::setHP(int _amount)
 	DisplayHP::set_percentage(static_cast<float>(current_health) / static_cast<float>(max_health));
 }
 
+void Player::death()
+{
+	print("player death");
+}
+
 void Character::take_hit(int _amount)
 {
 	setHP(-_amount);
@@ -507,6 +512,12 @@ float Enemy::angle_to_player()
 	
 
 	return atan2f(-diff.x, -diff.y) / RAD2DEG;
+}
+
+void Enemy::death()
+{
+	destroy_this = true;
+	// punkty
 }
 
 Projectile::Projectile(Vector2f pos, Sprite* s, Vector2i _frame, int _damage, float _rotation, float _spd_mod, int _coll_mask, int _dir) :
