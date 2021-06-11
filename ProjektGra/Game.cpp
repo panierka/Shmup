@@ -103,8 +103,6 @@ int main()
 		Engine::objects[i].reset();
 	}*/
 	
-	delete at1;
-
 	print("");
 	print("koniec");
 

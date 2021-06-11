@@ -17,6 +17,7 @@ class Timer;
 class AnimationClip;
 class Engine;
 class BlinkEffect;
+class AttackTimer;
 // "globalne"
 
 const Vector2u SCREEN_SIZE(700u, 950u); // ekran w pikselach
@@ -161,9 +162,11 @@ class Enemy : public Character
 {
 public:
 	std::vector<void(*)(Enemy&)> attacks;
+	AttackTimer* attack_timer;
 
 public:
 	Enemy(Vector2f pos, Sprite* s, bool b, Vector2i frame);
+	~Enemy();
 
 	virtual void collide(unique_ptr<PhysicalObject>&);
 	virtual Vector2f handle_borders(Vector2f);
@@ -194,6 +197,8 @@ public:
 	void pause();
 
 	void stop();
+
+	void destroy();
 
 	~Timer();
 };

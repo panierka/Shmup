@@ -34,7 +34,9 @@ void AnimationClip::call()
 
 AnimationClip::~AnimationClip()
 {
-	delete timer;
+	// delete timer
+	timer->destroy();
+	timer = nullptr;
 }
 
 AnimationClip::AnimationClip(int s_i, int f, float _fps, PhysicalObject& o, bool _idle):
@@ -59,7 +61,9 @@ BlinkEffect::BlinkEffect(Character* g) :
 
 BlinkEffect::~BlinkEffect()
 {
-	//delete timer;
+	// delete timer
+	timer->destroy();
+	timer = nullptr;
 }
 
 void BlinkEffect::activate()
@@ -88,6 +92,8 @@ AttackTimer::AttackTimer(float _time, Enemy& _me) :
 		timer = t.get();
 
 		timers.push_back(std::move(t));
+
+		_me.attack_timer = this;
 	}
 	else
 	{
@@ -97,7 +103,9 @@ AttackTimer::AttackTimer(float _time, Enemy& _me) :
 
 AttackTimer::~AttackTimer()
 {
-	//delete timer;
+	// delete timer
+	timer->destroy();
+	timer = nullptr;
 }
 
 void AttackTimer::function()

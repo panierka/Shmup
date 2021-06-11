@@ -153,15 +153,7 @@ void Timer::tick(float _deltaT)
 
 		if (!reset)
 		{
-			for (auto it = begin(timers); it != end(timers); ++it)
-			{
-				if (it->get() == this)
-				{
-					it->reset();
-					timers.erase(it);
-					return;
-				}
-			}
+			destroy();
 		}
 	}
 }
@@ -199,6 +191,19 @@ Timer::~Timer()
 	// timers.erase(std::remove(timers.begin(), timers.end(), this));
 	
 	print("usunieto timer");
+}
+
+void Timer::destroy()
+{
+	for (auto it = begin(timers); it != end(timers); ++it)
+	{
+		if (it->get() == this)
+		{
+			it->reset();
+			timers.erase(it);
+			return;
+		}
+	}
 }
 
 void tick_timers(float _deltaT)
@@ -363,7 +368,7 @@ void Character::shoot(int _sprite_index, Vector2i _frame, int _damage, float _st
 	for (int i = 0; i < _bullets_count; i++)
 	{
 		float _angle = _start_angle + (i * _angle_diff);
-		std::unique_ptr<Projectile> p = make_unique<Projectile>(position, generate_sprite(textures[_sprite_index], Vector2f(12.f, 25.f)), _frame, _damage, _angle, bullet_velocity_mod, projectile_collision_mask, facing_direction_y);
+		std::unique_ptr<Projectile> p = make_unique<Projectile>(position, generate_sprite(textures[_sprite_index], (Vector2f)_frame / 2.f), _frame, _damage, _angle, bullet_velocity_mod, projectile_collision_mask, facing_direction_y);
 
 		p->animations.push_back(new AnimationClip(0, 4, 24, *p, true));
 
@@ -445,12 +450,21 @@ void Enemy::collide(unique_ptr<PhysicalObject>& coll)
 	}
 }
 
+Enemy::~Enemy()
+{
+	delete attack_timer;
+}
+
 Vector2f Enemy::handle_borders(Vector2f _pos)
 {
 	float _off0 = collider->width / 2.f - offset.x;
 	float _off = collider->width / 2.f + offset.x;
 
-	if (_pos.x - _off0 < 0)
+	if (_pos.y > SCREEN_SIZE.y)
+	{
+		destroy_this = true;
+	}
+	else if (_pos.x - _off0 < 0)
 	{
 		_pos.x = _off0;
 		direction.x = 1;
