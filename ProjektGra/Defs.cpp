@@ -345,18 +345,40 @@ Vector2f Player::handle_borders(Vector2f _pos)
 	return _pos;
 }
 
+void Player::setHP(int _amount)
+{
+	Character::setHP(_amount);
+
+	DisplayHP::set_percentage(static_cast<float>(current_health) / static_cast<float>(max_health));
+}
+
 void Character::take_hit(int _amount)
 {
-	current_health -= _amount;
+	setHP(-_amount);
 
 	effect->activate();
+}
 
-	return;
+void Character::setHP(int _amount)
+{
+	current_health += _amount;
 
 	if (current_health <= 0)
 	{
 		death();
 	}
+	else if (current_health > max_health)
+	{
+		current_health = max_health;
+	}
+
+}
+
+void Character::set_max_health(int _max)
+{
+	max_health = _max;
+
+	setHP(_max);
 }
 
 void Character::death()

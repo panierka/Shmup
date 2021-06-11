@@ -37,6 +37,8 @@ int main()
 
 	_player->textures.push_back(new Texture(t2));
 
+	_player->set_max_health(500);
+
 	//_player->start();
 
 	Engine::objects.push_back(std::move(_player));

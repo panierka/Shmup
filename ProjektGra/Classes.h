@@ -127,9 +127,6 @@ public:
 // o. fiz. ze zdrowiem i zdolnoœci¹ strzelania 
 class Character : public PhysicalObject
 {
-private:
-	int max_health;
-	int current_health;
 
 public:
 	float bullet_velocity_mod = 1.f;
@@ -140,6 +137,9 @@ protected:
 	int facing_direction_y{};
 	int projectile_collision_mask;
 
+	int max_health;
+	int current_health;
+
 public:
 	Character(Vector2f v, Sprite* s, bool b, Vector2i);
 	~Character();
@@ -148,6 +148,9 @@ public:
 	virtual void death();
 	void shoot(int _sprite_index, Vector2i _frame, int _damage, float _start_angle, float _angle_diff, int _bullets_count, int _frames, int _framerate);
 
+	void set_max_health(int _max);
+
+	virtual void setHP(int _amount);
 	virtual void render(RenderWindow*);
 };
 
@@ -156,7 +159,7 @@ class Player : public Character
 {
 public:
 	Player(Vector2f v, Sprite* s, bool b, Vector2i);
-
+	void setHP(int _amount);
 	virtual Vector2f handle_borders(Vector2f);
 };
 
