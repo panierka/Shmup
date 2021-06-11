@@ -50,7 +50,7 @@ int main()
 	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(&t1, Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
 
 	e->animations.push_back(new AnimationClip(0, 3, 12, *e, true));
-	e->animations.push_back(new AnimationClip(4, 2, 16, *e, false));
+	e->animations.push_back(new AnimationClip(4, 2, 10, *e, false));
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
 
@@ -60,6 +60,7 @@ int main()
 
 	void (*f)(Enemy&) = [](Enemy& e)
 	{	float angle = e.angle_to_player();
+		e.call_animation(1);
 		e.shoot(0, Vector2i(25, 25), 10, angle - 10.f, 20.f, 2, 3, 8);
 		print(to_string(angle));
 	};

@@ -2,7 +2,8 @@
 #include<iostream> // debug only
 
 
-vector<unique_ptr<Timer>> timers{};
+std::vector<unique_ptr<Timer>> timers{};
+std::map<string, Texture*> texture_atlas{};
 
 Sounds sound1{};
 

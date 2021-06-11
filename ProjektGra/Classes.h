@@ -3,6 +3,7 @@
 #include<SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include<vector>
+#include<map>
 #include<random>
 #include "Engine.h"
 #include "AnimationClip.h"
@@ -27,7 +28,8 @@ const float RAD2DEG = 1 / 57.3f;
 
 //
 extern Sounds sound1;
-extern vector<unique_ptr<Timer>> timers;
+extern std::vector<unique_ptr<Timer>> timers;
+extern std::map<string, Texture*> texture_atlas;
 
 
 // podstawowy obiekt istniej¹cy w grze: porusza siê i ma jak¹œ grafikê
