@@ -8,10 +8,14 @@ using namespace std;
 class DisplayHP
 {
 public:
-	Font* font;
-	Text* text;
+	static Font* font;
+	static Text* text;
+
+public:
 	DisplayHP();
 	~DisplayHP();
+
+	static void set_percentage(float p);
 };
 
 extern DisplayHP playerhp;

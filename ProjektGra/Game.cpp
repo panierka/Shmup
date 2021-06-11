@@ -19,11 +19,11 @@ int main()
 	print("start");
 
 	// stworzenie okna gry
-	RenderWindow window(VideoMode(SCREEN_SIZE.x + 200u, SCREEN_SIZE.y), "Gra", Style::Titlebar | Style::Close);
+	RenderWindow window(VideoMode(SCREEN_SIZE.x + 275u, SCREEN_SIZE.y), "Gra", Style::Titlebar | Style::Close);
 
 	// wczytanie tekstur gracza i stworzenie jego obiektu
 	Texture t, t2;
-	t.loadFromFile("../Assets/Player-Spritesheet.png");
+	t.loadFromFile("../Assets/Player.png");
 	t2.loadFromFile("../Assets/Player-Projectile.png");
 
 

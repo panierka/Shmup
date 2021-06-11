@@ -530,4 +530,10 @@ void Projectile::collide(unique_ptr<PhysicalObject>& coll)
 	}
 }
 
+void update_texture_atlas(string _name, string _path)
+{
+	Texture* tex = new Texture();
+	tex->loadFromFile("../Assets/" + _path + ".png");
 
+	texture_atlas[_name] = tex;
+}

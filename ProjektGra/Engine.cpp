@@ -8,6 +8,10 @@ Engine::Engine(RenderWindow* w) :
 {
 	shader.loadFromFile("../Assets/effect_shader.frag", Shader::Fragment);
 	shader.setUniform("flashColor", Glsl::Vec4(1, 1, 1, 1));
+
+	rectangle = make_unique<RectangleShape>(Vector2f(275.f, SCREEN_SIZE.y));
+	rectangle->setFillColor(Color(0, 0, 0, 255));
+	rectangle->setPosition(SCREEN_SIZE.x, 0);
 }
 
 std::vector<std::unique_ptr<PhysicalObject>> Engine::objects{};
@@ -42,6 +46,8 @@ void Engine::update(float dt)
 	{
 		objects[i]->render(window);
 	}
+
+	window->draw(*rectangle);
 
 	window->draw(*playerhp.text);
 

@@ -16,6 +16,7 @@ public:
 	
 private:
 	RenderWindow* window;
+	std::unique_ptr<RectangleShape> rectangle;
 
 public:
 	Engine(RenderWindow*);

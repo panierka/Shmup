@@ -9,6 +9,7 @@
 #include "AnimationClip.h"
 #include<algorithm>
 #include "SoundEffects.h"
+#include "DisplayHP.h"
 
 using namespace sf;
 using namespace std;
@@ -217,3 +218,5 @@ Sprite* generate_sprite(Texture*);
 
 // globalny przeskok w czasomierzach
 void tick_timers(float);
+
+void update_texture_atlas(string _name, string _path);
