@@ -2,7 +2,7 @@
 #include<iostream> // debug only
 
 
-vector<Timer*> timers;
+vector<Timer*> timers{};
 
 Sounds sound1{};
 
@@ -197,6 +197,12 @@ void tick_timers(float _deltaT)
 {
 	for (Timer* _timer : timers)
 	{
+		if (_timer == nullptr)
+		{
+			print("-------------------------------- nullptr");
+			continue;
+		}
+
 		_timer->tick(_deltaT);
 	}
 }
@@ -318,7 +324,7 @@ Vector2f Player::handle_borders(Vector2f _pos)
 {
 	float _off0 = collider->width / 2.f - offset.x;
 	float _off = collider->width / 2.f + offset.x;
-
+	
 	if (_pos.x - _off0 < 0)
 	{
 		_pos.x = _off0;
