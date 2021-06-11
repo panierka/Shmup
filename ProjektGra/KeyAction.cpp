@@ -63,12 +63,12 @@ InputHandler::InputHandler(Player* _player)
 			if (player->ready_to_action)
 			{
 				player->call_animation(1);
-				player->shoot(0, Vector2i(25, 50), 10, 0, 0, 1, 4, 24);
+				player->shoot("player-bullet", Vector2i(25, 50), 10, 0, 0, 1, 4, 24);
 			}
 		}));
 }
 
 InputHandler::~InputHandler()
 {
-
+	
 }

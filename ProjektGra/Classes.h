@@ -130,7 +130,6 @@ class Character : public PhysicalObject
 
 public:
 	float bullet_velocity_mod = 1.f;
-	std::vector<Texture*> textures;
 	BlinkEffect* effect;
 
 protected:
@@ -146,7 +145,7 @@ public:
 
 	void take_hit(int _amount);
 	virtual void death();
-	void shoot(int _sprite_index, Vector2i _frame, int _damage, float _start_angle, float _angle_diff, int _bullets_count, int _frames, int _framerate);
+	void shoot(string _tex, Vector2i _frame, int _damage, float _start_angle, float _angle_diff, int _bullets_count, int _frames, int _framerate);
 
 	void set_max_health(int _max);
 

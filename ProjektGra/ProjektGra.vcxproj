@@ -144,20 +144,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnimationClip.cpp" />
-    <ClCompile Include="AnimationSystem.cpp" />
-    <ClCompile Include="Classes.cpp" />
     <ClCompile Include="Defs.cpp" />
     <ClCompile Include="DisplayHP.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="KeyAction.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="SoundEffects.cpp" />
-    <ClCompile Include="Tools.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationClip.h" />
-    <ClInclude Include="AnimationSystem.h" />
     <ClInclude Include="Classes.h" />
     <ClInclude Include="DisplayHP.h" />
     <ClInclude Include="KeyAction.h" />

@@ -310,13 +310,6 @@ Character::Character(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
 Character::~Character()
 {
 	delete effect;
-
-	for (auto t : textures)
-	{
-		delete t;
-	}
-
-	textures.clear();
 }
 
 Player::Player(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
@@ -391,12 +384,12 @@ void Character::death()
 	
 }
 
-void Character::shoot(int _sprite_index, Vector2i _frame, int _damage, float _start_angle, float _angle_diff, int _bullets_count, int _frames, int _framerate)
+void Character::shoot(string _tex, Vector2i _frame, int _damage, float _start_angle, float _angle_diff, int _bullets_count, int _frames, int _framerate)
 {
 	for (int i = 0; i < _bullets_count; i++)
 	{
 		float _angle = _start_angle + (i * _angle_diff);
-		std::unique_ptr<Projectile> p = make_unique<Projectile>(position, generate_sprite(textures[_sprite_index], (Vector2f)_frame / 2.f), _frame, _damage, _angle, bullet_velocity_mod, projectile_collision_mask, facing_direction_y);
+		std::unique_ptr<Projectile> p = make_unique<Projectile>(position, generate_sprite(texture_atlas[_tex], (Vector2f)_frame / 2.f), _frame, _damage, _angle, bullet_velocity_mod, projectile_collision_mask, facing_direction_y);
 
 		p->animations.push_back(new AnimationClip(0, _frames, _framerate, *p, true));
 
