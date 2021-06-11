@@ -4,6 +4,16 @@
 
 //Player& player = Player();
 
+#pragma region > Przeciwnicy  < 
+
+void spawn_fly()
+{
+
+}
+
+#pragma endregion
+
+
 int main()
 {
 	print("start");
@@ -12,10 +22,10 @@ int main()
 	RenderWindow window(VideoMode(SCREEN_SIZE.x, SCREEN_SIZE.y), "Gra", Style::Titlebar | Style::Close);
 
 	// wczytanie tekstur gracza i stworzenie jego obiektu
-	Texture t, t1, t2;
+	Texture t, t2;
 	t.loadFromFile("../Assets/Player-Spritesheet.png");
-	t1.loadFromFile("../Assets/Enemy-Fly.png");
 	t2.loadFromFile("../Assets/Player-Projectile.png");
+
 
 
 	std::unique_ptr<Player> _player = make_unique<Player>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 375), generate_sprite(&t, Vector2f(50.f, 50.f)), false, Vector2i(100, 100));
@@ -32,31 +42,34 @@ int main()
 	Engine::objects.push_back(std::move(_player));
 	//player = *_player;
 
-	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(&t1, Vector2f(62.f, 62.f)), true, Vector2i(125, 125));
+	Texture t1, t3;
 
-	e->animations.push_back(new AnimationClip(0, 4, 10, *e, true));
-	e->animations.push_back(new AnimationClip(6, 3, 16, *e, false));
+	t1.loadFromFile("../Assets/Fly.png");
+	t3.loadFromFile("../Assets/Enemy-Bullet.png");
+
+	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(&t1, Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+
+	e->animations.push_back(new AnimationClip(0, 3, 12, *e, true));
+	e->animations.push_back(new AnimationClip(4, 2, 16, *e, false));
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
 
-	e->textures.push_back(new Texture(t2));
+	e->textures.push_back(new Texture(t3));
 
-	e->set_move(Vector2f(1.f, -0.25f), 2.5f, 1, true);
+	e->set_move(Vector2f(1.f, -0.25f), 3.75f, 1, true);
 
 	void (*f)(Enemy&) = [](Enemy& e)
 	{	float angle = e.angle_to_player();
-		e.shoot(0, Vector2i(25, 50), 10, angle, 0, 1);
+		e.shoot(0, Vector2i(25, 25), 10, angle - 10.f, 20.f, 2, 3, 8);
 		print(to_string(angle));
 	};
-
 	e->attacks.push_back(f);
-	
+
+	e->bullet_velocity_mod = 0.95f;
+
 	AttackTimer* at1 = new AttackTimer(1.f, *e);
 
-	//e->start();
-
 	Engine::objects.push_back(std::move(e));
-	
 
 	// inicjalizacja dodatkowych komponentów
 	InputHandler input(dynamic_cast<Player*>(Engine::objects[0].get()));

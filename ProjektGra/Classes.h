@@ -143,7 +143,7 @@ public:
 
 	void take_hit(int _amount);
 	virtual void death();
-	void shoot(int _sprite_index, Vector2i _frame, int _damage, float _start_angle, float _angle_diff, int _bullets_count);
+	void shoot(int _sprite_index, Vector2i _frame, int _damage, float _start_angle, float _angle_diff, int _bullets_count, int _frames, int _framerate);
 
 	virtual void render(RenderWindow*);
 };
