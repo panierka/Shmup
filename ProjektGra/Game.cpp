@@ -19,7 +19,7 @@ int main()
 	print("start");
 
 	// stworzenie okna gry
-	RenderWindow window(VideoMode(SCREEN_SIZE.x, SCREEN_SIZE.y), "Gra", Style::Titlebar | Style::Close);
+	RenderWindow window(VideoMode(SCREEN_SIZE.x + 200u, SCREEN_SIZE.y), "Gra", Style::Titlebar | Style::Close);
 
 	// wczytanie tekstur gracza i stworzenie jego obiektu
 	Texture t, t2;
@@ -110,6 +110,7 @@ int main()
 
 		// wykonanie siê obliczeñ czasomierzy
 		tick_timers(_frame_time);
+		
 	}
 
 	/*for (std::size_t i = 0; i < Engine::objects.size(); i++)

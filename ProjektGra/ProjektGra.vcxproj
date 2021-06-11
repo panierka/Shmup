@@ -147,6 +147,7 @@
     <ClCompile Include="AnimationSystem.cpp" />
     <ClCompile Include="Classes.cpp" />
     <ClCompile Include="Defs.cpp" />
+    <ClCompile Include="DisplayHP.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="KeyAction.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="AnimationClip.h" />
     <ClInclude Include="AnimationSystem.h" />
     <ClInclude Include="Classes.h" />
+    <ClInclude Include="DisplayHP.h" />
     <ClInclude Include="KeyAction.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="SoundEffects.h" />

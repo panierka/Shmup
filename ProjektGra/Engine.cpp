@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "DisplayHP.h"
 
 Shader Engine::shader{};
 
@@ -41,6 +42,8 @@ void Engine::update(float dt)
 	{
 		objects[i]->render(window);
 	}
+
+	window->draw(*playerhp.text);
 
 	//
 	//for (auto target : phy_objects)
