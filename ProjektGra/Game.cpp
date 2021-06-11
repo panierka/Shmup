@@ -50,7 +50,7 @@ int main()
 	};
 
 	e->attacks.push_back(f);
-
+	
 	AttackTimer* at1 = new AttackTimer(1.f, *e);
 
 	//e->start();
@@ -65,7 +65,7 @@ int main()
 	Clock clock;
 	float _frame_time = clock.getElapsedTime().asSeconds();
 
-	sound1.add_sound("pogchamp", "../Assets/Sounds/Soundtrack.wav", 20);
+	//sound1.add_sound("pogchamp", "../Assets/Sounds/Soundtrack.wav", 20);
 
 	//sound1.play_sound("pogchamp");
 	/*BackgroundMusic background;*/
@@ -102,7 +102,7 @@ int main()
 	{
 		Engine::objects[i].reset();
 	}*/
-
+	
 	delete at1;
 
 	print("");

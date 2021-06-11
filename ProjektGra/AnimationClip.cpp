@@ -40,19 +40,26 @@ AnimationClip::~AnimationClip()
 AnimationClip::AnimationClip(int s_i, int f, float _fps, PhysicalObject& o, bool _idle):
 	starting_index(s_i), frames(f), obj(o), current_frame(0), idle(_idle)
 {
-	timer = new Timer(1 / _fps, this, true, !_idle);
+	std::unique_ptr<Timer> t = make_unique<Timer>(1 / _fps, this, true, !_idle);
+	timer = t.get();
+
+	timers.push_back(std::move(t));
 }
 
 BlinkEffect::BlinkEffect(Character* g) :
 	tint_value(0.f)
 {
 	g->effect = this;
-	timer = new Timer(0.15f, this, true, false);
+
+	std::unique_ptr<Timer> t = make_unique<Timer>(0.15f, this, true, false);
+	timer = t.get();
+
+	timers.push_back(std::move(t));
 }
 
 BlinkEffect::~BlinkEffect()
 {
-	delete timer;
+	//delete timer;
 }
 
 void BlinkEffect::activate()
@@ -77,7 +84,10 @@ AttackTimer::AttackTimer(float _time, Enemy& _me) :
 {
 	if (me.attacks.size() > 0)
 	{
-		timer = new Timer(_time, this, true, false);
+		std::unique_ptr<Timer> t = make_unique<Timer>(_time, this, true, false);
+		timer = t.get();
+
+		timers.push_back(std::move(t));
 	}
 	else
 	{
@@ -87,7 +97,7 @@ AttackTimer::AttackTimer(float _time, Enemy& _me) :
 
 AttackTimer::~AttackTimer()
 {
-	delete timer;
+	//delete timer;
 }
 
 void AttackTimer::function()

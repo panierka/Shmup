@@ -26,6 +26,8 @@ const float RAD2DEG = 1 / 57.3f;
 
 //
 extern Sounds sound1;
+extern vector<unique_ptr<Timer>> timers;
+
 
 // podstawowy obiekt istniej¹cy w grze: porusza siê i ma jak¹œ grafikê
 class GameObject: public std::enable_shared_from_this<GameObject>

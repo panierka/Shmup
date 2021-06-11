@@ -2,7 +2,7 @@
 #include<iostream> // debug only
 
 
-vector<Timer*> timers{};
+vector<unique_ptr<Timer>> timers{};
 
 Sounds sound1{};
 
@@ -153,7 +153,15 @@ void Timer::tick(float _deltaT)
 
 		if (!reset)
 		{
-			delete this;
+			for (auto it = begin(timers); it != end(timers); ++it)
+			{
+				if (it->get() == this)
+				{
+					it->reset();
+					timers.erase(it);
+					return;
+				}
+			}
 		}
 	}
 }
@@ -162,7 +170,7 @@ Timer::Timer(float _time, Callable* _call, bool _reset, bool _start_paused) :
 	max_time(_time), current_time(0), call(_call), reset(_reset), paused(true)
 {
 	timers_index = timers.size();
-	timers.push_back(this);
+	//timers.push_back(this);
 
 	if (!_start_paused)
 	{
@@ -188,22 +196,16 @@ void Timer::stop()
 
 Timer::~Timer()
 {
-	timers.erase(std::remove(timers.begin(), timers.end(), this));
+	// timers.erase(std::remove(timers.begin(), timers.end(), this));
 	
 	print("usunieto timer");
 }
 
 void tick_timers(float _deltaT)
 {
-	for (Timer* _timer : timers)
+	for (int i = 0; i < timers.size(); i++)
 	{
-		if (_timer == nullptr)
-		{
-			print("-------------------------------- nullptr");
-			continue;
-		}
-
-		_timer->tick(_deltaT);
+		timers[i]->tick(_deltaT);
 	}
 }
 
