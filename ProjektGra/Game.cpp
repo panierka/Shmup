@@ -1,6 +1,7 @@
 #include"Classes.h"
 #include"KeyAction.h"
 #include<iostream>
+#include"WaveSpawner.h"
 
 //Player& player = Player();
 
@@ -8,7 +9,30 @@
 
 void spawn_fly()
 {
+	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(texture_atlas["fly"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
 
+	e->animations.push_back(new AnimationClip(0, 3, 12, *e, true));
+	e->animations.push_back(new AnimationClip(4, 2, 10, *e, false));
+
+	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
+
+	e->set_move(Vector2f(1.f, -0.25f), 3.25f, 1, true);
+
+	void (*f)(Enemy&) = [](Enemy& e)
+	{	
+		float angle = e.angle_to_player();
+		e.call_animation(1);
+		e.shoot("enemy-bullet", Vector2i(25, 25), 10, angle - 12.5f, 25.f, 2, 3, 8);
+	};
+	e->attacks.push_back(f);
+
+	e->bullet_velocity_mod = 0.85f;
+
+	e->add_max_health(28);
+
+	AttackTimer* at1 = new AttackTimer(1.f, *e);
+
+	Engine::objects.push_back(std::move(e));
 }
 
 #pragma endregion
@@ -56,32 +80,6 @@ int main()
 
 	t1.loadFromFile("../Assets/Fly.png");
 	t3.loadFromFile("../Assets/Enemy-Bullet.png");
-	
-	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(texture_atlas["fly"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
-
-	e->animations.push_back(new AnimationClip(0, 3, 12, *e, true));
-	e->animations.push_back(new AnimationClip(4, 2, 10, *e, false));
-
-
-	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
-	
-	e->set_move(Vector2f(1.f, -0.25f), 3.75f, 1, true);
-	
-	void (*f)(Enemy&) = [](Enemy& e)
-	{	float angle = e.angle_to_player();
-		e.call_animation(1);
-		e.shoot("enemy-bullet", Vector2i(25, 25), 10, angle - 10.f, 20.f, 2, 3, 8);
-		print(to_string(angle));
-	};
-	e->attacks.push_back(f);
-
-	e->bullet_velocity_mod = 0.95f;
-	
-	e->add_max_health(48);
-
-	AttackTimer* at1 = new AttackTimer(1.f, *e);
-
-	Engine::objects.push_back(std::move(e));
 
 	// inicjalizacja dodatkowych komponentów
 	InputHandler input(dynamic_cast<Player*>(Engine::objects[0].get()));
@@ -91,9 +89,14 @@ int main()
 	float _frame_time = clock.getElapsedTime().asSeconds();
 
 	//sound1.add_sound("pogchamp", "../Assets/Sounds/Soundtrack.wav", 20);
-
+	
 	//sound1.play_sound("pogchamp");
 	/*BackgroundMusic background;*/
+
+	WaveSpawner::big_enemies.push_back(spawn_fly);
+
+	WaveSpawner wave;
+	
 
 	window.setFramerateLimit(60);
 	// pêtla programu
@@ -111,6 +114,9 @@ int main()
 		}
 		// dynamiczne kalkulowanie realnego delta t miêdzy kolejnymi klatkami z "wyg³adzaniem"
 		_frame_time = clock.restart().asSeconds();
+
+
+		wave.spawn(_frame_time);
 
 		// sprawdzenie akcji gracza
 		input.check_input();

@@ -150,6 +150,7 @@
     <ClCompile Include="KeyAction.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="SoundEffects.cpp" />
+    <ClCompile Include="WaveSpawner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationClip.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="KeyAction.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="SoundEffects.h" />
+    <ClInclude Include="WaveSpawner.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -321,6 +321,12 @@ Player::Player(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
 	bullet_velocity_mod = 1.5f;
 }
 
+Player::~Player()
+{
+	delete inv_frames;
+	delete inv_charger;
+}
+
 void Player::add_max_ammo(int _max)
 {
 	max_ammo += _max;
@@ -382,6 +388,7 @@ void Character::take_hit(int _amount)
 {
 	if (invulnerable)
 	{
+		setHP((_amount / 2) + 1);
 		return;
 	}
 

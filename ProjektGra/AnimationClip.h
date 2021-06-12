@@ -63,7 +63,7 @@ class InvFramesCharger : public CallableTimer
 {
 public:
 	bool fully_charged = false;
-	float charge_value = 2.6f;
+	float charge_value = 3.1f;
 
 private:
 	float current_charge = 0;

@@ -169,6 +169,7 @@ private:
 
 public:
 	Player(Vector2f v, Sprite* s, bool b, Vector2i);
+	~Player();
 	void setHP(int _amount);
 	virtual Vector2f handle_borders(Vector2f);
 

@@ -2,7 +2,7 @@
 #include<iostream>
 
 // prêdkoœæ gracza wyra¿ona w jednostkach gry na sekundê
-const float PLAYER_SPEED = 5.25f;
+const float PLAYER_SPEED = 6.5f;
 
 void KeyAction::Perform()
 {
