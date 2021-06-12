@@ -114,17 +114,21 @@ int main()
 			
 			if (_event.type == Event::KeyReleased)
 			{
-				if (_event.key.code == Keyboard::PageDown)
+				if (_event.key.code == Keyboard::Down)
 				{
 					menu.move_down();
 				}
-				if (_event.key.code == Keyboard::PageUp)
+				if (_event.key.code == Keyboard::Up)
 				{
 					menu.move_up();
 				}
-				if (_event.key.code == Keyboard::Enter)
+				if (_event.key.code == Keyboard::Enter && menu.current_position == 0)
 				{
 					exit_menu = true;
+				}
+				if (_event.key.code == Keyboard::Enter && menu.current_position == 2)
+				{
+					return 0;
 				}
 			}
 		}

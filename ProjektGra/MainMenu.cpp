@@ -14,6 +14,7 @@ MainMenu::MainMenu(int screen_size_x, int screen_size_y)
 	text[2].setString("Exit");
 	text[2].setPosition(Vector2f(400u, 550u));
 	current_position = 0;
+	text[current_position].setFillColor(Color::Red);
 }
 
 MainMenu::~MainMenu()
@@ -31,7 +32,7 @@ void MainMenu::print_menu(RenderWindow& window)
 
 void MainMenu::move_up()
 {
-	if (current_position > 0)
+	if (current_position  > 0)
 	{
 		text[current_position].setFillColor(Color::White);
 		current_position--;
@@ -41,7 +42,7 @@ void MainMenu::move_up()
 
 void MainMenu::move_down()
 {
-	if (current_position < NUMBER_OF_ELEMENTS)
+	if (current_position + 1 < NUMBER_OF_ELEMENTS)
 	{
 		text[current_position].setFillColor(Color::White);
 		current_position++;

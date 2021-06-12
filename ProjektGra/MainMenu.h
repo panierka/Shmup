@@ -3,6 +3,7 @@
 
 using namespace sf;
 
+
 #define NUMBER_OF_ELEMENTS 3
 class MainMenu
 {
@@ -12,8 +13,8 @@ public:
 	void print_menu(RenderWindow& window);
 	void move_up();
 	void move_down();
+	int current_position;
 private:
 	Font* font;
 	Text text[NUMBER_OF_ELEMENTS]{};
-	int current_position;
 };
