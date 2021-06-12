@@ -28,7 +28,7 @@ void AnimationClip::call()
 	obj.ready_to_action = idle;
 
 	current_frame = 0;
-	obj.change_sprite(0);
+	obj.change_sprite(starting_index);
 	timer->start();
 }
 

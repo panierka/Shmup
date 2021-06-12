@@ -35,6 +35,58 @@ void spawn_fly()
 	Engine::objects.push_back(std::move(e));
 }
 
+void spawn_block1()
+{
+	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(texture_atlas["block1"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+
+	e->animations.push_back(new AnimationClip(0, 2, 12, *e, true));
+	e->animations.push_back(new AnimationClip(2, 2, 8, *e, false));
+
+	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
+
+	e->set_move(Vector2f(1.f, -0.35f), 1.75f, 1, true);
+
+	void (*f)(Enemy&) = [](Enemy& e)
+	{
+		float angle = e.angle_to_player();
+		e.call_animation(1);
+		e.shoot("enemy-bullet", Vector2i(25, 25), 12, 0, 0, 1, 3, 8);
+	};
+	e->attacks.push_back(f);
+
+	e->bullet_velocity_mod = 0.75f;
+
+	e->add_max_health(21);
+
+	AttackTimer* at1 = new AttackTimer(2.f, *e);
+
+	Engine::objects.push_back(std::move(e));
+}
+
+void spawn_block2()
+{
+	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(texture_atlas["block2"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+
+	e->animations.push_back(new AnimationClip(0, 2, 10, *e, true));
+
+	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
+
+	e->set_move(Vector2f(1.f, -0.35f), 1.75f, 1, true);
+
+	void (*f)(Enemy&) = [](Enemy& e)
+	{
+		e.setHP(1);
+	};
+	e->attacks.push_back(f);
+
+	e->bullet_velocity_mod = 0.85f;
+
+	e->add_max_health(36);
+
+	AttackTimer* at1 = new AttackTimer(1.f, *e);
+
+	Engine::objects.push_back(std::move(e));
+}
 #pragma endregion
 
 
@@ -56,6 +108,8 @@ int main()
 	update_texture_atlas("fly", "Fly");
 	update_texture_atlas("player-bullet", "Player-Projectile");
 	update_texture_atlas("enemy-bullet", "Enemy-Bullet");
+	update_texture_atlas("block1", "Block1");
+	update_texture_atlas("block2", "Block2");
 
 #pragma endregion
 
@@ -95,7 +149,11 @@ int main()
 
 	WaveSpawner::big_enemies.push_back(spawn_fly);
 
+	WaveSpawner::small_enemies.push_back(spawn_block1);
+	WaveSpawner::small_enemies.push_back(spawn_block2);
+
 	WaveSpawner wave;
+	wave.set_wave(15);
 	
 
 	window.setFramerateLimit(60);
