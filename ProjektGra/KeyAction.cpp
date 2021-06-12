@@ -65,8 +65,15 @@ InputHandler::InputHandler(Player* _player)
 		{
 			if (player->ready_to_action)
 			{
-				player->call_animation(1);
-				player->shoot("player-bullet", Vector2i(25, 50), 10, 0, 0, 1, 4, 24);
+				if (player->try_use_ammo())
+				{
+					player->call_animation(1);
+					player->shoot("player-bullet", Vector2i(25, 50), 10, 0, 0, 1, 4, 24);
+				}
+				else
+				{
+					// dŸwiêk
+				}
 			}
 		}));
 	
@@ -74,6 +81,8 @@ InputHandler::InputHandler(Player* _player)
 		{
 			if (player->ready_to_action && player->inv_charger->fully_charged)
 			{
+				player->reload();
+
 				player->call_animation(2);
 				player->invulnerable = true;
 

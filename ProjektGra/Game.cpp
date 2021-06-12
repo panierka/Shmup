@@ -44,7 +44,8 @@ int main()
 	
 	_player->create_collider(Vector2f(0.f, 14.f), Vector2f(36.f, 40.f));
 
-	_player->set_max_health(60);
+	_player->add_max_health(60);
+	_player->add_max_ammo(6);
 
 	//_player->start();
 
@@ -76,7 +77,7 @@ int main()
 
 	e->bullet_velocity_mod = 0.95f;
 	
-	e->set_max_health(35);
+	e->add_max_health(48);
 
 	AttackTimer* at1 = new AttackTimer(1.f, *e);
 

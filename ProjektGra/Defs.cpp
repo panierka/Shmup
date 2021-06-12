@@ -321,6 +321,34 @@ Player::Player(Vector2f v, Sprite* s, bool b, Vector2i _frame_size):
 	bullet_velocity_mod = 1.5f;
 }
 
+void Player::add_max_ammo(int _max)
+{
+	max_ammo += _max;
+
+	reload();
+}
+
+bool Player::try_use_ammo()
+{
+	if (current_ammo > 0)
+	{
+		current_ammo--;
+
+		DisplayHP::set_count(current_ammo, max_ammo, DisplayHP::ammo_text);
+
+		return true;
+	}
+	
+	return false;
+}
+
+void Player::reload()
+{
+	current_ammo = max_ammo;
+
+	DisplayHP::set_count(current_ammo, max_ammo, DisplayHP::ammo_text);
+}
+
 Vector2f Player::handle_borders(Vector2f _pos)
 {
 	float _off0 = collider->width / 2.f - offset.x;
@@ -377,11 +405,11 @@ void Character::setHP(int _amount)
 
 }
 
-void Character::set_max_health(int _max)
+void Character::add_max_health(int _max)
 {
 	max_health = _max;
 
-	setHP(_max);
+	setHP(max_health);
 }
 
 void Character::death()

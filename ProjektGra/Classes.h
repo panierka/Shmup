@@ -139,7 +139,7 @@ protected:
 	int facing_direction_y{};
 	int projectile_collision_mask;
 
-	int max_health;
+	int max_health = 0;
 	int current_health;
 
 public:
@@ -150,7 +150,7 @@ public:
 	virtual void death();
 	void shoot(string _tex, Vector2i _frame, int _damage, float _start_angle, float _angle_diff, int _bullets_count, int _frames, int _framerate);
 
-	void set_max_health(int _max);
+	void add_max_health(int _max);
 
 	virtual void setHP(int _amount);
 	virtual void render(RenderWindow*);
@@ -163,12 +163,21 @@ public:
 	PlayerInvFrames* inv_frames;
 	InvFramesCharger* inv_charger;
 
+private:
+	int max_ammo = 0;
+	int current_ammo; 
+
 public:
 	Player(Vector2f v, Sprite* s, bool b, Vector2i);
 	void setHP(int _amount);
 	virtual Vector2f handle_borders(Vector2f);
 
 	virtual void death();
+
+	void add_max_ammo(int _max);
+
+	bool try_use_ammo();
+	void reload();
 };
 
 // postaæ z cechami typowymi dla wroga
