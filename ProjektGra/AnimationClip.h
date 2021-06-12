@@ -15,12 +15,22 @@ public:
 	virtual ~Callable();
 };
 
-class BlinkEffect : public Callable
+class CallableTimer : public Callable
 {
 public:
-	Timer* timer;
+	Timer* timer = nullptr;
+
+public:
+	CallableTimer(float _time, CallableTimer* _call, bool _reset, bool _paused);
+	virtual ~CallableTimer();
+};
+
+class BlinkEffect : public CallableTimer
+{
+public:
 	float tint_value;
 
+public:
 	BlinkEffect(Character*);
 	~BlinkEffect();
 	void activate();
@@ -28,10 +38,9 @@ public:
 	virtual void function();
 };
 
-class AttackTimer : public Callable
+class AttackTimer : public CallableTimer
 {
 public:
-	Timer* timer;
 	Enemy& me;
 
 public:
@@ -41,11 +50,8 @@ public:
 	virtual void function();
 };
 
-class PlayerInvFrames : public Callable
+class PlayerInvFrames : public CallableTimer
 {
-public:
-	Timer* timer;
-
 public:
 	PlayerInvFrames();
 	~PlayerInvFrames();
@@ -53,7 +59,7 @@ public:
 	virtual void function();
 };
 
-class AnimationClip : public Callable
+class AnimationClip : public CallableTimer
 {
 private:
 	unsigned int starting_index;
@@ -64,7 +70,6 @@ private:
 public:
 	PhysicalObject& obj;
 	bool idle;
-	Timer* timer;
 
 	//float frames_per_second;
 	

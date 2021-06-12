@@ -34,36 +34,24 @@ void AnimationClip::call()
 
 AnimationClip::~AnimationClip()
 {
-	// delete timer
-	timer->destroy();
-	timer = nullptr;
+
 }
 
 AnimationClip::AnimationClip(int s_i, int f, float _fps, PhysicalObject& o, bool _idle):
-	starting_index(s_i), frames(f), obj(o), current_frame(0), idle(_idle)
+	starting_index(s_i), frames(f), obj(o), current_frame(0), idle(_idle), CallableTimer(1 / _fps, this, true, !_idle)
 {
-	std::unique_ptr<Timer> t = make_unique<Timer>(1 / _fps, this, true, !_idle);
-	timer = t.get();
 
-	timers.push_back(std::move(t));
 }
 
 BlinkEffect::BlinkEffect(Character* g) :
-	tint_value(0.f)
+	tint_value(0.f), CallableTimer(0.15f, this, true, false)
 {
 	g->effect = this;
-
-	std::unique_ptr<Timer> t = make_unique<Timer>(0.15f, this, true, false);
-	timer = t.get();
-
-	timers.push_back(std::move(t));
 }
 
 BlinkEffect::~BlinkEffect()
 {
-	// delete timer
-	timer->destroy();
-	timer = nullptr;
+
 }
 
 void BlinkEffect::activate()
@@ -84,18 +72,11 @@ Callable::~Callable()
 }
 
 AttackTimer::AttackTimer(float _time, Enemy& _me) :
-	me(_me)
+	me(_me), CallableTimer(_time, this, true, false)
 {
-	if (me.attacks.size() > 0)
-	{
-		std::unique_ptr<Timer> t = make_unique<Timer>(_time, this, true, false);
-		timer = t.get();
+	_me.attack_timer = this;
 
-		timers.push_back(std::move(t));
-
-		_me.attack_timer = this;
-	}
-	else
+	if (me.attacks.size() <= 0)
 	{
 		print("brak zdefiniowanych atakow u przeciwnika");
 	}
@@ -103,9 +84,7 @@ AttackTimer::AttackTimer(float _time, Enemy& _me) :
 
 AttackTimer::~AttackTimer()
 {
-	// delete timer
-	timer->destroy();
-	timer = nullptr;
+
 }
 
 void AttackTimer::function()
@@ -114,24 +93,34 @@ void AttackTimer::function()
 	me.attacks[_random_attack_index](me);
 }
 
-PlayerInvFrames::PlayerInvFrames()
+PlayerInvFrames::PlayerInvFrames():
+	CallableTimer(0.083f * 3.f, this, true, false)
 {
-	std::unique_ptr<Timer> t = make_unique<Timer>(0.083f * 3.f, this, true, false);
-	timer = t.get();
 
-	timers.push_back(std::move(t));
 }
 
 PlayerInvFrames::~PlayerInvFrames()
 {
-	// delete timer
-	timer->destroy();
-	timer = nullptr;
+
 }
 
 void PlayerInvFrames::function()
 {
 	InputHandler::player->invulnerable = false;
-	print("--------------------------------------------------- poggers");
 	timer->stop();
+}
+
+CallableTimer::CallableTimer(float _time, CallableTimer* _call, bool _reset, bool _paused)
+{
+	std::unique_ptr<Timer> t = make_unique<Timer>(_time, _call, _reset, _paused);
+	timer = t.get();
+
+	timers.push_back(std::move(t));
+}
+
+CallableTimer::~CallableTimer()
+{
+	// delete timer
+	timer->destroy();
+	timer = nullptr;
 }
