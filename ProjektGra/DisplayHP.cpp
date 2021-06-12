@@ -4,32 +4,41 @@
 DisplayHP::DisplayHP()
 {
 	font = new Font();
-	text = new Text();
+	health_text = new Text();
+	dodge_text = new Text();
 
 	font->loadFromFile("../Assets/arial.ttf");
-	text->setFont(*font);
-	text->setString("Wielki Pan Rektor");
-	text->setCharacterSize(30);
-	text->setFillColor(Color::Red);
+	health_text->setFont(*font);
+	health_text->setString("Wielki Pan Rektor");
+	health_text->setCharacterSize(30);
+	health_text->setFillColor(Color::Red);
 
-	set_percentage(876.f / 1099.f);
+	dodge_text->setFont(*font);
+	dodge_text->setString("Wielki Pan Rektor");
+	dodge_text->setCharacterSize(30);
+	dodge_text->setFillColor(Color::White);
 
-	text->setPosition(SCREEN_SIZE.x + 40.f, SCREEN_SIZE.y - 100.f);
+	set_percentage(876.f / 1099.f, DisplayHP::health_text);
+
+	health_text->setPosition(SCREEN_SIZE.x + 40.f, SCREEN_SIZE.y - 100.f);
+	dodge_text->setPosition(SCREEN_SIZE.x + 40.f, SCREEN_SIZE.y - 200.f);
 }
 
 DisplayHP::~DisplayHP()
 {
 	delete font;
-	delete text;
+	delete health_text;
 }
 
-void DisplayHP::set_percentage(float p)
+void DisplayHP::set_percentage(float p, Text* _text)
 {
 	int i = round(p * 100);
-	text->setString(to_string(i) + "%");
+
+	_text->setString(to_string(i) + "%");
 }
 
 DisplayHP playerhp{};
 
 Font* DisplayHP::font{};
-Text* DisplayHP::text{};
+Text* DisplayHP::health_text{};
+Text* DisplayHP::dodge_text{};

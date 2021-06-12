@@ -342,7 +342,7 @@ void Player::setHP(int _amount)
 {
 	Character::setHP(_amount);
 
-	DisplayHP::set_percentage(static_cast<float>(current_health) / static_cast<float>(max_health));
+	DisplayHP::set_percentage(static_cast<float>(current_health) / static_cast<float>(max_health), DisplayHP::health_text);
 }
 
 void Player::death()

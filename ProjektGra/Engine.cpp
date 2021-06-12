@@ -49,7 +49,8 @@ void Engine::update(float dt)
 
 	window->draw(*rectangle);
 
-	window->draw(*playerhp.text);
+	window->draw(*DisplayHP::health_text);
+	window->draw(*DisplayHP::dodge_text);
 
 	//
 	//for (auto target : phy_objects)

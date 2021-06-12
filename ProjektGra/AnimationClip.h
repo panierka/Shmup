@@ -59,6 +59,25 @@ public:
 	virtual void function();
 };
 
+class InvFramesCharger : public CallableTimer
+{
+public:
+	bool fully_charged = false;
+	int charge_value = 3;
+
+private:
+	int current_charge = 0;
+
+public:
+	InvFramesCharger();
+	~InvFramesCharger();
+
+	virtual void function();
+
+private:
+	void set_ready();
+};
+
 class AnimationClip : public CallableTimer
 {
 private:

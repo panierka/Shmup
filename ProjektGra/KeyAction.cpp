@@ -47,8 +47,9 @@ void InputHandler::check_input()
 InputHandler::InputHandler(Player* _player)
 { 
 	player = _player;
-
+	
 	player->inv_frames = new PlayerInvFrames();
+	player->inv_charger = new InvFramesCharger();
 	
 	defined_actions.push_back(new KeyAction(Keyboard::A, true, []()
 		{
@@ -71,12 +72,14 @@ InputHandler::InputHandler(Player* _player)
 	
 	defined_actions.push_back(new KeyAction(Keyboard::Space, false, []()
 		{
-			if (player->ready_to_action)
+			if (player->ready_to_action && player->inv_charger->fully_charged)
 			{
 				player->call_animation(2);
 				player->invulnerable = true;
 
 				player->inv_frames->timer->start();
+				player->inv_charger->fully_charged = false;
+				player->inv_charger->timer->start(); 
 			}
 		}));
 }

@@ -21,6 +21,7 @@ class Engine;
 class BlinkEffect;
 class AttackTimer;
 class PlayerInvFrames;
+class InvFramesCharger;
 // "globalne"
 
 const Vector2u SCREEN_SIZE(700u, 950u); // ekran w pikselach
@@ -160,6 +161,7 @@ class Player : public Character
 {
 public:
 	PlayerInvFrames* inv_frames;
+	InvFramesCharger* inv_charger;
 
 public:
 	Player(Vector2f v, Sprite* s, bool b, Vector2i);

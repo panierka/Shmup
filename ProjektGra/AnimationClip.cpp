@@ -124,3 +124,45 @@ CallableTimer::~CallableTimer()
 	timer->destroy();
 	timer = nullptr;
 }
+
+InvFramesCharger::InvFramesCharger() :
+	CallableTimer(0.1f, this, true, false)
+{
+	set_ready();
+}
+
+InvFramesCharger::~InvFramesCharger()
+{
+}
+
+void InvFramesCharger::function()
+{
+	if (!fully_charged)
+	{
+		if (current_charge < 100)
+		{
+			current_charge += charge_value;
+
+			float f = static_cast<float>(current_charge) / 100.f;
+
+			if (f > 1.f)
+			{
+				f = 1.f;
+			}
+
+			DisplayHP::set_percentage(f, DisplayHP::dodge_text);
+		}
+		else
+		{
+			set_ready();
+			timer->stop();
+		}
+	}
+}
+
+void InvFramesCharger::set_ready()
+{
+	current_charge = 0;
+	fully_charged = true;
+	DisplayHP::set_percentage(1.f, DisplayHP::dodge_text);
+}
