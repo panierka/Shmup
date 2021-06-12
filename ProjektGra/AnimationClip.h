@@ -1,5 +1,6 @@
 #pragma once
 #include"Classes.h"
+#include"KeyAction.h"
 
 class Timer;
 class PhysicalObject;
@@ -36,6 +37,18 @@ public:
 public:
 	AttackTimer(float _time, Enemy& _me);
 	~AttackTimer();
+
+	virtual void function();
+};
+
+class PlayerInvFrames : public Callable
+{
+public:
+	Timer* timer;
+
+public:
+	PlayerInvFrames();
+	~PlayerInvFrames();
 
 	virtual void function();
 };

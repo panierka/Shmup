@@ -113,3 +113,25 @@ void AttackTimer::function()
 	int _random_attack_index = random_number(0, me.attacks.size() - 1);
 	me.attacks[_random_attack_index](me);
 }
+
+PlayerInvFrames::PlayerInvFrames()
+{
+	std::unique_ptr<Timer> t = make_unique<Timer>(0.083f * 3.f, this, true, false);
+	timer = t.get();
+
+	timers.push_back(std::move(t));
+}
+
+PlayerInvFrames::~PlayerInvFrames()
+{
+	// delete timer
+	timer->destroy();
+	timer = nullptr;
+}
+
+void PlayerInvFrames::function()
+{
+	InputHandler::player->invulnerable = false;
+	print("--------------------------------------------------- poggers");
+	timer->stop();
+}

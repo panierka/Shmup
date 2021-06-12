@@ -48,6 +48,8 @@ InputHandler::InputHandler(Player* _player)
 { 
 	player = _player;
 
+	player->inv_frames = new PlayerInvFrames();
+	
 	defined_actions.push_back(new KeyAction(Keyboard::A, true, []()
 		{
 			next_move += Vector2f(-1, 0);
@@ -64,6 +66,17 @@ InputHandler::InputHandler(Player* _player)
 			{
 				player->call_animation(1);
 				player->shoot("player-bullet", Vector2i(25, 50), 10, 0, 0, 1, 4, 24);
+			}
+		}));
+	
+	defined_actions.push_back(new KeyAction(Keyboard::Space, false, []()
+		{
+			if (player->ready_to_action)
+			{
+				player->call_animation(2);
+				player->invulnerable = true;
+
+				player->inv_frames->timer->start();
 			}
 		}));
 }

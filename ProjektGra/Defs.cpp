@@ -352,6 +352,11 @@ void Player::death()
 
 void Character::take_hit(int _amount)
 {
+	if (invulnerable)
+	{
+		return;
+	}
+
 	setHP(-_amount);
 
 	effect->activate();

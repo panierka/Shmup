@@ -20,6 +20,7 @@ class AnimationClip;
 class Engine;
 class BlinkEffect;
 class AttackTimer;
+class PlayerInvFrames;
 // "globalne"
 
 const Vector2u SCREEN_SIZE(700u, 950u); // ekran w pikselach
@@ -131,6 +132,7 @@ class Character : public PhysicalObject
 public:
 	float bullet_velocity_mod = 1.f;
 	BlinkEffect* effect;
+	bool invulnerable = false;
 
 protected:
 	int facing_direction_y{};
@@ -156,6 +158,9 @@ public:
 // postaæ z cechami typowymi dla gracza
 class Player : public Character
 {
+public:
+	PlayerInvFrames* inv_frames;
+
 public:
 	Player(Vector2f v, Sprite* s, bool b, Vector2i);
 	void setHP(int _amount);

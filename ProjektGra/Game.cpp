@@ -40,7 +40,8 @@ int main()
 
 	_player->animations.push_back(new AnimationClip(0, 4, 10, *_player, true));
 	_player->animations.push_back(new AnimationClip(5, 4, 18, *_player, false));
-
+	_player->animations.push_back(new AnimationClip(10, 3, 12, *_player, false));
+	
 	_player->create_collider(Vector2f(0.f, 14.f), Vector2f(36.f, 40.f));
 
 	_player->set_max_health(60);
@@ -59,6 +60,7 @@ int main()
 
 	e->animations.push_back(new AnimationClip(0, 3, 12, *e, true));
 	e->animations.push_back(new AnimationClip(4, 2, 10, *e, false));
+
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
 	

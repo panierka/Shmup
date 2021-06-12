@@ -2,6 +2,8 @@
 #include<SFML/Window.hpp>
 #include"Classes.h"
 
+class Player;
+
 class KeyAction
 {
 public:
@@ -21,10 +23,12 @@ public:
 
 class InputHandler
 {
+public:
+	static Player* player;
+
 private:
 	std::vector<KeyAction*> defined_actions;
-	static Player* player;
-	static Vector2f next_move;
+	static sf::Vector2f next_move;
 
 public:
 
