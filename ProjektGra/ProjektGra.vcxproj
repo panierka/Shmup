@@ -149,6 +149,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="KeyAction.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="SoundEffects.cpp" />
     <ClCompile Include="WaveSpawner.cpp" />
   </ItemGroup>
@@ -158,6 +159,7 @@
     <ClInclude Include="DisplayHP.h" />
     <ClInclude Include="KeyAction.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="SoundEffects.h" />
     <ClInclude Include="WaveSpawner.h" />
   </ItemGroup>

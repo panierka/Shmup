@@ -10,6 +10,7 @@
 #include<algorithm>
 #include "SoundEffects.h"
 #include "DisplayHP.h"
+#include "MainMenu.h"
 
 using namespace sf;
 using namespace std;
@@ -33,7 +34,6 @@ const float RAD2DEG = 1 / 57.3f;
 extern Sounds sound1;
 extern std::vector<unique_ptr<Timer>> timers;
 extern std::map<string, Texture*> texture_atlas;
-
 
 // podstawowy obiekt istniej¹cy w grze: porusza siê i ma jak¹œ grafikê
 class GameObject: public std::enable_shared_from_this<GameObject>
