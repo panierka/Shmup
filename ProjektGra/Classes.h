@@ -163,6 +163,10 @@ public:
 	PlayerInvFrames* inv_frames;
 	InvFramesCharger* inv_charger;
 
+	int stat_damage = 10;
+	int stat_damage_special = 4;
+	float stat_bullet_velocity = 1.f;
+
 private:
 	int max_ammo = 0;
 	int current_ammo; 

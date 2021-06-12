@@ -20,7 +20,7 @@ void WaveSpawner::set_wave(int n)
 	{
 		unique_ptr<WaveUnit> w = make_unique<WaveUnit>();
 		w->big = i < _bigs;
-		w->dt_mod += random_number(0, 10) / 10.f;
+		w->dt_mod += random_number(6, 16) / 10.f;
 
 		wave_data.push_back(std::move(w));
 	}

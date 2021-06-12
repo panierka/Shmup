@@ -68,7 +68,49 @@ InputHandler::InputHandler(Player* _player)
 				if (player->try_use_ammo())
 				{
 					player->call_animation(1);
-					player->shoot("player-bullet", Vector2i(25, 50), 10, 0, 0, 1, 4, 24);
+					player->shoot("player-bullet", Vector2i(25, 50), player->stat_damage, 0, 0, 1, 4, 24);
+				}
+				else
+				{
+					// dŸwiêk
+				}
+			}
+		}));
+
+	defined_actions.push_back(new KeyAction(Keyboard::L, false, []()
+		{
+			if (player->ready_to_action)
+			{
+				if (player->try_use_ammo())
+				{
+					player->call_animation(1);
+
+					int bonus_damage = 0;
+
+					while (player->try_use_ammo())
+					{
+						bonus_damage += player->stat_damage / 8;
+					}
+
+					for (int i = -2; i < 2; i++)
+					{
+						float _angle = i * 7.5f + random_number(0, 8);
+
+						player->bullet_velocity_mod = player->stat_bullet_velocity * random_number(80, 120) / 100.f;
+
+						player->shoot("player-bullet", Vector2i(25, 50), player->stat_damage_special + bonus_damage, _angle, 0, 1, 4, 24);
+					}
+
+					for (int i = 0; i < 2; i++)
+					{
+						float _angle = random_number(-40, 40);
+
+						player->bullet_velocity_mod = player->stat_bullet_velocity * random_number(70, 130) / 100.f;
+
+						player->shoot("player-bullet", Vector2i(25, 50), player->stat_damage_special + bonus_damage, _angle, 0, 1, 4, 24);
+					}
+
+					player->bullet_velocity_mod = player->stat_bullet_velocity;
 				}
 				else
 				{
