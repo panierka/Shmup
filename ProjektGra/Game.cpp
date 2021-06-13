@@ -187,7 +187,7 @@ void spawn_priest()
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
 
-	e->set_move(Vector2f(1.f, -0.15f), 1.1f, 1, true);
+	e->set_move(Vector2f(1.f, -0.175f), 1.05f, 1, true);
 
 	void (*f)(Enemy&) = [](Enemy& e)
 	{
@@ -204,14 +204,80 @@ void spawn_priest()
 	e->attacks.push_back(f);
 	e->attacks.push_back(f1);
 
-	e->bullet_velocity_mod = 0.65f;
+	e->bullet_velocity_mod = 0.55f;
 
 	e->add_max_health(32);
 
-	AttackTimer* at1 = new AttackTimer(4.5f, *e);
+	AttackTimer* at1 = new AttackTimer(7.f, *e);
 
 	Engine::objects.push_back(std::move(e));
 }
+
+void spawn_prince()
+{
+	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(texture_atlas["prince"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+
+	e->animations.push_back(new AnimationClip(0, 2, 8, *e, true));
+	e->animations.push_back(new AnimationClip(2, 2, 10, *e, false));
+	e->animations.push_back(new AnimationClip(5, 2, 10, *e, false));
+
+	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
+
+	e->set_move(Vector2f(1.f, -0.225f), 2.5f, 1, true);
+
+	void (*f)(Enemy&) = [](Enemy& e)
+	{
+		e.call_animation(1);
+		e.shoot("enemy-bullet", Vector2i(25, 25), 12, -45, 90, 4, 3, 8);
+	};
+
+	void (*f1)(Enemy&) = [](Enemy& e)
+	{
+		e.call_animation(1);
+		e.shoot("enemy-bullet", Vector2i(25, 25), 12, 0, 90, 4, 3, 8);
+	};
+
+	e->attacks.push_back(f);
+	e->attacks.push_back(f1);
+
+	e->bullet_velocity_mod = 1.05f;
+
+	e->add_max_health(32);
+
+	AttackTimer* at1 = new AttackTimer(1.5f, *e);
+
+	Engine::objects.push_back(std::move(e));
+}
+
+void spawn_sniper()
+{
+	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(texture_atlas["sniper"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+
+	e->animations.push_back(new AnimationClip(0, 3, 10, *e, true));
+	e->animations.push_back(new AnimationClip(4, 2, 10, *e, false));
+
+	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
+
+	e->set_move(Vector2f(1.f, -0.125f), 1.15f, 1, true);
+
+	void (*f)(Enemy&) = [](Enemy& e)
+	{
+		float angle = e.angle_to_player();
+		e.call_animation(1);
+		e.shoot("saw", Vector2i(50, 50), 58, angle, 0, 1, 3, 8);
+	};
+
+	e->attacks.push_back(f);
+
+	e->bullet_velocity_mod = 0.95f;
+
+	e->add_max_health(18);
+
+	AttackTimer* at1 = new AttackTimer(1.5f, *e);
+
+	Engine::objects.push_back(std::move(e));
+}
+
 #pragma endregion
 
 
@@ -292,6 +358,8 @@ int main()
 	update_texture_atlas("fat", "Fatman");
 	update_texture_atlas("priest", "Priest");
 	update_texture_atlas("saw", "saw");
+	update_texture_atlas("prince", "Prince");
+	update_texture_atlas("sniper", "Sniper");
 
 #pragma endregion
 
@@ -331,6 +399,8 @@ int main()
 	WaveSpawner::big_enemies.push_back(spawn_fly);
 	WaveSpawner::big_enemies.push_back(spawn_fatman);
 	WaveSpawner::big_enemies.push_back(spawn_priest);
+	WaveSpawner::big_enemies.push_back(spawn_prince);
+	WaveSpawner::big_enemies.push_back(spawn_sniper);
 
 	WaveSpawner::small_enemies.push_back(spawn_block1);
 	WaveSpawner::small_enemies.push_back(spawn_block2);
