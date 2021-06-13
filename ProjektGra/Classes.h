@@ -232,6 +232,9 @@ public:
 	~Timer();
 };
 
+template<typename T>
+T magnitude(Vector2<T> v);
+
 // pomocnicza funkcja do szybkiego i sformatowanego wypisywania w konsoli
 void print(string);
 

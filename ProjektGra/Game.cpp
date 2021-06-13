@@ -143,6 +143,39 @@ void spawn_block3()
 
 	Engine::objects.push_back(std::move(e));
 }
+
+void spawn_block4()
+{
+	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(texture_atlas["block5"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+
+	e->animations.push_back(new AnimationClip(0, 2, 10, *e, true));
+	e->animations.push_back(new AnimationClip(2, 2, 14, *e, false));
+
+	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
+
+	e->set_move(Vector2f(1.f, -0.35f), 1.75f, 1, true);
+
+	void (*f)(Enemy&) = [](Enemy& e)
+	{
+		if (magnitude(InputHandler::player->position - e.position) > 6.75f * ONE_UNIT_SIZE)
+		{
+			return;
+		}
+
+		float angle = e.angle_to_player();
+		e.call_animation(1);
+		e.shoot("enemy-bullet", Vector2i(25, 25), 10, angle , 0, 1, 3, 8);
+	};
+	e->attacks.push_back(f);
+
+	e->bullet_velocity_mod = 0.75f;
+
+	e->add_max_health(23);
+
+	AttackTimer* at1 = new AttackTimer(0.25f, *e);
+
+	Engine::objects.push_back(std::move(e));
+}
 #pragma endregion
 
 
@@ -218,6 +251,7 @@ int main()
 	update_texture_atlas("block1", "Block1");
 	update_texture_atlas("block2", "Block2");
 	update_texture_atlas("block3", "Block3");
+	update_texture_atlas("block5", "Block5");
 	update_texture_atlas("player-bullet2", "player-bullet-2");
 	update_texture_atlas("fat", "Fatman");
 
@@ -262,6 +296,7 @@ int main()
 	WaveSpawner::small_enemies.push_back(spawn_block1);
 	WaveSpawner::small_enemies.push_back(spawn_block2);
 	WaveSpawner::small_enemies.push_back(spawn_block3);
+	WaveSpawner::small_enemies.push_back(spawn_block4);
 
 	WaveSpawner wave;
 	wave.set_wave(15);
