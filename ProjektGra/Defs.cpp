@@ -541,7 +541,7 @@ Vector2f Enemy::handle_borders(Vector2f _pos)
 
 float Enemy::angle_to_player()
 {
-	Vector2f diff = position - Engine::objects[0]->position;
+	Vector2f diff = position - InputHandler::player->position; //Engine::objects[0]->position;
 	
 
 	return atan2f(-diff.x, -diff.y) / RAD2DEG;

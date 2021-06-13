@@ -157,7 +157,7 @@ void spawn_block4()
 
 	void (*f)(Enemy&) = [](Enemy& e)
 	{
-		if (magnitude(InputHandler::player->position - e.position) > 6.75f * ONE_UNIT_SIZE)
+		if (magnitude(InputHandler::player->position - e.position) > 5.75f * ONE_UNIT_SIZE)
 		{
 			return;
 		}
@@ -173,6 +173,42 @@ void spawn_block4()
 	e->add_max_health(23);
 
 	AttackTimer* at1 = new AttackTimer(0.25f, *e);
+
+	Engine::objects.push_back(std::move(e));
+}
+
+void spawn_priest()
+{
+	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(texture_atlas["priest"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+
+	e->animations.push_back(new AnimationClip(0, 3, 8, *e, true));
+	e->animations.push_back(new AnimationClip(4, 3, 8, *e, false));
+	e->animations.push_back(new AnimationClip(7, 3, 8, *e, false));
+
+	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
+
+	e->set_move(Vector2f(1.f, -0.15f), 1.1f, 1, true);
+
+	void (*f)(Enemy&) = [](Enemy& e)
+	{
+		e.call_animation(1);
+		e.shoot("enemy-bullet", Vector2i(25, 25), 12, -33, 11, 6, 3, 8);
+	};
+
+	void (*f1)(Enemy&) = [](Enemy& e)
+	{
+		e.call_animation(2);
+		spawn_block1();
+	};
+
+	e->attacks.push_back(f);
+	e->attacks.push_back(f1);
+
+	e->bullet_velocity_mod = 0.65f;
+
+	e->add_max_health(32);
+
+	AttackTimer* at1 = new AttackTimer(4.5f, *e);
 
 	Engine::objects.push_back(std::move(e));
 }
@@ -254,6 +290,8 @@ int main()
 	update_texture_atlas("block5", "Block5");
 	update_texture_atlas("player-bullet2", "player-bullet-2");
 	update_texture_atlas("fat", "Fatman");
+	update_texture_atlas("priest", "Priest");
+	update_texture_atlas("saw", "saw");
 
 #pragma endregion
 
@@ -292,6 +330,7 @@ int main()
 		/*BackgroundMusic background;*/
 	WaveSpawner::big_enemies.push_back(spawn_fly);
 	WaveSpawner::big_enemies.push_back(spawn_fatman);
+	WaveSpawner::big_enemies.push_back(spawn_priest);
 
 	WaveSpawner::small_enemies.push_back(spawn_block1);
 	WaveSpawner::small_enemies.push_back(spawn_block2);
