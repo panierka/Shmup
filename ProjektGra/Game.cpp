@@ -233,7 +233,7 @@ void spawn_prince()
 
 	void (*f1)(Enemy&) = [](Enemy& e)
 	{
-		e.call_animation(1);
+		e.call_animation(2);
 		e.shoot("enemy-bullet", Vector2i(25, 25), 12, 0, 90, 4, 3, 8);
 	};
 
@@ -409,25 +409,49 @@ int main()
 
 	WaveSpawner wave;
 	wave.set_wave(15);
-
+	spawn_prince();
 
 	window.setFramerateLimit(60);
 	bool pause_game = false;
+
+	int pause_action_index = 0;
+
 	// sprawdzenie zdarzeñ okna
 	while (window.isOpen())
 	{
 		Event _event;
+
+		pause_action_index = 0;
+
 		while (window.pollEvent(_event))
 		{
 			if (_event.type == Event::Closed)
 			{
 				window.close();
 			}
-			if (_event.type == Event::KeyReleased)
+			else if (_event.type == Event::KeyReleased)
 			{
 				if (_event.key.code == Keyboard::Escape)
 				{
 					pause_game = true;
+				}
+				if (_event.key.code == Keyboard::Down)
+				{
+					pause_action_index = 2;
+				}
+				if (_event.key.code == Keyboard::Up)
+				{
+					pause_action_index = 3;
+				}
+				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 0)
+				{
+					pause_action_index = 4;
+					break;
+				}
+				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 2)
+				{
+					pause_action_index = 5;
+					//return 0;
 				}
 			}
 		}
@@ -451,32 +475,27 @@ int main()
 		}
 		else
 		{
-			/*Event _event_pause;*/
+			clock.restart();
+			_frame_time = 0;
 
-			while(window.pollEvent(_event/*_pause*/))
+			switch (pause_action_index)
 			{
-				if (_event/*_pause*/.type == Event::KeyReleased)
-				{
-					if (_event/*_pause*/.key.code == Keyboard::Down)
-					{
-						pause_menu.move_down();
-					}
-					if (_event/*_pause*/.key.code == Keyboard::Up)
-					{
-						pause_menu.move_up();
-					}
-					if (_event/*_pause*/.key.code == Keyboard::Enter && pause_menu.current_position == 0)
-					{
-						pause_game = false;
-						break;
-					}
-					if (_event/*_pause*/.key.code == Keyboard::Enter && pause_menu.current_position == 2)
-					{
-						window.close();
-						//return 0;
-					}
-				}				
+			case 2:
+				pause_menu.move_down();
+				break;
+			case 3:
+				pause_menu.move_up();
+				break;
+			case 4:
+				pause_game = false;
+				break;
+			case 5:
+				window.close();
+				break;
+			default:
+				break;
 			}
+			
 			
 			
 			/*if(Keyboard::isKeyPressed(Keyboard::Down))
