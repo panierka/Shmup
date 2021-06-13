@@ -35,6 +35,34 @@ void spawn_fly()
 	Engine::objects.push_back(std::move(e));
 }
 
+void spawn_fatman()
+{
+	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(texture_atlas["fat"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+
+	e->animations.push_back(new AnimationClip(0, 2, 8, *e, true));
+	e->animations.push_back(new AnimationClip(2, 3, 12, *e, false));
+
+	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
+
+	e->set_move(Vector2f(1.f, -0.15f), 1.1f, 1, true);
+
+	void (*f)(Enemy&) = [](Enemy& e)
+	{
+		float angle = e.angle_to_player();
+		e.call_animation(1);
+		e.shoot("enemy-bullet", Vector2i(25, 25), 10, angle, 45, 8, 3, 8);
+	};
+	e->attacks.push_back(f);
+
+	e->bullet_velocity_mod = 0.5f;
+
+	e->add_max_health(98);
+
+	AttackTimer* at1 = new AttackTimer(3.f, *e);
+
+	Engine::objects.push_back(std::move(e));
+}
+
 void spawn_block1()
 {
 	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(texture_atlas["block1"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
@@ -87,6 +115,34 @@ void spawn_block2()
 
 	Engine::objects.push_back(std::move(e));
 }
+
+void spawn_block3()
+{
+	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(texture_atlas["block3"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+
+	e->animations.push_back(new AnimationClip(0, 2, 10, *e, true));
+	e->animations.push_back(new AnimationClip(2, 2, 8, *e, false));
+
+	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
+
+	e->set_move(Vector2f(1.f, -0.35f), 1.75f, 1, true);
+
+	void (*f)(Enemy&) = [](Enemy& e)
+	{
+		float angle = e.angle_to_player();
+		e.call_animation(1);
+		e.shoot("enemy-bullet", Vector2i(25, 25), 12, -15, 15, 3, 3, 8);
+	};
+	e->attacks.push_back(f);
+
+	e->bullet_velocity_mod = 0.75f;
+
+	e->add_max_health(23);
+
+	AttackTimer* at1 = new AttackTimer(4.f, *e);
+
+	Engine::objects.push_back(std::move(e));
+}
 #pragma endregion
 
 
@@ -128,7 +184,8 @@ int main()
 				}
 				if (_event.key.code == Keyboard::Enter && menu.current_position == 2)
 				{
-					return 0;
+					window.close();
+					//return 0;
 				}
 			}
 		}
@@ -160,6 +217,9 @@ int main()
 	update_texture_atlas("enemy-bullet", "Enemy-Bullet");
 	update_texture_atlas("block1", "Block1");
 	update_texture_atlas("block2", "Block2");
+	update_texture_atlas("block3", "Block3");
+	update_texture_atlas("player-bullet2", "player-bullet-2");
+	update_texture_atlas("fat", "Fatman");
 
 #pragma endregion
 
@@ -197,9 +257,11 @@ int main()
 		//sound1.play_sound("pogchamp");
 		/*BackgroundMusic background;*/
 	WaveSpawner::big_enemies.push_back(spawn_fly);
+	WaveSpawner::big_enemies.push_back(spawn_fatman);
 
 	WaveSpawner::small_enemies.push_back(spawn_block1);
 	WaveSpawner::small_enemies.push_back(spawn_block2);
+	WaveSpawner::small_enemies.push_back(spawn_block3);
 
 	WaveSpawner wave;
 	wave.set_wave(15);

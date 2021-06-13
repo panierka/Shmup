@@ -98,7 +98,7 @@ InputHandler::InputHandler(Player* _player)
 
 						player->bullet_velocity_mod = player->stat_bullet_velocity * random_number(80, 120) / 100.f;
 
-						player->shoot("player-bullet", Vector2i(25, 50), player->stat_damage_special + bonus_damage, _angle, 0, 1, 4, 24);
+						player->shoot("player-bullet2", Vector2i(25, 25), player->stat_damage_special + bonus_damage, _angle, 0, 1, 4, 24);
 					}
 
 					for (int i = 0; i < 2; i++)
@@ -107,7 +107,7 @@ InputHandler::InputHandler(Player* _player)
 
 						player->bullet_velocity_mod = player->stat_bullet_velocity * random_number(70, 130) / 100.f;
 
-						player->shoot("player-bullet", Vector2i(25, 50), player->stat_damage_special + bonus_damage, _angle, 0, 1, 4, 24);
+						player->shoot("player-bullet2", Vector2i(25, 25), player->stat_damage_special + bonus_damage, _angle, 0, 1, 4, 16);
 					}
 
 					player->bullet_velocity_mod = player->stat_bullet_velocity;
