@@ -208,7 +208,7 @@ void spawn_priest()
 
 	e->add_max_health(32);
 
-	AttackTimer* at1 = new AttackTimer(7.f, *e);
+	AttackTimer* at1 = new AttackTimer(9.f, *e);
 
 	Engine::objects.push_back(std::move(e));
 }
@@ -289,7 +289,7 @@ int main()
 	RenderWindow window(VideoMode(SCREEN_SIZE.x + 275u, SCREEN_SIZE.y), "Gra", Style::Titlebar | Style::Close);
 
 	MainMenu menu(SCREEN_SIZE.x + 275u, SCREEN_SIZE.y);
-
+	PauseMenu pause_menu(SCREEN_SIZE.x + 275u, SCREEN_SIZE.y);
 	bool exit_menu = false;
 
 	while (window.isOpen())
@@ -412,6 +412,7 @@ int main()
 
 
 	window.setFramerateLimit(60);
+	bool pause_game = false;
 	// sprawdzenie zdarzeñ okna
 	while (window.isOpen())
 	{
@@ -422,22 +423,73 @@ int main()
 			{
 				window.close();
 			}
+			if (_event.type == Event::KeyReleased)
+			{
+				if (_event.key.code == Keyboard::Escape)
+				{
+					pause_game = true;
+				}
+			}
 		}
-		// dynamiczne kalkulowanie realnego delta t miêdzy kolejnymi klatkami z "wyg³adzaniem"
-		_frame_time = clock.restart().asSeconds();
+		
+		if (!pause_game)
+		{
+			// dynamiczne kalkulowanie realnego delta t miêdzy kolejnymi klatkami z "wyg³adzaniem"
+			_frame_time = clock.restart().asSeconds();
 
+			wave.spawn(_frame_time);
 
-		wave.spawn(_frame_time);
+			// sprawdzenie akcji gracza
+			input.check_input();
 
-		// sprawdzenie akcji gracza
-		input.check_input();
+			// wyœwietlanie poprawnych informacji na ekranie
 
-		// wyœwietlanie poprawnych informacji na ekranie
+			engine.update(_frame_time);
 
-		engine.update(_frame_time);
+			// wykonanie siê obliczeñ czasomierzy
+			tick_timers(_frame_time);
+		}
+		else
+		{
+			/*Event _event_pause;*/
 
-		// wykonanie siê obliczeñ czasomierzy
-		tick_timers(_frame_time);
+			while(window.pollEvent(_event/*_pause*/))
+			{
+				if (_event/*_pause*/.type == Event::KeyReleased)
+				{
+					if (_event/*_pause*/.key.code == Keyboard::Down)
+					{
+						pause_menu.move_down();
+					}
+					if (_event/*_pause*/.key.code == Keyboard::Up)
+					{
+						pause_menu.move_up();
+					}
+					if (_event/*_pause*/.key.code == Keyboard::Enter && pause_menu.current_position == 0)
+					{
+						pause_game = false;
+						break;
+					}
+					if (_event/*_pause*/.key.code == Keyboard::Enter && pause_menu.current_position == 2)
+					{
+						window.close();
+						//return 0;
+					}
+				}				
+			}
+			
+			
+			/*if(Keyboard::isKeyPressed(Keyboard::Down))
+			{
+				pause_menu.move_down();
+			}
+			*/
+
+			window.clear(Color(73, 84, 123, 255));
+			pause_menu.print_menu(window);
+			window.display();
+			
+		}
 	}
 
 	/*for (std::size_t i = 0; i < Engine::objects.size(); i++)
