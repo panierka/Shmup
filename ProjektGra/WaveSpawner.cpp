@@ -82,6 +82,18 @@ void WaveSpawner::spawn(float dt)
 	}
 }
 
+void WaveSpawner::change_enemies_alive(int i)
+{
+	enemies_alive += i;
+
+	if (enemies_alive == 0)
+	{
+		print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
+		next_wave();
+	}
+}
+
 std::vector<void(*)()> WaveSpawner::big_enemies{};
 std::vector<void(*)()> WaveSpawner::small_enemies{};
 

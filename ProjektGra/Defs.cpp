@@ -485,6 +485,8 @@ Enemy::Enemy(Vector2f pos, Sprite* s, bool b, Vector2i frame):
 	collision_marker = 4;
 	facing_direction_y = -1;
 	projectile_collision_mask = 3;
+
+	waves.change_enemies_alive(1);
 }
 
 void Enemy::collide(unique_ptr<PhysicalObject>& coll)
@@ -513,6 +515,8 @@ void Enemy::collide(unique_ptr<PhysicalObject>& coll)
 
 Enemy::~Enemy()
 {
+	waves.change_enemies_alive(-1);
+
 	delete attack_timer;
 }
 

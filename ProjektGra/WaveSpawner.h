@@ -19,6 +19,8 @@ private:
 	int current_wave = -1;
 	int enemy_counts_per_wave[5] = { 7, 14, 19, 25, 33 };
 
+	int enemies_alive = 0;
+
 	std::vector<std::shared_ptr<WaveUnit>> wave_data;
 
 public:
@@ -29,6 +31,8 @@ public:
 
 	void set_wave(int n);
 	void spawn(float dt);
+
+	void change_enemies_alive(int i);
 };
 
 class WaveUnit
