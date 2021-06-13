@@ -11,6 +11,7 @@
 #include "SoundEffects.h"
 #include "DisplayHP.h"
 #include "MainMenu.h"
+#include"WaveSpawner.h"
 
 using namespace sf;
 using namespace std;
@@ -23,6 +24,8 @@ class BlinkEffect;
 class AttackTimer;
 class PlayerInvFrames;
 class InvFramesCharger;
+class WaveSpawner;
+
 // "globalne"
 
 const Vector2u SCREEN_SIZE(700u, 950u); // ekran w pikselach
@@ -31,6 +34,7 @@ const float ONE_UNIT_SIZE = 50.f; // jedna jednostka rozmiaru
 const float RAD2DEG = 1 / 57.3f;
 
 //
+extern WaveSpawner waves;
 extern Sounds sound1;
 extern std::vector<unique_ptr<Timer>> timers;
 extern std::map<string, Texture*> texture_atlas;

@@ -1,9 +1,10 @@
 #include"Classes.h"
 #include"KeyAction.h"
 #include<iostream>
-#include"WaveSpawner.h"
 
 //Player& player = Player();
+
+WaveSpawner waves{};
 
 #pragma region > Przeciwnicy  < 
 
@@ -278,6 +279,11 @@ void spawn_sniper()
 	Engine::objects.push_back(std::move(e));
 }
 
+void spawn_boss()
+{
+
+}
+
 #pragma endregion
 
 
@@ -396,6 +402,8 @@ int main()
 
 		//sound1.play_sound("pogchamp");
 		/*BackgroundMusic background;*/
+	WaveSpawner::boss = spawn_boss;
+
 	WaveSpawner::big_enemies.push_back(spawn_fly);
 	WaveSpawner::big_enemies.push_back(spawn_fatman);
 	WaveSpawner::big_enemies.push_back(spawn_priest);
@@ -407,9 +415,11 @@ int main()
 	WaveSpawner::small_enemies.push_back(spawn_block3);
 	WaveSpawner::small_enemies.push_back(spawn_block4);
 
-	WaveSpawner wave;
-	wave.set_wave(15);
-	spawn_prince();
+	/*WaveSpawner wave;
+	wave.next_wave();*/
+
+	waves = WaveSpawner();
+	waves.next_wave();
 
 	window.setFramerateLimit(60);
 	bool pause_game = false;
@@ -461,7 +471,7 @@ int main()
 			// dynamiczne kalkulowanie realnego delta t miêdzy kolejnymi klatkami z "wyg³adzaniem"
 			_frame_time = clock.restart().asSeconds();
 
-			wave.spawn(_frame_time);
+			waves.spawn(_frame_time);
 
 			// sprawdzenie akcji gracza
 			input.check_input();
