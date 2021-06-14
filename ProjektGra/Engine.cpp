@@ -4,7 +4,7 @@
 Shader Engine::shader{};
 
 Engine::Engine(RenderWindow* w) :
-	window(w) 
+	window(w)
 {
 	shader.loadFromFile("../Assets/effect_shader.frag", Shader::Fragment);
 	shader.setUniform("flashColor", Glsl::Vec4(1, 1, 1, 1));
@@ -12,13 +12,63 @@ Engine::Engine(RenderWindow* w) :
 	rectangle = make_unique<RectangleShape>(Vector2f(275.f, SCREEN_SIZE.y));
 	rectangle->setFillColor(Color(0, 0, 0, 255));
 	rectangle->setPosition(SCREEN_SIZE.x, 0);
+
+	background = generate_sprite(texture_atlas["bck"], Vector2f(0,0));
+
+	line1 = generate_sprite(texture_atlas["line"], Vector2f(50, 0));
+
+	line1->setPosition(230, 0);
+
+	line2 = generate_sprite(texture_atlas["line"], Vector2f(50, 0));
+
+	line2->setPosition(467, 0);
+
+	for (int i = 0; i < 3; i++)
+	{
+		unique_ptr<Sprite> s = make_unique<Sprite>();
+		s->setPosition(65 + i * 230, 400);
+		s->setTexture(*texture_atlas["stats"]);
+		stat_upgrades.push_back(std::move(s));
+	}
 }
 
 std::vector<std::unique_ptr<PhysicalObject>> Engine::objects{};
+std::vector<std::unique_ptr<Sprite>> Engine::stat_upgrades{};
+
+Engine::~Engine()
+{
+	//delete window;
+	delete background;
+	delete line1;
+	delete line2;
+}
+
+void Engine::set_stat_upgrades(const std::vector<Stat>& _data)
+{
+	for (int i = 0; i < stat_upgrades.size(); i++)
+	{
+		int _index = static_cast<int>(_data[i]);
+		Vector2i v(_index % 3, _index / 3);
+		Vector2i _frame(100, 150);
+		stat_upgrades[i]->setTextureRect(IntRect(v * _frame, _frame));
+	}
+}
 
 void Engine::update(float dt)
 {
 	window->clear(Color(73, 84, 123, 255));
+	window->draw(*background);
+	
+	if (waves.intermission)
+	{
+		window->draw(*line1);
+		window->draw(*line2);
+
+		for (int i = 0; i < Engine::stat_upgrades.size(); i++)
+		{
+			window->draw(*Engine::stat_upgrades[i].get());
+		}
+	}
 
 	for (int i = 0; i < objects.size(); i++)
 	{

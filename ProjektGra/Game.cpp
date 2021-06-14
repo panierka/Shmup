@@ -1,16 +1,19 @@
 #include"Classes.h"
 #include"KeyAction.h"
 #include<iostream>
+#include<cstdlib>
 
 //Player& player = Player();
 
 WaveSpawner waves{};
 
+Vector2f enemy_spawn_pos = (Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, -450);
+
 #pragma region > Przeciwnicy  < 
 
 void spawn_fly()
 {
-	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(texture_atlas["fly"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(texture_atlas["fly"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
 
 	e->animations.push_back(new AnimationClip(0, 3, 12, *e, true));
 	e->animations.push_back(new AnimationClip(4, 2, 10, *e, false));
@@ -38,7 +41,7 @@ void spawn_fly()
 
 void spawn_fatman()
 {
-	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(texture_atlas["fat"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(texture_atlas["fat"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
 
 	e->animations.push_back(new AnimationClip(0, 2, 8, *e, true));
 	e->animations.push_back(new AnimationClip(2, 3, 12, *e, false));
@@ -66,7 +69,7 @@ void spawn_fatman()
 
 void spawn_block1()
 {
-	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(texture_atlas["block1"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(texture_atlas["block1"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
 
 	e->animations.push_back(new AnimationClip(0, 2, 12, *e, true));
 	e->animations.push_back(new AnimationClip(2, 2, 8, *e, false));
@@ -94,7 +97,7 @@ void spawn_block1()
 
 void spawn_block2()
 {
-	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(texture_atlas["block2"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(texture_atlas["block2"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
 
 	e->animations.push_back(new AnimationClip(0, 2, 10, *e, true));
 
@@ -119,7 +122,7 @@ void spawn_block2()
 
 void spawn_block3()
 {
-	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(texture_atlas["block3"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(texture_atlas["block3"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
 
 	e->animations.push_back(new AnimationClip(0, 2, 10, *e, true));
 	e->animations.push_back(new AnimationClip(2, 2, 8, *e, false));
@@ -147,7 +150,7 @@ void spawn_block3()
 
 void spawn_block4()
 {
-	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(texture_atlas["block5"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(texture_atlas["block5"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
 
 	e->animations.push_back(new AnimationClip(0, 2, 10, *e, true));
 	e->animations.push_back(new AnimationClip(2, 2, 14, *e, false));
@@ -180,7 +183,7 @@ void spawn_block4()
 
 void spawn_priest()
 {
-	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(texture_atlas["priest"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(texture_atlas["priest"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
 
 	e->animations.push_back(new AnimationClip(0, 3, 8, *e, true));
 	e->animations.push_back(new AnimationClip(4, 3, 8, *e, false));
@@ -216,7 +219,7 @@ void spawn_priest()
 
 void spawn_prince()
 {
-	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(texture_atlas["prince"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(texture_atlas["prince"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
 
 	e->animations.push_back(new AnimationClip(0, 2, 8, *e, true));
 	e->animations.push_back(new AnimationClip(2, 2, 10, *e, false));
@@ -252,7 +255,7 @@ void spawn_prince()
 
 void spawn_sniper()
 {
-	std::unique_ptr<Enemy> e = make_unique <Enemy>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(100, -375), generate_sprite(texture_atlas["sniper"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(texture_atlas["sniper"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
 
 	e->animations.push_back(new AnimationClip(0, 3, 10, *e, true));
 	e->animations.push_back(new AnimationClip(4, 2, 10, *e, false));
@@ -290,6 +293,8 @@ void spawn_boss()
 int main()
 {
 	print("start");
+
+	srand(time(0));
 
 	// stworzenie okna gry
 	RenderWindow window(VideoMode(SCREEN_SIZE.x + 275u, SCREEN_SIZE.y), "Gra", Style::Titlebar | Style::Close);
@@ -366,11 +371,14 @@ int main()
 	update_texture_atlas("saw", "saw");
 	update_texture_atlas("prince", "Prince");
 	update_texture_atlas("sniper", "Sniper");
+	update_texture_atlas("bck", "Background");
+	update_texture_atlas("line", "Stat_Line");
+	update_texture_atlas("stats", "Stats");
 
 #pragma endregion
 
 
-	std::unique_ptr<Player> _player = make_unique<Player>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 375), generate_sprite(texture_atlas["player"], Vector2f(50.f, 50.f)), false, Vector2i(100, 100));
+	std::unique_ptr<Player> _player = make_unique<Player>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 425), generate_sprite(texture_atlas["player"], Vector2f(50.f, 50.f)), false, Vector2i(100, 100));
 
 	_player->animations.push_back(new AnimationClip(0, 4, 10, *_player, true));
 	_player->animations.push_back(new AnimationClip(5, 4, 18, *_player, false));
@@ -402,6 +410,7 @@ int main()
 
 		//sound1.play_sound("pogchamp");
 		/*BackgroundMusic background;*/
+
 	WaveSpawner::boss = spawn_boss;
 
 	WaveSpawner::big_enemies.push_back(spawn_fly);
@@ -417,6 +426,7 @@ int main()
 
 	/*WaveSpawner wave;
 	wave.next_wave();*/
+
 
 	waves = WaveSpawner();
 	waves.next_wave();

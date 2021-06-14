@@ -26,6 +26,8 @@ class PlayerInvFrames;
 class InvFramesCharger;
 class WaveSpawner;
 
+enum Stat;
+
 // "globalne"
 
 const Vector2u SCREEN_SIZE(700u, 950u); // ekran w pikselach
@@ -169,7 +171,10 @@ public:
 
 	int stat_damage = 10;
 	int stat_damage_special = 4;
+	float stat_speed = 6.5f;
 	float stat_bullet_velocity = 1.f;
+
+	int lifesteal = 0;
 
 private:
 	int max_ammo = 0;
@@ -187,6 +192,20 @@ public:
 
 	bool try_use_ammo();
 	void reload();
+
+	void upgrade_stat(Stat s);
+};
+
+enum Stat : int
+{
+	HEALTH,
+	DAMAGE,
+	ALT_DAMAGE,
+	SPEED,
+	BULLET_VELOCITY,
+	AMMO,
+	DODGE_RECHARGE,
+	LIFESTEAL 
 };
 
 // postaæ z cechami typowymi dla wroga

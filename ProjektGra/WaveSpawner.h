@@ -3,6 +3,7 @@
 #include"Classes.h"
 
 class WaveUnit;
+enum Stat;
 
 class WaveSpawner
 {
@@ -11,9 +12,12 @@ public:
 	static std::vector<void(*)()> small_enemies;
 	static void(*boss)();
 
+	bool intermission = false;
+
 private:
 	float time_to_spawn;
 	int inwave_index;
+
 	bool active;
 
 	int current_wave = -1;
@@ -22,6 +26,8 @@ private:
 	int enemies_alive = 0;
 
 	std::vector<std::shared_ptr<WaveUnit>> wave_data;
+
+	std::vector<Stat> possible_stats{};
 
 public:
 	WaveSpawner();
@@ -33,6 +39,8 @@ public:
 	void spawn(float dt);
 
 	void change_enemies_alive(int i);
+
+	void check_upgrade();
 };
 
 class WaveUnit

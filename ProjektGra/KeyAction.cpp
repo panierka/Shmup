@@ -1,8 +1,6 @@
 #include "KeyAction.h"
 #include<iostream>
 
-// prêdkoœæ gracza wyra¿ona w jednostkach gry na sekundê
-const float PLAYER_SPEED = 6.5f;
 
 void KeyAction::Perform()
 {
@@ -41,8 +39,9 @@ void InputHandler::check_input()
 		a->Perform();
 	}
 
-	player->set_move(next_move, PLAYER_SPEED, 1.f);
+	player->set_move(next_move, player->stat_speed, 1.f);
 }
+
 
 InputHandler::InputHandler(Player* _player)
 { 
@@ -67,6 +66,7 @@ InputHandler::InputHandler(Player* _player)
 			{
 				if (player->try_use_ammo())
 				{
+					player->bullet_velocity_mod = player->stat_bullet_velocity;
 					player->call_animation(1);
 					player->shoot("player-bullet", Vector2i(25, 50), player->stat_damage, 0, 0, 1, 4, 24);
 				}
@@ -132,6 +132,11 @@ InputHandler::InputHandler(Player* _player)
 				player->inv_charger->fully_charged = false;
 				player->inv_charger->timer->start(); 
 			}
+		}));
+
+	defined_actions.push_back(new KeyAction(Keyboard::Enter, false, []()
+		{
+			waves.check_upgrade();
 		}));
 }
 

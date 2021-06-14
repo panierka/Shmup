@@ -414,7 +414,7 @@ void Character::setHP(int _amount)
 
 void Character::add_max_health(int _max)
 {
-	max_health = _max;
+	max_health += _max;
 
 	setHP(max_health);
 }
@@ -595,6 +595,14 @@ void Projectile::collide(unique_ptr<PhysicalObject>& coll)
 
 			dynamic_cast<Character*>(coll.get())->take_hit(damage);
 
+			if (collision_marker == 2)
+			{
+				if (InputHandler::player->lifesteal > 0)
+				{
+					InputHandler::player->setHP(InputHandler::player->lifesteal);
+				}
+			}
+
 			destroy_this = true;
 		}
 	}
@@ -606,4 +614,35 @@ void update_texture_atlas(string _name, string _path)
 	tex->loadFromFile("../Assets/" + _path + ".png");
 
 	texture_atlas[_name] = tex;
+}
+
+void Player::upgrade_stat(Stat s)
+{
+	switch (s)
+	{
+	case HEALTH:
+		add_max_health(45);
+		break;
+	case DAMAGE:
+		stat_damage += 8;
+		break;
+	case ALT_DAMAGE:
+		stat_damage_special += 3;
+		break;
+	case SPEED:
+		stat_speed += 1.25f;
+		break;
+	case BULLET_VELOCITY:
+		stat_bullet_velocity += 0.4f;
+		break;
+	case AMMO:
+		add_max_ammo(4);
+		break;
+	case DODGE_RECHARGE:
+		inv_charger->charge_value += 0.6f;
+		break;
+	case LIFESTEAL:
+		lifesteal += 1;
+		break;
+	}
 }
