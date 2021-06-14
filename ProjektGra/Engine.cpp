@@ -104,13 +104,13 @@ void Engine::update(float dt)
 	window->draw(*DisplayHP::ammo_text);
 
 	//
-	//for (auto target : phy_objects)
+	//for (int i = 0; i < objects.size(); i++)
 	//{
-
 	//	RectangleShape r;
-	//	r.setSize(Vector2f(target->collider->width, target->collider->height));
-	//	r.setOrigin(Vector2f(target->collider->width, target->collider->height) / 2.f);
-	//	r.setPosition(Vector2f(target->collider->left, target->collider->top));
+	//	r.setSize(Vector2f(objects[i]->collider->width, objects[i]->collider->height));
+	//	//r.setOrigin(Vector2f(objects[i]->collider->width, objects[i]->collider->height) / 2.f);
+	//	//r.setOrigin(Vector2f(50, 50));
+	//	r.setPosition(Vector2f(objects[i]->collider->left, objects[i]->collider->top));
 	//	r.setFillColor(Color::Color(0, 255, 0, 100));
 
 	//	window->draw(r);

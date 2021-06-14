@@ -284,7 +284,61 @@ void spawn_sniper()
 
 void spawn_boss()
 {
+	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos + Vector2f(0, 150), generate_sprite(texture_atlas["BOSS"], Vector2f(100.f, 100.f)), true, Vector2i(200, 200));
 
+	e->animations.push_back(new AnimationClip(0, 2, 8, *e, true));
+	e->animations.push_back(new AnimationClip(3, 2, 10, *e, false));
+	e->animations.push_back(new AnimationClip(6, 2, 10, *e, false));
+	e->animations.push_back(new AnimationClip(9, 2, 10, *e, false));
+	e->animations.push_back(new AnimationClip(11, 2, 10, *e, false));
+
+	e->create_collider(Vector2f(-50.f, -50.f), Vector2f(150.f, 150.f));
+
+	e->set_move(Vector2f(1.f, 0.f), 2.0f, 1, true);
+
+	void (*f1)(Enemy&) = [](Enemy& e)
+	{
+		float angle = e.angle_to_player();
+		e.call_animation(1);
+		e.bullet_velocity_mod = 1.f;
+		e.shoot("enemy-bullet", Vector2i(25, 25), 18, -25.f, 12.5f, 5, 3, 8);
+		e.shoot("saw", Vector2i(50, 50), 59, angle, 0, 1, 3, 8);
+	};
+
+	void (*f2)(Enemy&) = [](Enemy& e)
+	{
+		e.call_animation(2);
+		e.bullet_velocity_mod = 0.8f;
+		e.shoot("enemy-bullet", Vector2i(25, 25), 16, 0, 30.f, 12, 3, 8);
+	};
+
+	void (*f3)(Enemy&) = [](Enemy& e)
+	{
+		float angle = e.angle_to_player();
+		e.call_animation(3);
+		e.bullet_velocity_mod = 1.2f;
+		e.shoot("enemy-bullet", Vector2i(25, 25), 32, angle - 2.5f, 5.f, 2, 3, 8);
+	};
+
+	void (*f4)(Enemy&) = [](Enemy& e)
+	{
+		if (random_number(0, 3) == 0)
+		{
+			e.call_animation(4);
+			spawn_block1();
+		}
+	};
+
+	e->attacks.push_back(f1);
+	e->attacks.push_back(f2);
+	e->attacks.push_back(f3);
+	e->attacks.push_back(f4);
+
+	e->add_max_health(1600);
+
+	AttackTimer* at1 = new AttackTimer(0.85f, *e);
+
+	Engine::objects.push_back(std::move(e));
 }
 
 #pragma endregion
@@ -374,6 +428,7 @@ int main()
 	update_texture_atlas("bck", "Background");
 	update_texture_atlas("line", "Stat_Line");
 	update_texture_atlas("stats", "Stats");
+	update_texture_atlas("BOSS", "Boss");
 
 #pragma endregion
 
