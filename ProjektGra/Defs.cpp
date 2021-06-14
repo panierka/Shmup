@@ -624,7 +624,7 @@ void Player::upgrade_stat(Stat s)
 		add_max_health(45);
 		break;
 	case DAMAGE:
-		stat_damage += 8;
+		stat_damage += 5;
 		break;
 	case ALT_DAMAGE:
 		stat_damage_special += 3;
@@ -643,6 +643,7 @@ void Player::upgrade_stat(Stat s)
 		break;
 	case LIFESTEAL:
 		lifesteal += 1;
+		stat_damage += 2;
 		break;
 	}
 }

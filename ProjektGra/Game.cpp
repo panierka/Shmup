@@ -11,6 +11,11 @@ Vector2f enemy_spawn_pos = (Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, -450);
 
 #pragma region > Przeciwnicy  < 
 
+float random_dir()
+{
+	return random_number(0, 1) ? 1.f : -1.f;
+}
+
 void spawn_fly()
 {
 	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(texture_atlas["fly"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
@@ -20,7 +25,7 @@ void spawn_fly()
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
 
-	e->set_move(Vector2f(1.f, -0.25f), 3.25f, 1, true);
+	e->set_move(Vector2f(1.f * random_dir(), -0.25f), 3.25f, 1, true);
 
 	void (*f)(Enemy&) = [](Enemy& e)
 	{	
@@ -48,7 +53,7 @@ void spawn_fatman()
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
 
-	e->set_move(Vector2f(1.f, -0.15f), 1.1f, 1, true);
+	e->set_move(Vector2f(1.f * random_dir(), -0.15f), 1.1f, 1, true);
 
 	void (*f)(Enemy&) = [](Enemy& e)
 	{
@@ -76,7 +81,7 @@ void spawn_block1()
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
 
-	e->set_move(Vector2f(1.f, -0.35f), 1.75f, 1, true);
+	e->set_move(Vector2f(1.f * random_dir(), -0.35f), 1.75f, 1, true);
 
 	void (*f)(Enemy&) = [](Enemy& e)
 	{
@@ -103,7 +108,7 @@ void spawn_block2()
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
 
-	e->set_move(Vector2f(1.f, -0.35f), 1.75f, 1, true);
+	e->set_move(Vector2f(1.f * random_dir(), -0.35f), 1.75f, 1, true);
 
 	void (*f)(Enemy&) = [](Enemy& e)
 	{
@@ -129,7 +134,7 @@ void spawn_block3()
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
 
-	e->set_move(Vector2f(1.f, -0.35f), 1.75f, 1, true);
+	e->set_move(Vector2f(1.f * random_dir(), -0.35f), 1.75f, 1, true);
 
 	void (*f)(Enemy&) = [](Enemy& e)
 	{
@@ -157,7 +162,7 @@ void spawn_block4()
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
 
-	e->set_move(Vector2f(1.f, -0.35f), 1.75f, 1, true);
+	e->set_move(Vector2f(1.f * random_dir(), -0.35f), 1.75f, 1, true);
 
 	void (*f)(Enemy&) = [](Enemy& e)
 	{
@@ -191,7 +196,7 @@ void spawn_priest()
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
 
-	e->set_move(Vector2f(1.f, -0.175f), 1.05f, 1, true);
+	e->set_move(Vector2f(1.f * random_dir(), -0.175f), 1.05f, 1, true);
 
 	void (*f)(Enemy&) = [](Enemy& e)
 	{
@@ -227,7 +232,7 @@ void spawn_prince()
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
 
-	e->set_move(Vector2f(1.f, -0.225f), 2.5f, 1, true);
+	e->set_move(Vector2f(1.f * random_dir(), -0.225f), 2.5f, 1, true);
 
 	void (*f)(Enemy&) = [](Enemy& e)
 	{
@@ -262,7 +267,7 @@ void spawn_sniper()
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
 
-	e->set_move(Vector2f(1.f, -0.125f), 1.15f, 1, true);
+	e->set_move(Vector2f(1.f * random_dir(), -0.125f), 1.15f, 1, true);
 
 	void (*f)(Enemy&) = [](Enemy& e)
 	{
