@@ -20,7 +20,7 @@ void WaveSpawner::next_wave()
 {
 	current_wave++;
 
-	if (current_wave < 0)//5)
+	if (current_wave < 5)
 	{
 		set_wave(enemy_counts_per_wave[current_wave]);
 	}
