@@ -527,6 +527,9 @@ Vector2f Enemy::handle_borders(Vector2f _pos)
 
 	if (_pos.y > SCREEN_SIZE.y)
 	{
+		// dŸwiêk
+		InputHandler::player->setHP(-current_health);
+		InputHandler::player->effect->activate();
 		destroy_this = true;
 	}
 	else if (_pos.x - _off0 < 0)
