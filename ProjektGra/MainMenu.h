@@ -1,30 +1,87 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-
-using namespace sf;
-
+#include"Classes.h"
+#include"KeyAction.h"
+#include<iostream>
+#include<cstdlib>
 
 #define NUMBER_OF_ELEMENTS 3
-class MainMenu
+
+static int counter = 0;
+
+class cScreen
 {
 public:
-	MainMenu(int screen_size_x, int screen_size_y);
+	virtual int Run(RenderWindow& window) = 0;
+};
+
+class MainMenu : public cScreen
+{
+public:
+	virtual int Run(RenderWindow& window);
 	MainMenu();
 	~MainMenu();
+};
+
+class Menu //: public cScreen
+{
+private:
+	Font* font;
+public:
+	Menu();
+	~Menu();
+	/*virtual int Run(RenderWindow& window);*/
 	void print_menu(RenderWindow& window);
 	void move_up();
 	void move_down();
 	int current_position;
 	Text text[NUMBER_OF_ELEMENTS]{};
-private:
-	Font* font;
 };
 
-class PauseMenu:public MainMenu
+class Game :public cScreen
 {
 public:
-	PauseMenu(int screen_size_x, int screen_size_y);
+	Game();
+	~Game();
+	static void spawn_fly();
+	static void spawn_fatman();
+	static void spawn_block1();
+	static void spawn_block2();
+	static void spawn_block3();
+	static void spawn_block4();
+	static void spawn_priest();
+	static void spawn_prince();
+	static void spawn_sniper();
+	static void spawn_boss();
+
+	virtual int Run(RenderWindow& window);
+
+private:
+	static float random_dir();
+};
+
+
+//class MainMenu // <--------------------------------------------------------
+//{
+//public:
+//	MainMenu(int screen_size_x, int screen_size_y);
+//	MainMenu();
+//	~MainMenu();
+//	void print_menu(RenderWindow& window);
+//	void move_up();
+//	void move_down();
+//	int current_position;
+//	Text text[NUMBER_OF_ELEMENTS]{};
+//private:
+//	Font* font;
+//};
+
+class PauseMenu: public Menu
+{
+public:
+	PauseMenu();
 	virtual ~PauseMenu();
+	/*virtual int Run(RenderWindow& window);*/
 private:
 	Font* font1;
 };
+
