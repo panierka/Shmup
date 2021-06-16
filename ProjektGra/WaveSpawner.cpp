@@ -27,7 +27,7 @@ void WaveSpawner::next_wave()
 	{
 		set_wave(enemy_counts_per_wave[current_wave]);
 	}
-	else
+	else if (current_wave == 5)
 	{
 		boss();
 	}
@@ -100,7 +100,14 @@ void WaveSpawner::change_enemies_alive(int i)
 
 		Engine::set_stat_upgrades(possible_stats);
 
-		intermission = true;
+		if (current_wave == 5)
+		{
+			game_state = 2;
+		}
+		else
+		{
+			intermission = true;
+		}
 	}
 }
 

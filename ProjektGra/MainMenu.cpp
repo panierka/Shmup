@@ -11,7 +11,7 @@ float Game::random_dir()
 
 void Game::spawn_fly()
 {
-	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(texture_atlas["fly"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(TextureAtlas::texture_atlas["fly"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
 
 	e->animations.push_back(new AnimationClip(0, 3, 12, *e, true));
 	e->animations.push_back(new AnimationClip(4, 2, 10, *e, false));
@@ -39,7 +39,7 @@ void Game::spawn_fly()
 
 void Game::spawn_fatman()
 {
-	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(texture_atlas["fat"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(TextureAtlas::texture_atlas["fat"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
 
 	e->animations.push_back(new AnimationClip(0, 2, 8, *e, true));
 	e->animations.push_back(new AnimationClip(2, 3, 12, *e, false));
@@ -67,7 +67,7 @@ void Game::spawn_fatman()
 
 void Game::spawn_block1()
 {
-	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(texture_atlas["block1"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(TextureAtlas::texture_atlas["block1"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
 
 	e->animations.push_back(new AnimationClip(0, 2, 12, *e, true));
 	e->animations.push_back(new AnimationClip(2, 2, 8, *e, false));
@@ -95,7 +95,7 @@ void Game::spawn_block1()
 
 void Game::spawn_block2()
 {
-	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(texture_atlas["block2"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(TextureAtlas::texture_atlas["block2"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
 
 	e->animations.push_back(new AnimationClip(0, 2, 10, *e, true));
 
@@ -120,7 +120,7 @@ void Game::spawn_block2()
 
 void Game::spawn_block3()
 {
-	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(texture_atlas["block3"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(TextureAtlas::texture_atlas["block3"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
 
 	e->animations.push_back(new AnimationClip(0, 2, 10, *e, true));
 	e->animations.push_back(new AnimationClip(2, 2, 8, *e, false));
@@ -148,7 +148,7 @@ void Game::spawn_block3()
 
 void Game::spawn_block4()
 {
-	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(texture_atlas["block5"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(TextureAtlas::texture_atlas["block5"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
 
 	e->animations.push_back(new AnimationClip(0, 2, 10, *e, true));
 	e->animations.push_back(new AnimationClip(2, 2, 14, *e, false));
@@ -181,7 +181,7 @@ void Game::spawn_block4()
 
 void Game::spawn_priest()
 {
-	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(texture_atlas["priest"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(TextureAtlas::texture_atlas["priest"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
 
 	e->animations.push_back(new AnimationClip(0, 3, 8, *e, true));
 	e->animations.push_back(new AnimationClip(4, 3, 8, *e, false));
@@ -217,7 +217,7 @@ void Game::spawn_priest()
 
 void Game::spawn_prince()
 {
-	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(texture_atlas["prince"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(TextureAtlas::texture_atlas["prince"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
 
 	e->animations.push_back(new AnimationClip(0, 2, 8, *e, true));
 	e->animations.push_back(new AnimationClip(2, 2, 10, *e, false));
@@ -253,7 +253,7 @@ void Game::spawn_prince()
 
 void Game::spawn_sniper()
 {
-	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(texture_atlas["sniper"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
+	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos, generate_sprite(TextureAtlas::texture_atlas["sniper"], Vector2f(50.f, 50.f)), true, Vector2i(100, 100));
 
 	e->animations.push_back(new AnimationClip(0, 3, 10, *e, true));
 	e->animations.push_back(new AnimationClip(4, 2, 10, *e, false));
@@ -282,7 +282,7 @@ void Game::spawn_sniper()
 
 void Game::spawn_boss()
 {
-	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos + Vector2f(0, 150), generate_sprite(texture_atlas["BOSS"], Vector2f(100.f, 100.f)), true, Vector2i(200, 200));
+	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos + Vector2f(0, 150), generate_sprite(TextureAtlas::texture_atlas["BOSS"], Vector2f(100.f, 100.f)), true, Vector2i(200, 200));
 
 	e->animations.push_back(new AnimationClip(0, 2, 8, *e, true));
 	e->animations.push_back(new AnimationClip(3, 2, 10, *e, false));
@@ -420,7 +420,6 @@ int MainMenu::Run(RenderWindow& window)
 				}
 				if (_event.key.code == Keyboard::Enter && menu.current_position == 0)
 				{
-					counter++;						//counter zwiêkszane o jeden co now¹ grê - counter statyczne
 					return 1;
 				}
 				if (_event.key.code == Keyboard::Enter && menu.current_position == 2)
@@ -446,35 +445,7 @@ int Game::Run(RenderWindow& window)
 	t.loadFromFile("../Assets/Player.png");
 	t2.loadFromFile("../Assets/Player-Projectile.png");
 
-#pragma region > Inicj. Tekstur <
-
-	update_texture_atlas("player", "Player");
-	update_texture_atlas("fly", "Fly");
-	update_texture_atlas("player-bullet", "Player-Projectile");
-	update_texture_atlas("enemy-bullet", "Enemy-Bullet");
-	update_texture_atlas("player", "Player");
-	update_texture_atlas("fly", "Fly");
-	update_texture_atlas("player-bullet", "Player-Projectile");
-	update_texture_atlas("enemy-bullet", "Enemy-Bullet");
-	update_texture_atlas("block1", "Block1");
-	update_texture_atlas("block2", "Block2");
-	update_texture_atlas("block3", "Block3");
-	update_texture_atlas("block5", "Block5");
-	update_texture_atlas("player-bullet2", "player-bullet-2");
-	update_texture_atlas("fat", "Fatman");
-	update_texture_atlas("priest", "Priest");
-	update_texture_atlas("saw", "saw");
-	update_texture_atlas("prince", "Prince");
-	update_texture_atlas("sniper", "Sniper");
-	update_texture_atlas("bck", "Background");
-	update_texture_atlas("line", "Stat_Line");
-	update_texture_atlas("stats", "Stats");
-	update_texture_atlas("BOSS", "Boss");
-
-#pragma endregion
-
-
-	std::unique_ptr<Player> _player = make_unique<Player>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 425), generate_sprite(texture_atlas["player"], Vector2f(50.f, 50.f)), false, Vector2i(100, 100));
+	std::unique_ptr<Player> _player = make_unique<Player>((Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, 425), generate_sprite(TextureAtlas::texture_atlas["player"], Vector2f(50.f, 50.f)), false, Vector2i(100, 100));
 
 	_player->animations.push_back(new AnimationClip(0, 4, 10, *_player, true));
 	_player->animations.push_back(new AnimationClip(5, 4, 18, *_player, false));
@@ -515,6 +486,9 @@ int Game::Run(RenderWindow& window)
 	window.setFramerateLimit(60);
 	bool pause_game = false;
 	int pause_action_index = 0;
+
+	game_state = 0;
+
 	// sprawdzenie zdarzeñ okna
 	while (window.isOpen())
 	{
@@ -573,6 +547,15 @@ int Game::Run(RenderWindow& window)
 
 			// wykonanie siê obliczeñ czasomierzy
 			tick_timers(_frame_time);
+
+			if (game_state == 1)
+			{
+				return 3;
+			}
+			else if (game_state == 2)
+			{
+				return 4;
+			}
 		}
 		else
 		{
@@ -753,7 +736,65 @@ Game::~Game()
 //	delete font1;
 //}
 
+Restart::Restart()
+{
+
+}
+
+Restart::~Restart()
+{
+
+}
+
 int Restart::Run(RenderWindow& window)
 {
 	return 1;
+}
+
+EndScreen::EndScreen(string _screen_key) :
+	screen_key(_screen_key)
+{
+	
+}
+
+EndScreen::~EndScreen()
+{
+
+}
+
+int EndScreen::Run(RenderWindow& window)
+{
+	Sprite endScreen;
+	endScreen.setTexture(*TextureAtlas::texture_atlas[screen_key]);
+
+	while (window.isOpen())
+	{
+		Event _event;
+
+		while (window.pollEvent(_event))
+		{
+			if (_event.type == Event::Closed)
+			{
+				window.close();
+			}
+
+			if (_event.type == Event::KeyReleased)
+			{
+				if (_event.key.code == Keyboard::Escape)
+				{
+					return 0;
+				}
+				else if (_event.key.code == Keyboard::R)
+				{
+					return 2;
+				}
+			}
+		}
+		
+		window.clear();
+		window.draw(endScreen);
+		window.display();
+	}
+
+	return -1;
 }

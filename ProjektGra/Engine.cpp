@@ -13,13 +13,13 @@ Engine::Engine(RenderWindow* w) :
 	rectangle->setFillColor(Color(0, 0, 0, 255));
 	rectangle->setPosition(SCREEN_SIZE.x, 0);
 
-	background = generate_sprite(texture_atlas["bck"], Vector2f(0,0));
+	background = generate_sprite(TextureAtlas::texture_atlas["bck"], Vector2f(0, 0));
 
-	line1 = generate_sprite(texture_atlas["line"], Vector2f(50, 0));
+	line1 = generate_sprite(TextureAtlas::texture_atlas["line"], Vector2f(50, 0));
 
 	line1->setPosition(230, 0);
 
-	line2 = generate_sprite(texture_atlas["line"], Vector2f(50, 0));
+	line2 = generate_sprite(TextureAtlas::texture_atlas["line"], Vector2f(50, 0));
 
 	line2->setPosition(467, 0);
 
@@ -27,7 +27,7 @@ Engine::Engine(RenderWindow* w) :
 	{
 		unique_ptr<Sprite> s = make_unique<Sprite>();
 		s->setPosition(65 + i * 230, 400);
-		s->setTexture(*texture_atlas["stats"]);
+		s->setTexture(*TextureAtlas::texture_atlas["stats"]);
 		stat_upgrades.push_back(std::move(s));
 	}
 }

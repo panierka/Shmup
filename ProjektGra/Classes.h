@@ -39,7 +39,8 @@ const float RAD2DEG = 1 / 57.3f;
 extern WaveSpawner waves;
 extern Sounds sound1;
 extern std::vector<unique_ptr<Timer>> timers;
-extern std::map<string, Texture*> texture_atlas;
+
+extern int game_state;
 
 // podstawowy obiekt istniej¹cy w grze: porusza siê i ma jak¹œ grafikê
 class GameObject: public std::enable_shared_from_this<GameObject>
@@ -271,4 +272,15 @@ Sprite* generate_sprite(Texture*);
 // globalny przeskok w czasomierzach
 void tick_timers(float);
 
-void update_texture_atlas(string _name, string _path);
+class TextureAtlas
+{
+public:
+	static std::map<string, Texture*> texture_atlas;
+
+public:
+	TextureAtlas();
+	~TextureAtlas();
+
+	static void update_texture_atlas(string _name, string _path);
+};
+

@@ -3,7 +3,9 @@
 
 
 std::vector<unique_ptr<Timer>> timers{};
-std::map<string, Texture*> texture_atlas{};
+std::map<string, Texture*> TextureAtlas::texture_atlas{};
+
+int game_state{};
 
 Sounds sound1{};
 
@@ -381,7 +383,7 @@ void Player::setHP(int _amount)
 
 void Player::death()
 {
-	print("player death");
+	game_state = 1;
 }
 
 void Character::take_hit(int _amount)
@@ -429,7 +431,7 @@ void Character::shoot(string _tex, Vector2i _frame, int _damage, float _start_an
 	for (int i = 0; i < _bullets_count; i++)
 	{
 		float _angle = _start_angle + (i * _angle_diff);
-		std::unique_ptr<Projectile> p = make_unique<Projectile>(position, generate_sprite(texture_atlas[_tex], (Vector2f)_frame / 2.f), _frame, _damage, _angle, bullet_velocity_mod, projectile_collision_mask, facing_direction_y);
+		std::unique_ptr<Projectile> p = make_unique<Projectile>(position, generate_sprite(TextureAtlas::texture_atlas[_tex], (Vector2f)_frame / 2.f), _frame, _damage, _angle, bullet_velocity_mod, projectile_collision_mask, facing_direction_y);
 
 		p->animations.push_back(new AnimationClip(0, _frames, _framerate, *p, true));
 
@@ -611,8 +613,13 @@ void Projectile::collide(unique_ptr<PhysicalObject>& coll)
 	}
 }
 
-void update_texture_atlas(string _name, string _path)
+void TextureAtlas::update_texture_atlas(string _name, string _path)
 {
+	if (texture_atlas.count(_name) > 0)
+	{
+		return;
+	}
+
 	Texture* tex = new Texture();
 	tex->loadFromFile("../Assets/" + _path + ".png");
 
@@ -648,5 +655,38 @@ void Player::upgrade_stat(Stat s)
 		lifesteal += 1;
 		stat_damage += 2;
 		break;
+	}
+}
+
+TextureAtlas::TextureAtlas()
+{
+	update_texture_atlas("player", "Player");
+	update_texture_atlas("fly", "Fly");
+	update_texture_atlas("player-bullet", "Player-Projectile");
+	update_texture_atlas("enemy-bullet", "Enemy-Bullet");
+	update_texture_atlas("block1", "Block1");
+	update_texture_atlas("block2", "Block2");
+	update_texture_atlas("block3", "Block3");
+	update_texture_atlas("block5", "Block5");
+	update_texture_atlas("player-bullet2", "player-bullet-2");
+	update_texture_atlas("fat", "Fatman");
+	update_texture_atlas("priest", "Priest");
+	update_texture_atlas("saw", "saw");
+	update_texture_atlas("prince", "Prince");
+	update_texture_atlas("sniper", "Sniper");
+	update_texture_atlas("bck", "Background");
+	update_texture_atlas("line", "Stat_Line");
+	update_texture_atlas("stats", "Stats");
+	update_texture_atlas("BOSS", "Boss");
+
+	update_texture_atlas("game-over", "GameOver");
+	update_texture_atlas("end", "Win");
+}
+
+TextureAtlas::~TextureAtlas()
+{
+	for (std::map<string, Texture*>::iterator it = texture_atlas.begin(); it != texture_atlas.end(); it++)
+	{
+		delete it->second;
 	}
 }

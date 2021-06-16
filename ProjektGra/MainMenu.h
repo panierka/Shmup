@@ -6,8 +6,6 @@
 
 #define NUMBER_OF_ELEMENTS 3
 
-static int counter = 0;
-
 class cScreen
 {
 public:
@@ -87,6 +85,22 @@ private:
 
 class Restart : public cScreen
 {
+public:
+	Restart();
+	virtual ~Restart();
+
+	virtual int Run(RenderWindow& window);
+};
+
+class EndScreen : public cScreen
+{
+private:
+	string screen_key;
+
+public:
+	EndScreen(string);
+	virtual ~EndScreen();
+
 	virtual int Run(RenderWindow& window);
 };
 
