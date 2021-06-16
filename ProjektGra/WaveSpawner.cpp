@@ -9,6 +9,8 @@ WaveSpawner::WaveSpawner():
 	}
 
 	std::random_shuffle(possible_stats.begin(), possible_stats.end());
+
+	intermission = false;
 }
 
 WaveSpawner::~WaveSpawner()
@@ -19,7 +21,8 @@ WaveSpawner::~WaveSpawner()
 void WaveSpawner::next_wave()
 {
 	current_wave++;
-
+	DisplayHP::set_count(current_wave + 1, 6, DisplayHP::wave_text);
+	
 	if (current_wave < 5)
 	{
 		set_wave(enemy_counts_per_wave[current_wave]);

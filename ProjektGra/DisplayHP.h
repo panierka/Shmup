@@ -13,6 +13,7 @@ public:
 	static Text* dodge_text;
 
 	static Text* ammo_text;
+	static Text* wave_text;
 
 public:
 	DisplayHP();

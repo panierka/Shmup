@@ -89,12 +89,12 @@ InputHandler::InputHandler(Player* _player)
 
 					while (player->try_use_ammo())
 					{
-						bonus_damage += player->stat_damage / 8;
+						bonus_damage += player->stat_damage / 6;
 					}
 
-					for (int i = -2; i < 2; i++)
+					for (int i = -2; i <= 2; i++)
 					{
-						float _angle = i * 7.5f + random_number(0, 8);
+						float _angle = i * 6.5f + random_number(-8, 8);
 
 						player->bullet_velocity_mod = player->stat_bullet_velocity * random_number(80, 120) / 100.f;
 
