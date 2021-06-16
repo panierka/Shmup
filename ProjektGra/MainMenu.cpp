@@ -425,8 +425,8 @@ int MainMenu::Run(RenderWindow& window)
 				}
 				if (_event.key.code == Keyboard::Enter && menu.current_position == 2)
 				{
-					window.close();
-					//return 0;
+					//window.close();
+					return -1;
 				}
 			}
 		}
@@ -438,6 +438,9 @@ int MainMenu::Run(RenderWindow& window)
 
 int Game::Run(RenderWindow& window)
 {
+	Engine::objects.clear();
+	Engine::stat_upgrades.clear();
+
 	// wczytanie tekstur gracza i stworzenie jego obiektu
 	Texture t, t2;
 	t.loadFromFile("../Assets/Player.png");
@@ -504,21 +507,6 @@ int Game::Run(RenderWindow& window)
 		//sound1.play_sound("pogchamp");
 		/*BackgroundMusic background;*/
 
-	WaveSpawner::boss = spawn_boss;
-
-	WaveSpawner::big_enemies.push_back(spawn_fly);
-	WaveSpawner::big_enemies.push_back(spawn_fatman);
-	WaveSpawner::big_enemies.push_back(spawn_priest);
-	WaveSpawner::big_enemies.push_back(spawn_prince);
-	WaveSpawner::big_enemies.push_back(spawn_sniper);
-
-	WaveSpawner::small_enemies.push_back(spawn_block1);
-	WaveSpawner::small_enemies.push_back(spawn_block2);
-	WaveSpawner::small_enemies.push_back(spawn_block3);
-	WaveSpawner::small_enemies.push_back(spawn_block4);
-
-	/*WaveSpawner wave;
-	wave.next_wave();*/
 	PauseMenu pause_menu;
 
 	waves = WaveSpawner();
@@ -629,10 +617,7 @@ int Game::Run(RenderWindow& window)
 		Engine::objects[i].reset();
 	}*/
 
-	print("");
-	print("koniec");
-
-	return EXIT_SUCCESS;
+	return -1; //EXIT_SUCCESS;
 }
 
 
@@ -667,7 +652,18 @@ MainMenu::~MainMenu()
 }
 Game::Game()
 {
+	WaveSpawner::boss = spawn_boss;
 
+	WaveSpawner::big_enemies.push_back(spawn_fly);
+	WaveSpawner::big_enemies.push_back(spawn_fatman);
+	WaveSpawner::big_enemies.push_back(spawn_priest);
+	WaveSpawner::big_enemies.push_back(spawn_prince);
+	WaveSpawner::big_enemies.push_back(spawn_sniper);
+
+	WaveSpawner::small_enemies.push_back(spawn_block1);
+	WaveSpawner::small_enemies.push_back(spawn_block2);
+	WaveSpawner::small_enemies.push_back(spawn_block3);
+	WaveSpawner::small_enemies.push_back(spawn_block4);
 }
 Game::~Game()
 {

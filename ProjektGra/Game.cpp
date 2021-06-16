@@ -367,16 +367,19 @@ int main()
 
 	while (screen >= 0)
 	{
-		if (counter > 0)							//za ka¿dym razem (poza pierwszym)
-		{
-			Screens.erase(Screens.begin() + 1);		//usuwamy z wektora obiekt gry
-			Game game;								
-			Screens.push_back(&game);				//dopisujemy now¹ na koñcu
-		}											//ale nie dzia³a
+		//if (counter > 0)							//za ka¿dym razem (poza pierwszym)
+		//{
+		//	Screens.erase(Screens.begin() + 1);		//usuwamy z wektora obiekt gry
+		//	Game game;								
+		//	Screens.push_back(&game);				//dopisujemy now¹ na koñcu
+		//}											//ale nie dzia³a
 		screen = Screens[screen]->Run(window);
 	}
 
+	return EXIT_SUCCESS;
 }
+
+
 //int main()
 //{
 //	print("start");
