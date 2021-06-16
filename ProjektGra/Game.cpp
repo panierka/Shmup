@@ -360,9 +360,12 @@ int main()
 	RenderWindow window(VideoMode(SCREEN_SIZE.x + 275u, SCREEN_SIZE.y), "Gra", Style::Titlebar | Style::Close);
 
 	MainMenu main_menu;
-	Screens.push_back(&main_menu);
+	Screens.push_back(&main_menu); // 0
 	Game game;
-	Screens.push_back(&game);
+	Screens.push_back(&game); // 1
+	Restart restart;
+	Screens.push_back(&restart); // 2
+
 	/*Screens.erase(Screens.begin());*/
 
 	while (screen >= 0)

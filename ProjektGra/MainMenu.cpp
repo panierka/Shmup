@@ -545,12 +545,13 @@ int Game::Run(RenderWindow& window)
 				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 0)
 				{
 					pause_action_index = 4;
-					break;
+				}
+				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 1)
+				{
+					return 2;
 				}
 				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 2)
 				{
-					pause_action_index = 5;
-					/*return 1;*/
 					return 0;
 				}
 			}
@@ -588,10 +589,6 @@ int Game::Run(RenderWindow& window)
 				break;
 			case 4:
 				pause_game = false;
-				break;
-			case 5:
-				/*window.close();*/
-				/*return 0;*/
 				break;
 			default:
 				break;
@@ -755,3 +752,8 @@ Game::~Game()
 //{
 //	delete font1;
 //}
+
+int Restart::Run(RenderWindow& window)
+{
+	return 1;
+}

@@ -85,3 +85,8 @@ private:
 	Font* font1;
 };
 
+class Restart : public cScreen
+{
+	virtual int Run(RenderWindow& window);
+};
+
