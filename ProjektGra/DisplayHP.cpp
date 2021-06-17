@@ -21,18 +21,11 @@ DisplayHP::DisplayHP()
 DisplayHP::~DisplayHP()
 {
 	delete font;
-
-	delete health_text;
-	delete dodge_text;
-	delete ammo_text;
-	delete wave_text;
-
-	delete score_text;
 }
 
-Text* DisplayHP::create_text(float _pos_y)
+shared_ptr<Text> DisplayHP::create_text(float _pos_y)
 {
-	Text* _text = new Text();
+	shared_ptr<Text> _text = make_shared<Text>();
 
 	_text->setFont(*font);
 	_text->setString("...");
@@ -44,14 +37,14 @@ Text* DisplayHP::create_text(float _pos_y)
 	return _text;
 }
 
-void DisplayHP::set_percentage(float p, Text* _text)
+void DisplayHP::set_percentage(float p, shared_ptr<Text> _text)
 {
 	int i = round(p * 100);
 
 	_text->setString(to_string(i) + "%");
 }
 
-void DisplayHP::set_count(int _current, int _max, Text* _text)
+void DisplayHP::set_count(int _current, int _max, shared_ptr<Text> _text)
 {
 	_text->setString(to_string(_current) + "/" + to_string(_max));
 }
@@ -70,11 +63,11 @@ void DisplayHP::add_score(int _amount)
 
 Font* DisplayHP::font{};
 
-Text* DisplayHP::health_text{};
-Text* DisplayHP::dodge_text{};
+shared_ptr<Text> DisplayHP::health_text{};
+shared_ptr<Text> DisplayHP::dodge_text{};
 
-Text* DisplayHP::ammo_text{};
-Text* DisplayHP::wave_text{};
+shared_ptr<Text> DisplayHP::ammo_text{};
+shared_ptr<Text> DisplayHP::wave_text{};
 
-Text* DisplayHP::score_text{};
+shared_ptr<Text> DisplayHP::score_text{};
 int DisplayHP::score = 0;
