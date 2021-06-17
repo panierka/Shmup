@@ -380,7 +380,7 @@ void Player::setHP(int _amount)
 
 	if (_amount < 0)
 	{
-		DisplayHP::add_score(-_amount * 5 - 100);
+		DisplayHP::add_score(-_amount * 10 - 350);
 	}
 
 	DisplayHP::set_percentage(static_cast<float>(current_health) / static_cast<float>(max_health), DisplayHP::health_text);
