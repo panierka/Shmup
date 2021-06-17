@@ -22,6 +22,7 @@ void WaveSpawner::next_wave()
 {
 	current_wave++;
 	DisplayHP::set_count(current_wave + 1, 6, DisplayHP::wave_text);
+	DisplayHP::add_score(5000 * (current_wave));
 	
 	if (current_wave < 5)
 	{
@@ -99,7 +100,6 @@ void WaveSpawner::change_enemies_alive(int i)
 		print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
 		Engine::set_stat_upgrades(possible_stats);
-		DisplayHP::add_score(5000 * (current_wave + 1));
 
 		if (current_wave == 5)
 		{
