@@ -17,6 +17,8 @@ void Game::spawn_fly()
 	e->animations.push_back(new AnimationClip(4, 2, 10, *e, false));
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
+	
+	e->score_value = 500;
 
 	e->set_move(Vector2f(1.f * random_dir(), -0.25f), 3.25f, 1, true);
 
@@ -45,7 +47,7 @@ void Game::spawn_fatman()
 	e->animations.push_back(new AnimationClip(2, 3, 12, *e, false));
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
-
+	e->score_value = 500;
 	e->set_move(Vector2f(1.f * random_dir(), -0.15f), 1.1f, 1, true);
 
 	void (*f)(Enemy&) = [](Enemy& e)
@@ -73,7 +75,7 @@ void Game::spawn_block1()
 	e->animations.push_back(new AnimationClip(2, 2, 8, *e, false));
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
-
+	e->score_value = 250;
 	e->set_move(Vector2f(1.f * random_dir(), -0.35f), 1.75f, 1, true);
 
 	void (*f)(Enemy&) = [](Enemy& e)
@@ -100,7 +102,7 @@ void Game::spawn_block2()
 	e->animations.push_back(new AnimationClip(0, 2, 10, *e, true));
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
-
+	e->score_value = 250;
 	e->set_move(Vector2f(1.f * random_dir(), -0.35f), 1.75f, 1, true);
 
 	void (*f)(Enemy&) = [](Enemy& e)
@@ -126,7 +128,7 @@ void Game::spawn_block3()
 	e->animations.push_back(new AnimationClip(2, 2, 8, *e, false));
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
-
+	e->score_value = 250;
 	e->set_move(Vector2f(1.f * random_dir(), -0.35f), 1.75f, 1, true);
 
 	void (*f)(Enemy&) = [](Enemy& e)
@@ -154,7 +156,7 @@ void Game::spawn_block4()
 	e->animations.push_back(new AnimationClip(2, 2, 14, *e, false));
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
-
+	e->score_value = 250;
 	e->set_move(Vector2f(1.f * random_dir(), -0.35f), 1.75f, 1, true);
 
 	void (*f)(Enemy&) = [](Enemy& e)
@@ -188,7 +190,7 @@ void Game::spawn_priest()
 	e->animations.push_back(new AnimationClip(7, 3, 8, *e, false));
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
-
+	e->score_value = 500;
 	e->set_move(Vector2f(1.f * random_dir(), -0.175f), 1.05f, 1, true);
 
 	void (*f)(Enemy&) = [](Enemy& e)
@@ -224,7 +226,7 @@ void Game::spawn_prince()
 	e->animations.push_back(new AnimationClip(5, 2, 10, *e, false));
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
-
+	e->score_value = 500;
 	e->set_move(Vector2f(1.f * random_dir(), -0.225f), 2.5f, 1, true);
 
 	void (*f)(Enemy&) = [](Enemy& e)
@@ -259,7 +261,7 @@ void Game::spawn_sniper()
 	e->animations.push_back(new AnimationClip(4, 2, 10, *e, false));
 
 	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
-
+	e->score_value = 500;
 	e->set_move(Vector2f(1.f * random_dir(), -0.125f), 1.15f, 1, true);
 
 	void (*f)(Enemy&) = [](Enemy& e)
@@ -291,7 +293,7 @@ void Game::spawn_boss()
 	e->animations.push_back(new AnimationClip(11, 2, 10, *e, false));
 
 	e->create_collider(Vector2f(-50.f, -50.f), Vector2f(150.f, 150.f));
-
+	e->score_value = 10000;
 	e->set_move(Vector2f(1.f, 0.f), 2.0f, 1, true);
 
 	void (*f1)(Enemy&) = [](Enemy& e)
@@ -439,6 +441,8 @@ int Game::Run(RenderWindow& window)
 {
 	Engine::objects.clear();
 	Engine::stat_upgrades.clear();
+
+	DisplayHP display;
 
 	// wczytanie tekstur gracza i stworzenie jego obiektu
 	Texture t, t2;

@@ -378,6 +378,11 @@ void Player::setHP(int _amount)
 {
 	Character::setHP(_amount);
 
+	if (_amount < 0)
+	{
+		DisplayHP::add_score(-_amount * 5 - 100);
+	}
+
 	DisplayHP::set_percentage(static_cast<float>(current_health) / static_cast<float>(max_health), DisplayHP::health_text);
 }
 
@@ -530,6 +535,7 @@ Vector2f Enemy::handle_borders(Vector2f _pos)
 	if (_pos.y > SCREEN_SIZE.y)
 	{
 		// dŸwiêk
+		DisplayHP::add_score(-score_value * 2);
 		InputHandler::player->setHP(-current_health);
 		InputHandler::player->effect->activate();
 		destroy_this = true;
@@ -558,6 +564,8 @@ float Enemy::angle_to_player()
 
 void Enemy::death()
 {
+	DisplayHP::add_score(score_value);
+
 	destroy_this = true;
 	// punkty
 }
@@ -632,28 +640,36 @@ void Player::upgrade_stat(Stat s)
 	{
 	case HEALTH:
 		add_max_health(45);
+		DisplayHP::add_score(1000);
 		break;
 	case DAMAGE:
 		stat_damage += 5;
+		DisplayHP::add_score(750);
 		break;
 	case ALT_DAMAGE:
 		stat_damage_special += 3;
+		DisplayHP::add_score(1000);
 		break;
 	case SPEED:
 		stat_speed += 1.25f;
+		DisplayHP::add_score(3000);
 		break;
 	case BULLET_VELOCITY:
 		stat_bullet_velocity += 0.4f;
+		DisplayHP::add_score(3000);
 		break;
 	case AMMO:
 		add_max_ammo(4);
+		DisplayHP::add_score(1000);
 		break;
 	case DODGE_RECHARGE:
 		inv_charger->charge_value += 0.6f;
+		DisplayHP::add_score(1000);
 		break;
 	case LIFESTEAL:
 		lifesteal += 1;
 		stat_damage += 2;
+		DisplayHP::add_score(2000);
 		break;
 	}
 }

@@ -66,6 +66,7 @@ InputHandler::InputHandler(Player* _player)
 			{
 				if (player->try_use_ammo())
 				{
+					DisplayHP::add_score(-player->stat_damage);
 					player->bullet_velocity_mod = player->stat_bullet_velocity;
 					player->call_animation(1);
 					player->shoot("player-bullet", Vector2i(25, 50), player->stat_damage, 0, 0, 1, 4, 24);
@@ -83,6 +84,7 @@ InputHandler::InputHandler(Player* _player)
 			{
 				if (player->try_use_ammo())
 				{
+					DisplayHP::add_score(-player->stat_damage);
 					player->call_animation(1);
 
 					int bonus_damage = 0;

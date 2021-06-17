@@ -216,6 +216,8 @@ public:
 	std::vector<void(*)(Enemy&)> attacks;
 	AttackTimer* attack_timer;
 
+	int score_value = 0;
+
 public:
 	Enemy(Vector2f pos, Sprite* s, bool b, Vector2i frame);
 	~Enemy();

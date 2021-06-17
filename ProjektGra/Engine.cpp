@@ -103,6 +103,7 @@ void Engine::update(float dt)
 	window->draw(*DisplayHP::dodge_text);
 	window->draw(*DisplayHP::ammo_text);
 	window->draw(*DisplayHP::wave_text);
+	window->draw(*DisplayHP::score_text);
 
 	//
 	//for (int i = 0; i < objects.size(); i++)

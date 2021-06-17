@@ -99,6 +99,7 @@ void WaveSpawner::change_enemies_alive(int i)
 		print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
 		Engine::set_stat_upgrades(possible_stats);
+		DisplayHP::add_score(5000 * (current_wave + 1));
 
 		if (current_wave == 5)
 		{
