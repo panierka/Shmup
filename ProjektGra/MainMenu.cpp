@@ -293,7 +293,7 @@ void Game::spawn_boss()
 	e->animations.push_back(new AnimationClip(11, 2, 10, *e, false));
 
 	e->create_collider(Vector2f(-50.f, -50.f), Vector2f(150.f, 150.f));
-	e->score_value = 10000;
+	e->score_value = 60000;
 	e->set_move(Vector2f(1.f, 0.f), 2.0f, 1, true);
 
 	void (*f1)(Enemy&) = [](Enemy& e)
