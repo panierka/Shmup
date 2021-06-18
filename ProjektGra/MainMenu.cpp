@@ -381,6 +381,12 @@ void Menu::move_up()
 		current_position--;
 		text[current_position].setFillColor(Color::Red);
 	}
+	else if (current_position == 0)
+	{
+		text[0].setFillColor(Color::White);
+		current_position = NUMBER_OF_ELEMENTS - 1;
+		text[current_position].setFillColor(Color::Red);
+	}
 }
 
 void Menu::move_down()
@@ -389,6 +395,12 @@ void Menu::move_down()
 	{
 		text[current_position].setFillColor(Color::White);
 		current_position++;
+		text[current_position].setFillColor(Color::Red);
+	}
+	else if (current_position == NUMBER_OF_ELEMENTS - 1)
+	{
+		text[NUMBER_OF_ELEMENTS - 1].setFillColor(Color::White);
+		current_position = 0;
 		text[current_position].setFillColor(Color::Red);
 	}
 }
