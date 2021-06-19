@@ -1,10 +1,11 @@
 #pragma once
 #include"Classes.h"
 #include"KeyAction.h"
+#include "SetVolume.h"
 #include<iostream>
 #include<cstdlib>
 
-#define NUMBER_OF_ELEMENTS 3
+#define NUMBER_OF_ELEMENTS 6
 
 class cScreen
 {
@@ -31,8 +32,13 @@ public:
 	void print_menu(RenderWindow& window);
 	void move_up();
 	void move_down();
+	void move_right_to_volume();
+	void move_left_to_volume();
+	string print_string(int volume);
 	int current_position;
+	int current_position2;
 	Text text[NUMBER_OF_ELEMENTS]{};
+	Text text1[3];
 };
 
 class Game :public cScreen

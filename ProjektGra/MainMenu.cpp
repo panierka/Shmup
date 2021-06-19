@@ -1,6 +1,6 @@
 #include "MainMenu.h"
-
 Vector2f enemy_spawn_pos = (Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, -450);
+SetVolume setVolume;
 
 #pragma region > Przeciwnicy  < 
 
@@ -349,15 +349,32 @@ Menu::Menu()
 	font->loadFromFile("../Assets/arial.ttf");
 	text[0].setFont(*font);
 	text[0].setString("Play");
-	text[0].setPosition(Vector2f(400u, 350u));
+	text[0].setPosition(Vector2f(400u, 200u));
 	text[1].setFont(*font);
-	text[1].setString("Leaderboard");
-	text[1].setPosition(Vector2f(400u, 450u));
+	text[1].setString("Sound Volume");
+	text[1].setPosition(Vector2f(400u, 300u));
 	text[2].setFont(*font);
-	text[2].setString("Exit");
-	text[2].setPosition(Vector2f(400u, 550u));
+	text[2].setString("Music Volume");
+	text[2].setPosition(Vector2f(400u, 400u));
+	text[3].setFont(*font);
+	text[3].setString("General Volume");
+	text[3].setPosition(Vector2f(400u, 500u));
+	text[4].setFont(*font);
+	text[4].setString("Leaderboard");
+	text[4].setPosition(Vector2f(400u, 600u));
+	text[5].setFont(*font);
+	text[5].setString("Exit");
+	text[5].setPosition(Vector2f(400u, 700u));
 	current_position = 0;
 	text[current_position].setFillColor(Color::Red);
+	text1[0].setFont(*font);
+	text1[0].setPosition(Vector2f(200u, 800u));
+	text1[2].setFont(*font);
+	text1[2].setPosition(Vector2f(800u, 800u));
+	text1[1].setFont(*font);
+	text1[1].setPosition(Vector2f(400u, 800u));
+	current_position2 = 2;
+	text1[current_position2].setFillColor(Color::Red);
 }
 
 Menu::~Menu()
@@ -365,6 +382,21 @@ Menu::~Menu()
 	delete font;
 }
 
+string Menu::print_string(int volume)
+{
+	string circles{};
+	string number{};
+	for (int i = 0; i < volume; i++)
+	{
+		circles += "O";
+	}
+	for (int j = 0; j < 10 - volume; j++)
+	{
+		circles += "X";
+	}
+	number = to_string(volume * 10);
+	return circles + "	" + number;
+}
 void Menu::print_menu(RenderWindow& window)
 {
 	for (int i = 0; i < NUMBER_OF_ELEMENTS; i++)
@@ -404,6 +436,29 @@ void Menu::move_down()
 		text[current_position].setFillColor(Color::Red);
 	}
 }
+
+void Menu::move_right_to_volume()
+{
+	text1[current_position2].setFillColor(Color::White);
+	if (current_position2 == 2)
+		current_position2 = -1;
+	current_position2++;
+	if (current_position2 == 1)
+		current_position2++;
+	text1[current_position2].setFillColor(Color::Red);
+}
+
+void Menu::move_left_to_volume()
+{
+	text1[current_position2].setFillColor(Color::White);
+	if (current_position2 == 0)
+		current_position2 = 3;
+	current_position2--;
+	if (current_position2 == 1)
+		current_position2--;
+	text1[current_position2].setFillColor(Color::Red);
+}
+
 int MainMenu::Run(RenderWindow& window)
 {
 	Menu menu;
@@ -424,27 +479,105 @@ int MainMenu::Run(RenderWindow& window)
 
 			if (_event.type == Event::KeyReleased)
 			{
+				menu.text1[0].setString("Down");
+				menu.text1[2].setString("Up");
 				if (_event.key.code == Keyboard::Down)
 				{
+					show_volume_interface = false;
 					menu.move_down();
 				}
 				if (_event.key.code == Keyboard::Up)
 				{
+					show_volume_interface = false;
 					menu.move_up();
 				}
 				if (_event.key.code == Keyboard::Enter && menu.current_position == 0)
 				{
 					return 1;
 				}
+				if (_event.key.code == Keyboard::Enter && menu.current_position == 1)
+				{
+					show_volume_interface = true;
+					menu.text1[1].setString(menu.print_string(sound_volume));
+				}
 				if (_event.key.code == Keyboard::Enter && menu.current_position == 2)
+				{
+					show_volume_interface = true;
+					menu.text1[1].setString(menu.print_string(music_volume));
+				}
+				if (_event.key.code == Keyboard::Enter && menu.current_position == 3)
+				{
+					show_volume_interface = true;
+					menu.text1[1].setString(menu.print_string(general_volume));
+				}
+				if (_event.key.code == Keyboard::Enter && menu.current_position == 4)
+				{
+					//leaderboard
+				}
+				if (_event.key.code == Keyboard::Enter && menu.current_position == 5)
 				{
 					//window.close();
 					return -1;
+				}
+				if (show_volume_interface)
+				{
+						if (_event.key.code == Keyboard::Left)
+						{
+							menu.move_left_to_volume();
+						}
+						if (_event.key.code == Keyboard::Right)
+						{
+							menu.move_right_to_volume();
+						}
+						if (_event.key.code == Keyboard::Space && menu.current_position2 == 2)
+						{
+							switch (menu.current_position)
+							{
+							case (1):
+								setVolume.turn_up(sound_volume);
+								menu.text1[1].setString(menu.print_string(sound_volume));
+								break;
+							case (2):
+								setVolume.turn_up(music_volume);
+								menu.text1[1].setString(menu.print_string(music_volume));
+								break;
+							case (3):
+								setVolume.turn_up(general_volume);
+								menu.text1[1].setString(menu.print_string(general_volume));
+								break;
+							}
+							/*sound1.play_sound("pogchamp1");*/	//nie dzia³a, bo dŸwiêk wczytywany dopiero przy pierwszej rozgrywce
+						}
+						if (_event.key.code == Keyboard::Space && menu.current_position2 == 0)
+						{
+							switch (menu.current_position)
+							{
+							case (1):
+								setVolume.turn_down(sound_volume);
+								menu.text1[1].setString(menu.print_string(sound_volume));
+								break;
+							case (2):
+								setVolume.turn_down(music_volume);
+								menu.text1[1].setString(menu.print_string(music_volume));
+								break;
+							case (3):
+								setVolume.turn_down(general_volume);
+								menu.text1[1].setString(menu.print_string(general_volume));
+								break;
+							}
+						}
 				}
 			}
 		}
 		window.clear(Color(73, 84, 123, 255));
 		menu.print_menu(window);
+		if (show_volume_interface)
+		{
+			for (int i = 0; i < 3; i++)
+			{
+				window.draw(menu.text1[i]);
+			}
+		}
 		window.display();
 	}
 }
@@ -489,9 +622,10 @@ int Game::Run(RenderWindow& window)
 	Clock clock;
 	float _frame_time = clock.getElapsedTime().asSeconds();
 
-	//sound1.add_sound("pogchamp", "../Assets/Sounds/Soundtrack.wav", 20);
-
-		//sound1.play_sound("pogchamp");
+	sound1.add_sound("pogchamp", "../Assets/Sounds/Soundtrack.wav", 20);
+	sound1.add_sound("pogchamp1", "../Assets/Sounds/plantLoud.wav", 100);
+	/*sound1.play_sound("pogchamp");*/
+	sound1.play_sound("pogchamp1");
 		/*BackgroundMusic background;*/
 
 	PauseMenu pause_menu;
@@ -520,16 +654,20 @@ int Game::Run(RenderWindow& window)
 			}
 			else if (_event.type == Event::KeyReleased)
 			{
+				pause_menu.text1[0].setString("Down");
+				pause_menu.text1[2].setString("Up");
 				if (_event.key.code == Keyboard::Escape)
 				{
 					pause_game = true;
 				}
 				if (_event.key.code == Keyboard::Down)
 				{
+					show_volume_interface = false;
 					pause_action_index = 2;
 				}
 				if (_event.key.code == Keyboard::Up)
 				{
+					show_volume_interface = false;
 					pause_action_index = 3;
 				}
 				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 0)
@@ -542,7 +680,70 @@ int Game::Run(RenderWindow& window)
 				}
 				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 2)
 				{
+					show_volume_interface = true;
+					pause_menu.text1[1].setString(pause_menu.print_string(sound_volume));
+				}
+				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 3)
+				{
+					show_volume_interface = true;
+					pause_menu.text1[1].setString(pause_menu.print_string(music_volume));
+				}
+				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 4)
+				{
+					show_volume_interface = true;
+					pause_menu.text1[1].setString(pause_menu.print_string(general_volume));
+				}
+				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 5)
+				{
 					return 0;
+				}
+				if (show_volume_interface)
+				{
+					if (_event.key.code == Keyboard::Left)
+					{
+						pause_menu.move_left_to_volume();
+					}
+					if (_event.key.code == Keyboard::Right)
+					{
+						pause_menu.move_right_to_volume();
+					}
+					if (_event.key.code == Keyboard::Space && pause_menu.current_position2 == 2)
+					{
+						switch (pause_menu.current_position)
+						{
+						case (2):
+							setVolume.turn_up(sound_volume);
+							pause_menu.text1[1].setString(pause_menu.print_string(sound_volume));
+							break;
+						case (3):
+							setVolume.turn_up(music_volume);
+							pause_menu.text1[1].setString(pause_menu.print_string(music_volume));
+							break;
+						case (4):
+							setVolume.turn_up(general_volume);
+							pause_menu.text1[1].setString(pause_menu.print_string(general_volume));
+							break;
+						}
+						/*sound1.play_sound("pogchamp1");*/	//nie dzia³a, bo dŸwiêk wczytywany dopiero przy pierwszej rozgrywce
+					}
+					if (_event.key.code == Keyboard::Space && pause_menu.current_position2 == 0)
+					{
+						switch (pause_menu.current_position)
+						{
+						case (2):
+							setVolume.turn_down(sound_volume);
+							pause_menu.text1[1].setString(pause_menu.print_string(sound_volume));
+							break;
+						case (3):
+							setVolume.turn_down(music_volume);
+							pause_menu.text1[1].setString(pause_menu.print_string(music_volume));
+							break;
+						case (4):
+							setVolume.turn_down(general_volume);
+							pause_menu.text1[1].setString(pause_menu.print_string(general_volume));
+							break;
+						}
+					}
 				}
 			}
 		}
@@ -603,6 +804,13 @@ int Game::Run(RenderWindow& window)
 
 			window.clear(Color(73, 84, 123, 255));
 			pause_menu.print_menu(window);
+			if (show_volume_interface)
+			{
+				for (int i = 0; i < 3; i++)
+				{
+					window.draw(pause_menu.text1[i]);
+				}
+			}
 			window.display();
 
 		}
@@ -623,13 +831,22 @@ PauseMenu::PauseMenu() :Menu()
 	font1->loadFromFile("../Assets/arial.ttf");
 	text[0].setFont(*font1);
 	text[0].setString("Resume");
-	text[0].setPosition(Vector2f(400u, 350u));
+	text[0].setPosition(Vector2f(400u, 200u));
 	text[1].setFont(*font1);
 	text[1].setString("Restart");
-	text[1].setPosition(Vector2f(400u, 450u));
+	text[1].setPosition(Vector2f(400u, 300u));
 	text[2].setFont(*font1);
-	text[2].setString("Exit");
-	text[2].setPosition(Vector2f(400u, 550u));
+	text[2].setString("Sound Volume");
+	text[2].setPosition(Vector2f(400u, 400u));
+	text[3].setFont(*font1);
+	text[3].setString("Music Volume");
+	text[3].setPosition(Vector2f(400u, 500u));
+	text[4].setFont(*font1);
+	text[4].setString("General Volume");
+	text[4].setPosition(Vector2f(400u, 600u));
+	text[5].setFont(*font1);
+	text[5].setString("Exit");
+	text[5].setPosition(Vector2f(400u, 700u));
 	current_position = 0;
 	text[current_position].setFillColor(Color::Red);
 }

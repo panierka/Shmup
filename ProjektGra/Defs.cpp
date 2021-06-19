@@ -8,6 +8,7 @@ std::map<string, Texture*> TextureAtlas::texture_atlas{};
 int game_state{};
 
 Sounds sound1{};
+BackgroundMusic background{};
 
 // funkcja do wyznaczania d³ugoœci wektorów
 template<typename T>
