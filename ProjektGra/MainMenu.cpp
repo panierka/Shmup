@@ -617,11 +617,18 @@ int Game::Run(RenderWindow& window)
 	float _frame_time = clock.getElapsedTime().asSeconds();
 
 	sound1.add_sound("pogchamp", "../Assets/Sounds/Soundtrack.wav", 20);
-	sound1.add_sound("pogchamp1", "../Assets/Sounds/plantLoud.wav", 100);
-	sound1.add_sound("hit", "../Assets/Sounds/Hit.wav", 25);
-	sound1.add_sound("glass", "../Assets/Sounds/Glass.wav", 34);
+	//sound1.add_sound("pogchamp1", "../Assets/Sounds/plantLoud.wav", 100);
+
+	sound1.add_sound("hit", "../Assets/Sounds/Hit.wav", 20);
+	sound1.add_sound("glass", "../Assets/Sounds/Glass.wav", 29);
+	sound1.add_sound("shot", "../Assets/Sounds/normal-shot.wav", 18);
+	sound1.add_sound("shot-heavy", "../Assets/Sounds/heavy.wav", 100);
+	sound1.add_sound("dodge", "../Assets/Sounds/dodge.wav", 45);
+	sound1.add_sound("parry", "../Assets/Sounds/Parry.wav", 65);
+	sound1.add_sound("upgrade", "../Assets/Sounds/Buy.wav", 62);
+
 	/*sound1.play_sound("pogchamp");*/
-	sound1.play_sound("pogchamp1");
+	//sound1.play_sound("pogchamp1");
 		/*BackgroundMusic background;*/
 
 	PauseMenu pause_menu;

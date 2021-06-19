@@ -396,6 +396,7 @@ void Character::take_hit(int _amount)
 {
 	if (invulnerable)
 	{
+		sound1.play_sound("parry");
 		setHP((_amount / 2) + 1);
 		return;
 	}
@@ -677,6 +678,8 @@ void Player::upgrade_stat(Stat s)
 		DisplayHP::add_score(2000);
 		break;
 	}
+
+	sound1.play_sound("upgrade");
 }
 
 TextureAtlas::TextureAtlas()

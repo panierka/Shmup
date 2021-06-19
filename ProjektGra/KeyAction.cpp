@@ -66,6 +66,7 @@ InputHandler::InputHandler(Player* _player)
 			{
 				if (player->try_use_ammo())
 				{
+					sound1.play_sound("shot");
 					DisplayHP::add_score(-player->stat_damage);
 					player->bullet_velocity_mod = player->stat_bullet_velocity;
 					player->call_animation(1);
@@ -84,6 +85,7 @@ InputHandler::InputHandler(Player* _player)
 			{
 				if (player->try_use_ammo())
 				{
+					sound1.play_sound("shot-heavy");
 					DisplayHP::add_score(-player->stat_damage);
 					player->call_animation(1);
 
@@ -125,6 +127,7 @@ InputHandler::InputHandler(Player* _player)
 		{
 			if (player->ready_to_action && player->inv_charger->fully_charged)
 			{
+				sound1.play_sound("dodge");
 				player->reload();
 
 				player->call_animation(2);
