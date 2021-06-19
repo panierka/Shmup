@@ -10,7 +10,7 @@ DisplayHP::DisplayHP()
 	wave_text = create_text(700.f);
 	score_text = create_text(800.f);
 
-	font->loadFromFile("../Assets/arial.ttf");
+	font->loadFromFile("../Assets/doves.ttf");
 
 	health_text->setFillColor(Color::Red);
 
@@ -29,7 +29,7 @@ shared_ptr<Text> DisplayHP::create_text(float _pos_y)
 
 	_text->setFont(*font);
 	_text->setString("...");
-	_text->setCharacterSize(30);
+	_text->setCharacterSize(60);
 	_text->setFillColor(Color::White);
 
 	_text->setPosition(SCREEN_SIZE.x + 40.f, SCREEN_SIZE.y - _pos_y);
@@ -58,7 +58,7 @@ void DisplayHP::add_score(int _amount)
 		score = 0;
 	}
 
-	score_text->setString(to_string(score));
+	score_text->setString(to_string(score) + "$");
 }
 
 Font* DisplayHP::font{};

@@ -346,25 +346,25 @@ void Game::spawn_boss()
 Menu::Menu()
 {
 	font = new Font();
-	font->loadFromFile("../Assets/arial.ttf");
+	font->loadFromFile("../Assets/doves.ttf");
 	text[0].setFont(*font);
-	text[0].setString("Play");
-	text[0].setPosition(Vector2f(400u, 200u));
+	text[0].setString("PLAY");
+	text[0].setPosition(Vector2f(200u, 200u));
 	text[1].setFont(*font);
-	text[1].setString("Sound Volume");
-	text[1].setPosition(Vector2f(400u, 300u));
+	text[1].setString("SOUND VOLUME");
+	text[1].setPosition(Vector2f(200u, 300u));
 	text[2].setFont(*font);
-	text[2].setString("Music Volume");
-	text[2].setPosition(Vector2f(400u, 400u));
+	text[2].setString("MUSIC VOLUME");
+	text[2].setPosition(Vector2f(200u, 400u));
 	text[3].setFont(*font);
-	text[3].setString("General Volume");
-	text[3].setPosition(Vector2f(400u, 500u));
+	text[3].setString("GENERAL VOLUMEe");
+	text[3].setPosition(Vector2f(200u, 500u));
 	text[4].setFont(*font);
-	text[4].setString("Leaderboard");
-	text[4].setPosition(Vector2f(400u, 600u));
+	text[4].setString("LEADERBOARD");
+	text[4].setPosition(Vector2f(200u, 600u));
 	text[5].setFont(*font);
-	text[5].setString("Exit");
-	text[5].setPosition(Vector2f(400u, 700u));
+	text[5].setString("EXIT");
+	text[5].setPosition(Vector2f(200u, 700u));
 	current_position = 0;
 	text[current_position].setFillColor(Color::Red);
 	text1[0].setFont(*font);
@@ -375,6 +375,11 @@ Menu::Menu()
 	text1[1].setPosition(Vector2f(400u, 800u));
 	current_position2 = 2;
 	text1[current_position2].setFillColor(Color::Red);
+
+	for (int i = 0; i < NUMBER_OF_ELEMENTS; i++)
+	{
+		text[i].setCharacterSize(80);
+	}
 }
 
 Menu::~Menu()
@@ -411,13 +416,13 @@ void Menu::move_up()
 	{
 		text[current_position].setFillColor(Color::White);
 		current_position--;
-		text[current_position].setFillColor(Color::Red);
+		text[current_position].setFillColor(Color::Color(255, 128, 0, 255));
 	}
 	else if (current_position == 0)
 	{
 		text[0].setFillColor(Color::White);
 		current_position = NUMBER_OF_ELEMENTS - 1;
-		text[current_position].setFillColor(Color::Red);
+		text[current_position].setFillColor(Color::Color(255, 128, 0, 255));
 	}
 }
 
@@ -427,13 +432,13 @@ void Menu::move_down()
 	{
 		text[current_position].setFillColor(Color::White);
 		current_position++;
-		text[current_position].setFillColor(Color::Red);
+		text[current_position].setFillColor(Color::Color(255, 128, 0, 255));
 	}
 	else if (current_position == NUMBER_OF_ELEMENTS - 1)
 	{
 		text[NUMBER_OF_ELEMENTS - 1].setFillColor(Color::White);
 		current_position = 0;
-		text[current_position].setFillColor(Color::Red);
+		text[current_position].setFillColor(Color::Color(255, 128, 0, 255));
 	}
 }
 
@@ -561,7 +566,7 @@ int MainMenu::Run(RenderWindow& window)
 				}
 			}
 		}
-		window.clear(Color(73, 84, 123, 255));
+		window.clear(Color(0, 0, 0, 255));
 		menu.print_menu(window);
 		if (show_volume_interface)
 		{
@@ -614,6 +619,7 @@ int Game::Run(RenderWindow& window)
 	sound1.add_sound("pogchamp", "../Assets/Sounds/Soundtrack.wav", 20);
 	sound1.add_sound("pogchamp1", "../Assets/Sounds/plantLoud.wav", 100);
 	sound1.add_sound("hit", "../Assets/Sounds/Hit.wav", 25);
+	sound1.add_sound("glass", "../Assets/Sounds/Glass.wav", 34);
 	/*sound1.play_sound("pogchamp");*/
 	sound1.play_sound("pogchamp1");
 		/*BackgroundMusic background;*/
@@ -792,7 +798,7 @@ int Game::Run(RenderWindow& window)
 			}
 			*/
 
-			window.clear(Color(73, 84, 123, 255));
+			window.clear(Color(0, 0, 0, 255));
 			pause_menu.print_menu(window);
 			if (show_volume_interface)
 			{
@@ -815,27 +821,28 @@ int Game::Run(RenderWindow& window)
 PauseMenu::PauseMenu() :Menu()
 {
 	font1 = new Font();
-	font1->loadFromFile("../Assets/arial.ttf");
+	font1->loadFromFile("../Assets/doves.ttf");
 	text[0].setFont(*font1);
-	text[0].setString("Resume");
-	text[0].setPosition(Vector2f(400u, 200u));
+	text[0].setString("RESUME");
+	text[0].setPosition(Vector2f(200u, 200u));
 	text[1].setFont(*font1);
-	text[1].setString("Restart");
-	text[1].setPosition(Vector2f(400u, 300u));
+	text[1].setString("RE$TART");
+	text[1].setPosition(Vector2f(200u, 300u));
 	text[2].setFont(*font1);
-	text[2].setString("Sound Volume");
-	text[2].setPosition(Vector2f(400u, 400u));
+	text[2].setString("SOUND VOLUME");
+	text[2].setPosition(Vector2f(200u, 400u));
 	text[3].setFont(*font1);
-	text[3].setString("Music Volume");
-	text[3].setPosition(Vector2f(400u, 500u));
+	text[3].setString("MUSIC VOLUME");
+	text[3].setPosition(Vector2f(200u, 500u));
 	text[4].setFont(*font1);
-	text[4].setString("General Volume");
-	text[4].setPosition(Vector2f(400u, 600u));
+	text[4].setString("GENERAL VOLUME");
+	text[4].setPosition(Vector2f(200u, 600u));
 	text[5].setFont(*font1);
-	text[5].setString("Exit");
-	text[5].setPosition(Vector2f(400u, 700u));
+	text[5].setString("EXIT");
+	text[5].setPosition(Vector2f(200u, 700u));
 	current_position = 0;
-	text[current_position].setFillColor(Color::Red);
+
+	text[current_position].setFillColor(Color::Color(255, 128, 0, 255));
 }
 
 PauseMenu::~PauseMenu()

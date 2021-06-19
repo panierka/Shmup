@@ -569,6 +569,8 @@ void Enemy::death()
 {
 	DisplayHP::add_score(score_value);
 
+	sound1.play_sound("glass");
+
 	destroy_this = true;
 	// punkty
 }
