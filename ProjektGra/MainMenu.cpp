@@ -624,6 +624,7 @@ int Game::Run(RenderWindow& window)
 
 	sound1.add_sound("pogchamp", "../Assets/Sounds/Soundtrack.wav", 20);
 	sound1.add_sound("pogchamp1", "../Assets/Sounds/plantLoud.wav", 100);
+	sound1.add_sound("hit", "../Assets/Sounds/Hit.wav", 25);
 	/*sound1.play_sound("pogchamp");*/
 	sound1.play_sound("pogchamp1");
 		/*BackgroundMusic background;*/

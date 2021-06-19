@@ -142,13 +142,14 @@ public:
 	float bullet_velocity_mod = 1.f;
 	BlinkEffect* effect;
 	bool invulnerable = false;
+	std::string hit_sound = "hit";
 
 protected:
 	int facing_direction_y{};
 	int projectile_collision_mask;
 
 	int max_health = 0;
-	int current_health;
+	int current_health = 0;
 
 public:
 	Character(Vector2f v, Sprite* s, bool b, Vector2i);

@@ -402,6 +402,8 @@ void Character::take_hit(int _amount)
 
 	setHP(-_amount);
 
+	sound1.play_sound(hit_sound);
+
 	effect->activate();
 }
 
