@@ -107,6 +107,7 @@ void WaveSpawner::change_enemies_alive(int i)
 		}
 		else
 		{
+			sound1.play_sound("wave-end");
 			intermission = true;
 		}
 	}

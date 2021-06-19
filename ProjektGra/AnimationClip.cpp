@@ -155,6 +155,7 @@ void InvFramesCharger::function()
 		}
 		else
 		{
+			sound1.play_sound("dodge-ready");
 			set_ready();
 			timer->stop();
 		}

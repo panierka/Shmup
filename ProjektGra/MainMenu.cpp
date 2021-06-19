@@ -599,6 +599,8 @@ int Game::Run(RenderWindow& window)
 	_player->add_max_health(60);
 	_player->add_max_ammo(6);
 
+	_player->hit_sound = "hit-player";
+
 	//_player->start();
 
 	Engine::objects.push_back(std::move(_player));
@@ -626,6 +628,10 @@ int Game::Run(RenderWindow& window)
 	sound1.add_sound("dodge", "../Assets/Sounds/dodge.wav", 45);
 	sound1.add_sound("parry", "../Assets/Sounds/Parry.wav", 65);
 	sound1.add_sound("upgrade", "../Assets/Sounds/Buy.wav", 62);
+	sound1.add_sound("hit-player", "../Assets/Sounds/player-hit.wav", 70);
+	sound1.add_sound("wave-end", "../Assets/Sounds/gong.wav", 86);
+	sound1.add_sound("no-ammo", "../Assets/Sounds/no-ammo.wav", 80);
+	sound1.add_sound("dodge-ready", "../Assets/Sounds/dodge-ready.wav", 100);
 
 	/*sound1.play_sound("pogchamp");*/
 	//sound1.play_sound("pogchamp1");

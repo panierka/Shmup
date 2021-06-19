@@ -381,7 +381,7 @@ void Player::setHP(int _amount)
 
 	if (_amount < 0)
 	{
-		DisplayHP::add_score(_amount * 75 - 400);
+		DisplayHP::add_score(_amount * 25 - 300);
 	}
 
 	DisplayHP::set_percentage(static_cast<float>(current_health) / static_cast<float>(max_health), DisplayHP::health_text);
@@ -539,7 +539,7 @@ Vector2f Enemy::handle_borders(Vector2f _pos)
 	if (_pos.y > SCREEN_SIZE.y)
 	{
 		// dŸwiêk
-		DisplayHP::add_score(-score_value * 2);
+		DisplayHP::add_score(-score_value * 2 - 1000);
 		InputHandler::player->setHP(-current_health);
 		InputHandler::player->effect->activate();
 		destroy_this = true;

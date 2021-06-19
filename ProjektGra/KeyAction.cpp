@@ -74,7 +74,7 @@ InputHandler::InputHandler(Player* _player)
 				}
 				else
 				{
-					// dŸwiêk
+					sound1.play_sound("no-ammo");
 				}
 			}
 		}));
@@ -118,7 +118,7 @@ InputHandler::InputHandler(Player* _player)
 				}
 				else
 				{
-					// dŸwiêk
+					sound1.play_sound("no-ammo");
 				}
 			}
 		}));
