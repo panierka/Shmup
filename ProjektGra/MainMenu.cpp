@@ -439,23 +439,15 @@ void Menu::move_down()
 
 void Menu::move_right_to_volume()
 {
-	text1[current_position2].setFillColor(Color::White);
-	if (current_position2 == 2)
-		current_position2 = -1;
-	current_position2++;
-	if (current_position2 == 1)
-		current_position2++;
+	text1[0].setFillColor(Color::White);
+	current_position2 = 2;
 	text1[current_position2].setFillColor(Color::Red);
 }
 
 void Menu::move_left_to_volume()
 {
 	text1[current_position2].setFillColor(Color::White);
-	if (current_position2 == 0)
-		current_position2 = 3;
-	current_position2--;
-	if (current_position2 == 1)
-		current_position2--;
+	current_position2 = 0;
 	text1[current_position2].setFillColor(Color::Red);
 }
 
@@ -529,7 +521,7 @@ int MainMenu::Run(RenderWindow& window)
 						{
 							menu.move_right_to_volume();
 						}
-						if (_event.key.code == Keyboard::Space && menu.current_position2 == 2)
+						if (_event.key.code == Keyboard::Right && menu.current_position2 == 2)
 						{
 							switch (menu.current_position)
 							{
@@ -548,7 +540,7 @@ int MainMenu::Run(RenderWindow& window)
 							}
 							/*sound1.play_sound("pogchamp1");*/	//nie dzia³a, bo dŸwiêk wczytywany dopiero przy pierwszej rozgrywce
 						}
-						if (_event.key.code == Keyboard::Space && menu.current_position2 == 0)
+						if (_event.key.code == Keyboard::Left && menu.current_position2 == 0)
 						{
 							switch (menu.current_position)
 							{
@@ -573,10 +565,7 @@ int MainMenu::Run(RenderWindow& window)
 		menu.print_menu(window);
 		if (show_volume_interface)
 		{
-			for (int i = 0; i < 3; i++)
-			{
-				window.draw(menu.text1[i]);
-			}
+			window.draw(menu.text1[1]);
 		}
 		window.display();
 	}
@@ -708,7 +697,7 @@ int Game::Run(RenderWindow& window)
 					{
 						pause_menu.move_right_to_volume();
 					}
-					if (_event.key.code == Keyboard::Space && pause_menu.current_position2 == 2)
+					if (_event.key.code == Keyboard::Right && pause_menu.current_position2 == 2)
 					{
 						switch (pause_menu.current_position)
 						{
@@ -727,7 +716,7 @@ int Game::Run(RenderWindow& window)
 						}
 						/*sound1.play_sound("pogchamp1");*/	//nie dzia³a, bo dŸwiêk wczytywany dopiero przy pierwszej rozgrywce
 					}
-					if (_event.key.code == Keyboard::Space && pause_menu.current_position2 == 0)
+					if (_event.key.code == Keyboard::Left && pause_menu.current_position2 == 0)
 					{
 						switch (pause_menu.current_position)
 						{
@@ -807,10 +796,7 @@ int Game::Run(RenderWindow& window)
 			pause_menu.print_menu(window);
 			if (show_volume_interface)
 			{
-				for (int i = 0; i < 3; i++)
-				{
-					window.draw(pause_menu.text1[i]);
-				}
+				window.draw(pause_menu.text1[1]);
 			}
 			window.display();
 
