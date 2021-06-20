@@ -4,8 +4,11 @@
 #include "SetVolume.h"
 #include<iostream>
 #include<cstdlib>
+#include <fstream>
 
 #define NUMBER_OF_ELEMENTS 6
+
+extern bool escape;
 
 class cScreen
 {
@@ -124,3 +127,15 @@ public:
 	virtual int Run(RenderWindow& window);
 };
 
+class Leaderboard : public cScreen
+{
+private:
+	Font* font;
+	Text text;
+	Text text1;
+	String name;
+public:
+	Leaderboard();
+	virtual ~Leaderboard();
+	virtual int Run(RenderWindow& window);
+};

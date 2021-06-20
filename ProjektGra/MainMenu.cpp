@@ -2,6 +2,8 @@
 Vector2f enemy_spawn_pos = (Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, -450);
 SetVolume setVolume;
 
+bool escape = true;
+bool no_data = true;
 #pragma region > Przeciwnicy  < 
 
 float Game::random_dir()
@@ -520,7 +522,7 @@ int MainMenu::Run(RenderWindow& window)
 				}
 				if (_event.key.code == Keyboard::Enter && menu.current_position == 4)
 				{
-					//leaderboard
+					return 6;
 				}
 				if (_event.key.code == Keyboard::Enter && menu.current_position == 5)
 				{
@@ -1031,11 +1033,13 @@ int EndScreen::Run(RenderWindow& window)
 			{
 				if (_event.key.code == Keyboard::Escape)
 				{ 
+					escape = true;
 					return 5;
 					//return 0;
 				}
 				else if (_event.key.code == Keyboard::R)
 				{
+					escape = false;
 					return 5;
 					//return 2;
 				}
@@ -1064,18 +1068,21 @@ SaveResultScreen::SaveResultScreen(int score)
 
 SaveResultScreen::~SaveResultScreen()
 {
-
+	delete font;
 }
 
 int SaveResultScreen::Run(RenderWindow& window)
 {
+	//font = new Font();
+	//font->loadFromFile("../Assets/doves.ttf");
+	bool typing = true;
+	text1.setString("");
 	name = "";
 	text.setString(to_string(DisplayHP::score) + "$");
 
 	while (window.isOpen())
 	{
 		Event _event;
-
 		while (window.pollEvent(_event))
 		{
 			if (_event.type == Event::Closed)
@@ -1083,7 +1090,28 @@ int SaveResultScreen::Run(RenderWindow& window)
 				window.close();
 			}
 
-			if (_event.type == Event::TextEntered)
+			if(_event.type == Event::KeyReleased)
+			{
+				if (_event.key.code == Keyboard::Enter)
+				{
+					fstream file;
+					file.open("Results.txt", ios::app);
+					file << name.toAnsiString() << "   " << DisplayHP::score << ";;" << endl;	//zapisanie wyniku
+					file.close();
+
+					if (escape)
+					{
+						return 0;
+					}
+					else
+					{
+						return 2;
+					}
+					/*typing = false;*/
+				}
+			}
+
+			if (_event.type == Event::TextEntered && typing)
 			{
 				if (_event.text.unicode == '\b')
 				{
@@ -1108,5 +1136,157 @@ int SaveResultScreen::Run(RenderWindow& window)
 		window.display();
 	}
 
-	return 0;
+	return -1;
+}
+
+Leaderboard::Leaderboard()
+{
+	font = new Font();
+	font->loadFromFile("../Assets/doves.ttf");
+}
+
+Leaderboard::~Leaderboard()
+{
+	delete font;
+}
+
+int Leaderboard::Run(RenderWindow& window)
+{
+	int size{};
+	int size_without_the_last_one{};
+	string line;
+	/*string name;*/
+	string score;
+	int typed_name{};
+	fstream file1;
+	file1.open("Results.txt", ios::in);
+
+	Text texts[5]{};
+
+	while (!file1.eof())	//obliczenie liczby graczy wraz z punktami, konieczne do wypisania rankingu
+	{
+		getline(file1, line);
+		size++;
+	}
+	size_without_the_last_one = size - 1;	//wskaŸnik jest zawsze ustawiony na nastêpnej pustej linijce, dlatego od rozmiaru nale¿y odj¹æ 1 - wtedy otrzymamy rozmiar zape³nionych linijek
+	file1.close();
+	if (size_without_the_last_one == 0)	//zabezpieczenie, gdy nie zosta³a rozegrana ¿adna gra
+	{
+		text.setFont(*font);
+		text.setString("No game has been played.");
+		text.setPosition(Vector2f(200.f, 400.f));
+	}
+	else
+	{
+		no_data = false;
+		string* table_of_the_names = new string[size_without_the_last_one];	//dynamiczna alokacja pamiêci na podstawie obliczonej wczeœniej liczby gier 
+		int* table_of_the_scores = new int[size_without_the_last_one];
+		int min{}, first{}, replacement{}, name_replacement{};
+		string name_min{}, first_name{};
+		fstream file;
+		file.open("Results.txt", ios::in);	//wczytywanie z pliku
+		for (int i = 0; i < size_without_the_last_one; i++)
+		{
+			getline(file, line);	//wczytanie pojedynczej linijki zawieraj¹cej imiê i wynik
+			for (int j = 0; j < line.length(); j++)
+			{
+				if (line[j] != 32 && typed_name != 0 && line[j] != ';')	//warunek wykona siê, gdy zmienna typedname zostanie zmodyfikowana po wczeœniejszym wpisaniu spacji - a wiêc bêdzie to element wyniku
+					score += line[j];
+				if (line[j] != 32 && typed_name == 0)
+					name += line[j];
+				if (line[j] == 32)	//spacja oznacza koniec imienia
+				{
+					typed_name++;
+					table_of_the_names[i] = name;
+				}
+				if (line[j] == ';')	//œrednik oznacza koniec wyniku
+					table_of_the_scores[i] = stoi(score);
+			}
+			typed_name = 0;
+			score.clear();
+			name.clear();
+		}
+		file.close();
+		for (int j = 0; j < size_without_the_last_one; j++)
+		{
+			name_replacement = j;
+			replacement = j;
+			min = *(table_of_the_scores + j);
+			name_min = *(table_of_the_names + j);
+			for (int i = 0; (j + i) < (size_without_the_last_one - 1); i++)
+			{
+				if (min < *(table_of_the_scores + j + i + 1))
+				{
+					min = *(table_of_the_scores + j + i + 1);
+					replacement = j + i + 1;
+					name_min = *(table_of_the_names + j + i + 1);
+					name_replacement = j + i + 1;
+				}
+			}
+			first = *(table_of_the_scores + j);
+			*(table_of_the_scores + j) = min;
+			*(table_of_the_scores + replacement) = first;
+			first_name = *(table_of_the_names + j);
+			*(table_of_the_names + j) = name_min;
+			*(table_of_the_names + name_replacement) = first_name;
+		}
+
+		int len = size_without_the_last_one <= 5 ? size_without_the_last_one : 5;
+
+		//if (size_without_the_last_one <= 5)
+		//{
+
+
+		for (int i = 0; i < len; i++)
+		{
+			texts[i].setFont(*font);
+			texts[i].setCharacterSize(50);
+			texts[i].setString(to_string(i + 1) + ". " + table_of_the_names[i] + " - " + to_string(table_of_the_scores[i]));
+			texts[i].setPosition(Vector2f(200.f, 400.f + i * 100.f));
+
+
+		}
+		//}
+		//else
+		//{
+		//	for (int i = 0; i < 5; i++)
+		//	{
+		//		text1.setFont(*font);
+		//		text1.setString(to_string(i + 1) + ". " + table_of_the_names[i] + " - " + to_string(table_of_the_scores[i]));
+		//		text1.setPosition(Vector2f(200.f + i * 200.f, 400.f));
+		//	}
+		//}
+		delete[size_without_the_last_one] table_of_the_scores;
+		delete[size_without_the_last_one] table_of_the_names;
+	}
+
+	while (window.isOpen())
+	{
+		Event _event;
+		while (window.pollEvent(_event))
+		{
+			if (_event.type == Event::Closed)
+			{
+				window.close();
+			}
+			if (_event.key.code == Keyboard::Escape)
+			{
+				return 0;
+			}
+
+		}
+		window.clear();
+		if (no_data)
+			window.draw(text);
+		//window.draw(text1);
+
+		for(int i = 0; i < 5; i++)
+		{
+			window.draw(texts[i]);
+		}
+
+		window.display();
+	}
+	
+	return -1;
 }

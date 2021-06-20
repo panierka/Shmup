@@ -33,6 +33,9 @@ int main()
 	SaveResultScreen save_result_screen(DisplayHP::score);
 	Screens.push_back(&save_result_screen); //5
 
+	Leaderboard leaderboard;
+	Screens.push_back(&leaderboard); //6
+
 	TextureAtlas atlas;
 	
 	while (screen >= 0)
