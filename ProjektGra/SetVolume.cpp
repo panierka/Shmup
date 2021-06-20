@@ -6,6 +6,8 @@ bool show_volume_interface = false;
 double sound_volume = 10;
 double music_volume = 10;
 double general_volume = 10;
+double general_faction_for_background;
+double general_faction_for_sounds;
 
 SetVolume::SetVolume()
 {
@@ -53,7 +55,6 @@ void SetVolume::SubtractMainVolume(double new_volume)
 		for (map<string, double>::iterator i = sound1.constant_volume.begin(); i != sound1.constant_volume.end(); i++)
 		{
 			i->second *= 0.1;
-			/*cout << i->second << endl;*/
 		}
 		first_calculation_1 = false;
 	}
@@ -72,7 +73,6 @@ void SetVolume::SubtractMainVolume(double new_volume)
 			sound1.volume[i->first] = 0;
 		else
 			i->second -= sound1.constant_volume[i->first];
-		/*cout << sound1.volume[i->first] << endl;*/
 	}
 
 }
@@ -88,7 +88,6 @@ void SetVolume::AddBackgroundVolume(double new_volume)
 		background.set_volume(background.volume + background.number);
 	else
 		background.set_volume(90);
-	/*cout << background.volume - background.number << endl;*/
 }
 
 void SetVolume::SubtractBackgroundVolume(double new_volume)
@@ -104,12 +103,10 @@ void SetVolume::SubtractBackgroundVolume(double new_volume)
 		background.set_volume(0);
 }
 
-//void SetVolume::SetEntireVolume(double new_volume)
-//{
-//	AddMainVolume(new_volume);
-//	AddBackgroundVolume(new_volume);
-//	general_volume = new_volume;
-//}
+void SetVolume::SetEntireVolume(double new_volume)
+{
+	Listener::setGlobalVolume(new_volume*10);
+}
 
 void SetVolume::turn_up(double &volume)
 {
@@ -120,8 +117,8 @@ void SetVolume::turn_up(double &volume)
 		AddMainVolume(volume);
 	else if (&volume == &music_volume)
 		AddBackgroundVolume(volume);
-	/*else if (&volume == &general_volume)
-		SetEntireVolume(volume);*/
+	else if (&volume == &general_volume)
+		SetEntireVolume(volume);
 }
 void SetVolume::turn_down(double& volume)
 {
@@ -132,6 +129,6 @@ void SetVolume::turn_down(double& volume)
 		SubtractMainVolume(volume);
 	else if (&volume == &music_volume)
 		SubtractBackgroundVolume(volume);
-	/*else if (&volume == &general_volume)
-		SetEntireVolume(volume);*/
+	else if (&volume == &general_volume)
+		SetEntireVolume(volume);
 }

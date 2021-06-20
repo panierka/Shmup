@@ -18,7 +18,8 @@ public:
 	void SubtractMainVolume(double new_volume);
 	void AddBackgroundVolume(double new_volume);
 	void SubtractBackgroundVolume(double new_volume);
-	/*void SetEntireVolume(double new_volume);*/
+	void AddEntireVolume(double new_volume);
+	void SetEntireVolume(double new_volume);
 	void turn_up(double &volume);
 	void turn_down(double &volume);
 };
