@@ -11,7 +11,7 @@ BackgroundMusic::BackgroundMusic()
 }
 BackgroundMusic::~BackgroundMusic()
 {
-
+	delete music;
 }
 void BackgroundMusic::start()
 {
@@ -51,4 +51,6 @@ void Sounds::add_sound(string soundname, string file_path, int sound_volume)
 	buffers[soundname] = new SoundBuffer();
 	buffers[soundname]->loadFromFile(file_path);
 	volume[soundname] = sound_volume;
+	constant_volume[soundname] = sound_volume;
+	initial_volume[soundname] = sound_volume;
 }

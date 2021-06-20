@@ -461,7 +461,17 @@ int MainMenu::Run(RenderWindow& window)
 	Menu menu;
 	bool exit_menu = false;
 
-
+	sound1.add_sound("hit", "../Assets/Sounds/Hit.wav", 20);
+	sound1.add_sound("glass", "../Assets/Sounds/Glass.wav", 29);
+	sound1.add_sound("shot", "../Assets/Sounds/normal-shot.wav", 18);
+	sound1.add_sound("shot-heavy", "../Assets/Sounds/heavy.wav", 100);
+	sound1.add_sound("dodge", "../Assets/Sounds/dodge.wav", 45);
+	sound1.add_sound("parry", "../Assets/Sounds/Parry.wav", 65);
+	sound1.add_sound("upgrade", "../Assets/Sounds/Buy.wav", 62);
+	sound1.add_sound("hit-player", "../Assets/Sounds/player-hit.wav", 70);
+	sound1.add_sound("wave-end", "../Assets/Sounds/gong.wav", 86);
+	sound1.add_sound("no-ammo", "../Assets/Sounds/no-ammo.wav", 80);
+	sound1.add_sound("dodge-ready", "../Assets/Sounds/dodge-ready.wav", 100);
 
 	while (window.isOpen())
 	{
@@ -471,6 +481,7 @@ int MainMenu::Run(RenderWindow& window)
 		{
 			if (_event.type == Event::Closed)
 			{
+				cout << sound1.volume["upgrade"] << endl;
 				window.close();
 			}
 
@@ -621,18 +632,16 @@ int Game::Run(RenderWindow& window)
 	sound1.add_sound("pogchamp", "../Assets/Sounds/Soundtrack.wav", 20);
 	//sound1.add_sound("pogchamp1", "../Assets/Sounds/plantLoud.wav", 100);
 
-	sound1.add_sound("hit", "../Assets/Sounds/Hit.wav", 20);
-	sound1.add_sound("glass", "../Assets/Sounds/Glass.wav", 29);
-	sound1.add_sound("shot", "../Assets/Sounds/normal-shot.wav", 18);
-	sound1.add_sound("shot-heavy", "../Assets/Sounds/heavy.wav", 100);
-	sound1.add_sound("dodge", "../Assets/Sounds/dodge.wav", 45);
-	sound1.add_sound("parry", "../Assets/Sounds/Parry.wav", 65);
-	sound1.add_sound("upgrade", "../Assets/Sounds/Buy.wav", 62);
-	sound1.add_sound("hit-player", "../Assets/Sounds/player-hit.wav", 70);
-	sound1.add_sound("wave-end", "../Assets/Sounds/gong.wav", 86);
-	sound1.add_sound("no-ammo", "../Assets/Sounds/no-ammo.wav", 80);
-	sound1.add_sound("dodge-ready", "../Assets/Sounds/dodge-ready.wav", 100);
 
+
+	//for (map<string, int>::iterator i = sound1.volume.begin(); i != sound1.volume.end(); i++)
+	//{
+	//	cout << i->first << endl;
+	//	cout << i->second << endl;
+	//	/*i->second = i->second * 0.1;*/
+	//	cout << "pog" << endl;
+	//}
+	/*cout << sound1.volume["no-ammo"];*/
 	/*sound1.play_sound("pogchamp");*/
 	//sound1.play_sound("pogchamp1");
 		/*BackgroundMusic background;*/

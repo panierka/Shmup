@@ -1,20 +1,24 @@
 #pragma once
 
 #include "Classes.h"
+#include <cmath>
 
 extern bool show_volume_interface;
-extern int sound_volume;
-extern int music_volume;
-extern int general_volume;
+extern double sound_volume;
+extern double music_volume;
+extern double general_volume;
+extern bool first_calculation;
 
 class SetVolume
 {
 public:
 	SetVolume();
 	~SetVolume();
-	void SetMainVolume(int new_volume);
-	void SetBackgroundVolume(int new_volume);
-	void SetEntireVolume(int new_volume);
-	void turn_up(int &volume);
-	void turn_down(int &volume);
+	void AddMainVolume(double new_volume);
+	void SubtractMainVolume(double new_volume);
+	void AddBackgroundVolume(double new_volume);
+	void SubtractBackgroundVolume(double new_volume);
+	/*void SetEntireVolume(double new_volume);*/
+	void turn_up(double &volume);
+	void turn_down(double &volume);
 };

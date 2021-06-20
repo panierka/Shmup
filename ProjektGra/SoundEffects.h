@@ -10,9 +10,10 @@ using namespace std;
 class BackgroundMusic
 {
 private:
-	int volume = 10;
 	Music* music;
 public:
+	int volume = 100;
+	double number;
 	BackgroundMusic();
 	~BackgroundMusic();
 	void set_volume(int volume);
@@ -24,7 +25,9 @@ class Sounds
 {
 public:
 	map<string, SoundBuffer*> buffers;
-	map<string, int> volume;
+	map<string, double> volume{};
+	map<string, double> constant_volume{};
+	map<string, int> initial_volume{};
 private:
 	Sound* sound;
 public:
