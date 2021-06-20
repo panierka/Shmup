@@ -13,7 +13,7 @@ class BackgroundMusic
 private:
 	Music* music;
 public:
-	int volume = 100;
+	int volume = 0;
 	double number;
 	BackgroundMusic();
 	~BackgroundMusic();

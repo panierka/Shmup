@@ -110,3 +110,17 @@ public:
 	virtual int Run(RenderWindow& window);
 };
 
+class SaveResultScreen : public cScreen
+{
+private:
+	int score;
+	Font* font;
+	Text text;
+	String name;
+	Text text1;
+public:
+	SaveResultScreen(int);
+	virtual ~SaveResultScreen();
+	virtual int Run(RenderWindow& window);
+};
+

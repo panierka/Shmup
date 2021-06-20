@@ -30,8 +30,11 @@ int main()
 	EndScreen win("end");
 	Screens.push_back(&win); // 4
 
-	TextureAtlas atlas;
+	SaveResultScreen save_result_screen(DisplayHP::score);
+	Screens.push_back(&save_result_screen); //5
 
+	TextureAtlas atlas;
+	
 	while (screen >= 0)
 	{
 		screen = Screens[screen]->Run(window);

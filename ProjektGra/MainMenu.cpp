@@ -366,7 +366,7 @@ Menu::Menu()
 	text[5].setString("EXIT");
 	text[5].setPosition(Vector2f(200u, 700u));
 	current_position = 0;
-	text[current_position].setFillColor(Color::Red);
+	text[current_position].setFillColor(Color::Color(255, 128, 0, 255));
 	text1[0].setFont(*font);
 	text1[0].setPosition(Vector2f(200u, 800u));
 	text1[2].setFont(*font);
@@ -1030,12 +1030,14 @@ int EndScreen::Run(RenderWindow& window)
 			if (_event.type == Event::KeyReleased)
 			{
 				if (_event.key.code == Keyboard::Escape)
-				{
-					return 0;
+				{ 
+					return 5;
+					//return 0;
 				}
 				else if (_event.key.code == Keyboard::R)
 				{
-					return 2;
+					return 5;
+					//return 2;
 				}
 			}
 		}
@@ -1046,4 +1048,65 @@ int EndScreen::Run(RenderWindow& window)
 	}
 
 	return -1;
+}
+
+SaveResultScreen::SaveResultScreen(int score)
+{
+	font = new Font();
+	font->loadFromFile("../Assets/doves.ttf");
+	text.setFont(*font);
+	text.setString("");
+	text.setPosition(Vector2f(200.f, 400.f));
+	text1.setFont(*font);
+	text1.setPosition(Vector2f(200.f, 600.f));
+
+}
+
+SaveResultScreen::~SaveResultScreen()
+{
+
+}
+
+int SaveResultScreen::Run(RenderWindow& window)
+{
+	name = "";
+	text.setString(to_string(DisplayHP::score) + "$");
+
+	while (window.isOpen())
+	{
+		Event _event;
+
+		while (window.pollEvent(_event))
+		{
+			if (_event.type == Event::Closed)
+			{
+				window.close();
+			}
+
+			if (_event.type == Event::TextEntered)
+			{
+				if (_event.text.unicode == '\b')
+				{
+					if(name.getSize() > 0)
+					{
+						name.erase(name.getSize() - 1, 1);
+					}
+					//name = myString.substr(0, myString.size() - 1);
+				}
+				else
+				{
+					name += _event.text.unicode;
+				}
+
+				text1.setString(name);
+				/*return 0;*/
+			}
+		}
+		window.clear();
+		window.draw(text);
+		window.draw(text1);
+		window.display();
+	}
+
+	return 0;
 }
