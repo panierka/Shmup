@@ -1077,8 +1077,10 @@ int SaveResultScreen::Run(RenderWindow& window)
 	//font->loadFromFile("../Assets/doves.ttf");
 	bool typing = true;
 	text1.setString("");
+	text1.setCharacterSize(50);
 	name = "";
 	text.setString(to_string(DisplayHP::score) + "$");
+	text.setCharacterSize(50);
 
 	while (window.isOpen())
 	{
@@ -1125,7 +1127,6 @@ int SaveResultScreen::Run(RenderWindow& window)
 				{
 					name += _event.text.unicode;
 				}
-
 				text1.setString(name);
 				/*return 0;*/
 			}
@@ -1174,6 +1175,7 @@ int Leaderboard::Run(RenderWindow& window)
 	{
 		text.setFont(*font);
 		text.setString("No game has been played.");
+		text.setCharacterSize(50);
 		text.setPosition(Vector2f(200.f, 400.f));
 	}
 	else
