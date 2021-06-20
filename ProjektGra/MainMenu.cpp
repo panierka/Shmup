@@ -48,7 +48,7 @@ void Game::spawn_fatman()
 	e->animations.push_back(new AnimationClip(0, 2, 8, *e, true));
 	e->animations.push_back(new AnimationClip(2, 3, 12, *e, false));
 
-	e->create_collider(Vector2f(0.f, 0.f), Vector2f(50.f, 50.f));
+	e->create_collider(Vector2f(-5.f, 0.f), Vector2f(60.f, 50.f));
 	e->score_value = 500;
 	e->set_move(Vector2f(1.f * random_dir(), -0.15f), 1.1f, 1, true);
 
@@ -57,6 +57,7 @@ void Game::spawn_fatman()
 		float angle = e.angle_to_player();
 		e.call_animation(1);
 		e.shoot("enemy-bullet", Vector2i(25, 25), 10, angle, 45, 8, 3, 8);
+		sound1.play_sound("fat");
 	};
 	e->attacks.push_back(f);
 
@@ -271,6 +272,7 @@ void Game::spawn_sniper()
 		float angle = e.angle_to_player();
 		e.call_animation(1);
 		e.shoot("saw", Vector2i(50, 50), 58, angle, 0, 1, 3, 8);
+		sound1.play_sound("saw");
 	};
 
 	e->attacks.push_back(f);
@@ -298,6 +300,8 @@ void Game::spawn_boss()
 	e->score_value = 60000;
 	e->set_move(Vector2f(1.f, 0.f), 2.0f, 1, true);
 
+	e->hit_sound = "boss-hit";
+
 	void (*f1)(Enemy&) = [](Enemy& e)
 	{
 		float angle = e.angle_to_player();
@@ -305,6 +309,7 @@ void Game::spawn_boss()
 		e.bullet_velocity_mod = 1.f;
 		e.shoot("enemy-bullet", Vector2i(25, 25), 18, -25.f, 12.5f, 5, 3, 8);
 		e.shoot("saw", Vector2i(50, 50), 59, angle, 0, 1, 3, 8);
+		sound1.play_sound("boss-roar");
 	};
 
 	void (*f2)(Enemy&) = [](Enemy& e)
@@ -312,6 +317,7 @@ void Game::spawn_boss()
 		e.call_animation(2);
 		e.bullet_velocity_mod = 0.8f;
 		e.shoot("enemy-bullet", Vector2i(25, 25), 16, 0, 30.f, 12, 3, 8);
+		sound1.play_sound("boss-thunder");
 	};
 
 	void (*f3)(Enemy&) = [](Enemy& e)
@@ -320,6 +326,7 @@ void Game::spawn_boss()
 		e.call_animation(3);
 		e.bullet_velocity_mod = 1.2f;
 		e.shoot("enemy-bullet", Vector2i(25, 25), 32, angle - 2.5f, 5.f, 2, 3, 8);
+		sound1.play_sound("boss-gun");
 	};
 
 	void (*f4)(Enemy&) = [](Enemy& e)
@@ -328,6 +335,7 @@ void Game::spawn_boss()
 		{
 			e.call_animation(4);
 			spawn_block1();
+			sound1.play_sound("boss-piano");
 		}
 	};
 
@@ -474,6 +482,14 @@ int MainMenu::Run(RenderWindow& window)
 	sound1.add_sound("wave-end", "../Assets/Sounds/gong.wav", 86);
 	sound1.add_sound("no-ammo", "../Assets/Sounds/no-ammo.wav", 80);
 	sound1.add_sound("dodge-ready", "../Assets/Sounds/dodge-ready.wav", 100);
+	sound1.add_sound("fat", "../Assets/Sounds/fat.wav", 100);
+	sound1.add_sound("saw", "../Assets/Sounds/saw.wav", 50);
+	sound1.add_sound("boss-hit", "../Assets/Sounds/boss-hit.wav", 58);
+	sound1.add_sound("boss-roar", "../Assets/Sounds/boss-roar.wav", 52);
+	sound1.add_sound("boss-thunder", "../Assets/Sounds/boss-thunder.wav", 65);
+	sound1.add_sound("boss-gun", "../Assets/Sounds/boss-gun.wav", 55);
+	sound1.add_sound("boss-piano", "../Assets/Sounds/boss-piano.wav", 100);
+
 
 	while (window.isOpen())
 	{
