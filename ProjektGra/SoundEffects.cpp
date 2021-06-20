@@ -32,7 +32,6 @@ Sounds::Sounds()
 }
 Sounds::~Sounds()
 {
-	delete sound;
 	for (std::map<string, SoundBuffer*>::iterator i = buffers.begin(); i != buffers.end(); i++)
 	{
 		delete buffers[i->first];
@@ -41,10 +40,16 @@ Sounds::~Sounds()
 void Sounds::play_sound(string soundname)
 {
 	// ? 
-	Sound* sound = new Sound();
-	sound->setBuffer(*buffers[soundname]);
-	sound->setVolume(volume[soundname]);
-	sound->play();
+	unique_ptr<Sound> pointer = make_unique<Sound>();
+	pointer->setBuffer(*buffers[soundname]);
+	pointer->setVolume(volume[soundname]);
+	pointer->play();
+	list1.push_back(move(pointer));
+
+	if(list1.size() >= 35)
+	{
+		list1.pop_front();
+	}
 }
 void Sounds::add_sound(string soundname, string file_path, int sound_volume)
 {

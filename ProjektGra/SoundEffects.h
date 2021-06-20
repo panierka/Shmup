@@ -3,6 +3,7 @@
 #include <SFML/Audio.hpp>
 #include <string>
 #include <map>
+#include <list>
 using namespace sf;
 using namespace std;
 
@@ -28,11 +29,11 @@ public:
 	map<string, double> volume{};
 	map<string, double> constant_volume{};
 	map<string, int> initial_volume{};
-private:
-	Sound* sound;
+
 public:
 	Sounds();
 	~Sounds();
 	void play_sound(string soundname);
 	void add_sound(string soundname, string file_path, int volume);
+	list<unique_ptr<Sound>>list1;
 };
