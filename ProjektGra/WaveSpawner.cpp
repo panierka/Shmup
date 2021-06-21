@@ -80,7 +80,7 @@ void WaveSpawner::spawn(float dt)
 
 		inwave_index--;
 
-		if (inwave_index == 0)
+		if (inwave_index == -1)
 		{
 			print("koniec fali");
 			active = false;
