@@ -9,10 +9,14 @@ int game_state{};
 
 Sounds sound1{};
 BackgroundMusic main_background{};
+BackgroundMusic* wsk1 = &main_background;
 BackgroundMusic defeat_background{};
+BackgroundMusic* wsk2 = &defeat_background;
 BackgroundMusic victory_background{};
+BackgroundMusic* wsk3 = &victory_background;
 BackgroundMusic boss_background{};
-BackgroundMusic tab[4] = { main_background, defeat_background, victory_background, boss_background};
+BackgroundMusic* wsk4 = &boss_background;
+BackgroundMusic* tab[4] = {wsk1, wsk2, wsk3, wsk4 };
 
 // funkcja do wyznaczania d³ugoœci wektorów
 template<typename T>

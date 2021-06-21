@@ -83,16 +83,16 @@ void SetVolume::AddBackgroundVolume(double new_volume)
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			tab[i].number = tab[i].volume * 0.1;
+			tab[i]->number = tab[i]->volume * 0.1;
 		}
 		first_calculation = false;
 	}
 	for (int i = 0; i < 4; i++)
 	{
-		if (tab[i].volume + tab[i].number <= 100)
-			tab[i].set_volume(tab[i].volume + tab[i].number);
+		if (tab[i]->volume + tab[i]->number <= 100)
+			tab[i]->set_volume(tab[i]->volume + tab[i]->number);
 		else
-			tab[i].set_volume(100);
+			tab[i]->set_volume(100);
 	}
 }
 
@@ -102,16 +102,16 @@ void SetVolume::SubtractBackgroundVolume(double new_volume)
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			tab[i].number = tab[i].volume * 0.1;
+			tab[i]->number = tab[i]->volume * 0.1;
 		}
 		first_calculation = false;
 	}
 	for (int i = 0; i < 4; i++)
 	{
-		if (tab[i].volume + tab[i].number >= 0)
-			tab[i].set_volume(tab[i].volume + tab[i].number);
+		if (tab[i]->volume - tab[i]->number >= 0)
+			tab[i]->set_volume(tab[i]->volume - tab[i]->number);
 		else
-			tab[i].set_volume(0);
+			tab[i]->set_volume(0);
 	}
 }
 
