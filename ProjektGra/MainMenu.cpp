@@ -297,7 +297,8 @@ void Game::spawn_sniper()
 void Game::spawn_boss()
 {
 	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos + Vector2f(0, 150), generate_sprite(TextureAtlas::texture_atlas["BOSS"], Vector2f(100.f, 100.f)), true, Vector2i(200, 200));
-
+	main_background.stop();
+	boss_background.change_background("../Assets/Sounds/bosssoundtrack.wav");
 	e->animations.push_back(new AnimationClip(0, 2, 8, *e, true));
 	e->animations.push_back(new AnimationClip(3, 2, 10, *e, false));
 	e->animations.push_back(new AnimationClip(6, 2, 10, *e, false));
@@ -539,6 +540,7 @@ int MainMenu::Run(RenderWindow& window)
 				if (_event.key.code == Keyboard::Enter && menu.current_position == 0)
 				{
 					sound1.play_sound("menu_click");
+					main_background.change_background("../Assets/Sounds/soundtrack1.wav");
 					return 1;
 				}
 				if (_event.key.code == Keyboard::Enter && menu.current_position == 1)
@@ -672,7 +674,7 @@ int Game::Run(RenderWindow& window)
 	Clock clock;
 	float _frame_time = clock.getElapsedTime().asSeconds();
 
-	sound1.add_sound("pogchamp", "../Assets/Sounds/Soundtrack.wav", 20);
+	/*sound1.add_sound("pogchamp", "../Assets/Sounds/Soundtrack.wav", 20);*/
 	//sound1.add_sound("pogchamp1", "../Assets/Sounds/plantLoud.wav", 100);
 
 
@@ -720,6 +722,7 @@ int Game::Run(RenderWindow& window)
 				if (_event.key.code == Keyboard::Escape)
 				{
 					pause_game = true;
+					main_background.pause();
 				}
 				if (_event.key.code == Keyboard::Down)
 				{
@@ -737,9 +740,12 @@ int Game::Run(RenderWindow& window)
 				{
 					sound1.play_sound("menu_click");
 					pause_action_index = 4;
+					main_background.start();
 				}
 				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 1)
 				{
+					main_background.stop();
+					main_background.start();
 					sound1.play_sound("menu_click");
 					return 2;
 				}
@@ -836,10 +842,14 @@ int Game::Run(RenderWindow& window)
 
 			if (game_state == 1)
 			{
+				main_background.stop();
+				defeat_background.change_background("../Assets/Sounds/defeatsoundtrack.wav");
 				return 3;
 			}
 			else if (game_state == 2)
 			{
+				boss_background.stop();
+				victory_background.change_background("../Assets/Sounds/victorysoundtrack.wav");
 				return 4;
 			}
 		}
@@ -1064,6 +1074,7 @@ EndScreen::~EndScreen()
 
 int EndScreen::Run(RenderWindow& window)
 {
+	main_background.stop();
 	Sprite endScreen;
 	endScreen.setTexture(*TextureAtlas::texture_atlas[screen_key]);
 
@@ -1129,6 +1140,8 @@ int SaveResultScreen::Run(RenderWindow& window)
 {
 	//font = new Font();
 	//font->loadFromFile("../Assets/doves.ttf");
+	victory_background.stop();
+	defeat_background.stop();
 	bool typing = true;
 	text2.setString("Your achieved score is: ");
 	text3.setString("Type your name: ");

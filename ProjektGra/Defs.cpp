@@ -8,7 +8,11 @@ std::map<string, Texture*> TextureAtlas::texture_atlas{};
 int game_state{};
 
 Sounds sound1{};
-BackgroundMusic background{};
+BackgroundMusic main_background{};
+BackgroundMusic defeat_background{};
+BackgroundMusic victory_background{};
+BackgroundMusic boss_background{};
+BackgroundMusic tab[4] = { main_background, defeat_background, victory_background, boss_background};
 
 // funkcja do wyznaczania d³ugoœci wektorów
 template<typename T>

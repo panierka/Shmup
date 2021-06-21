@@ -13,13 +13,15 @@ class BackgroundMusic
 private:
 	Music* music;
 public:
-	int volume = 0;
-	double number;
+	int volume = 100;
+	int number;
 	BackgroundMusic();
 	~BackgroundMusic();
+	void change_background(string file_path);
 	void set_volume(int volume);
 	void start();
 	void pause();
+	void stop();
 };
 
 class Sounds

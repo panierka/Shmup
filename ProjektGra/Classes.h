@@ -38,7 +38,11 @@ const float RAD2DEG = 1 / 57.3f;
 //
 extern WaveSpawner waves;
 extern Sounds sound1;
-extern BackgroundMusic background;
+extern BackgroundMusic main_background;
+extern BackgroundMusic defeat_background;
+extern BackgroundMusic victory_background;
+extern BackgroundMusic boss_background;
+extern BackgroundMusic tab[4];
 extern std::vector<unique_ptr<Timer>> timers;
 
 extern int game_state;

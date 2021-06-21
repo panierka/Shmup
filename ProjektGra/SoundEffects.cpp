@@ -4,19 +4,25 @@
 BackgroundMusic::BackgroundMusic()
 {
 	music = new Music();
-	music->openFromFile("../Assets/Sounds/Soundtrack.wav");
+}
+
+void BackgroundMusic::change_background(string file_path)
+{
+	music->openFromFile(file_path);
 	music->setLoop(true);
-	music->setVolume(volume);
 	start();
 }
-BackgroundMusic::~BackgroundMusic()
-{
-	delete music;
-}
+
 void BackgroundMusic::start()
 {
 	music->play();
 }
+
+BackgroundMusic::~BackgroundMusic()
+{
+	delete music;
+}
+
 void BackgroundMusic::pause()
 {
 	music->pause();
@@ -25,6 +31,11 @@ void BackgroundMusic::set_volume(int volume_level)
 {
 	volume = volume_level;
 	music->setVolume(volume);
+}
+
+void BackgroundMusic::stop()
+{
+	music->stop();
 }
 Sounds::Sounds()
 {
