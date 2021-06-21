@@ -2,6 +2,7 @@
 Vector2f enemy_spawn_pos = (Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, -450);
 SetVolume setVolume;
 
+bool boss = false;
 bool escape = true;
 bool no_data = true;
 #pragma region > Przeciwnicy  < 
@@ -298,6 +299,7 @@ void Game::spawn_boss()
 {
 	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos + Vector2f(0, 150), generate_sprite(TextureAtlas::texture_atlas["BOSS"], Vector2f(100.f, 100.f)), true, Vector2i(200, 200));
 	main_background.stop();
+	boss = true;
 	boss_background.change_background("../Assets/Sounds/bosssoundtrack.wav");
 	e->animations.push_back(new AnimationClip(0, 2, 8, *e, true));
 	e->animations.push_back(new AnimationClip(3, 2, 10, *e, false));
@@ -722,7 +724,10 @@ int Game::Run(RenderWindow& window)
 				if (_event.key.code == Keyboard::Escape)
 				{
 					pause_game = true;
-					main_background.pause();
+					if (boss)
+						boss_background.pause();
+					else
+						main_background.pause();
 				}
 				if (_event.key.code == Keyboard::Down)
 				{
@@ -1074,7 +1079,6 @@ EndScreen::~EndScreen()
 
 int EndScreen::Run(RenderWindow& window)
 {
-	main_background.stop();
 	Sprite endScreen;
 	endScreen.setTexture(*TextureAtlas::texture_atlas[screen_key]);
 
