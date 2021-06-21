@@ -3,7 +3,7 @@
 
 BackgroundMusic::BackgroundMusic()
 {
-	music = new Music();
+	music = make_shared<Music>();
 }
 
 void BackgroundMusic::change_background(string file_path)
@@ -20,7 +20,7 @@ void BackgroundMusic::start()
 
 BackgroundMusic::~BackgroundMusic()
 {
-	delete music;
+
 }
 
 void BackgroundMusic::pause()

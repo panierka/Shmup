@@ -11,7 +11,7 @@ using namespace std;
 class BackgroundMusic
 {
 private:
-	Music* music;
+	shared_ptr<Music> music;
 public:
 	int volume = 100;
 	int number;
