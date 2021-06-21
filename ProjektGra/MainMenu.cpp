@@ -375,7 +375,7 @@ Menu::Menu()
 	text[2].setString("MUSIC VOLUME");
 	text[2].setPosition(Vector2f(200u, 400u));
 	text[3].setFont(*font);
-	text[3].setString("GENERAL VOLUMEe");
+	text[3].setString("GENERAL VOLUME");
 	text[3].setPosition(Vector2f(200u, 500u));
 	text[4].setFont(*font);
 	text[4].setString("LEADERBOARD");
@@ -1109,10 +1109,15 @@ SaveResultScreen::SaveResultScreen(int score)
 	font->loadFromFile("../Assets/doves.ttf");
 	text.setFont(*font);
 	text.setString("");
-	text.setPosition(Vector2f(200.f, 400.f));
+	text.setPosition(Vector2f(700.f, 400.f));
 	text1.setFont(*font);
-	text1.setPosition(Vector2f(200.f, 600.f));
-
+	text1.setPosition(Vector2f(300.f, 700.f));
+	text2.setFont(*font);
+	text2.setPosition(Vector2f(100.f, 400.f));
+	text3.setFont(*font);
+	text3.setPosition(Vector2f(300.f, 600.f));
+	text3.setCharacterSize(60);
+	text2.setCharacterSize(60);
 }
 
 SaveResultScreen::~SaveResultScreen()
@@ -1125,11 +1130,13 @@ int SaveResultScreen::Run(RenderWindow& window)
 	//font = new Font();
 	//font->loadFromFile("../Assets/doves.ttf");
 	bool typing = true;
+	text2.setString("Your achieved score is: ");
+	text3.setString("Type your name: ");
 	text1.setString("");
-	text1.setCharacterSize(50);
+	text1.setCharacterSize(60);
 	name = "";
 	text.setString(to_string(DisplayHP::score) + "$");
-	text.setCharacterSize(50);
+	text.setCharacterSize(60);
 
 	while (window.isOpen())
 	{
@@ -1181,7 +1188,9 @@ int SaveResultScreen::Run(RenderWindow& window)
 			}
 		}
 		window.clear();
+		window.draw(text2);
 		window.draw(text);
+		window.draw(text3);
 		window.draw(text1);
 		window.display();
 	}
@@ -1224,7 +1233,7 @@ int Leaderboard::Run(RenderWindow& window)
 	{
 		text.setFont(*font);
 		text.setString("No game has been played.");
-		text.setCharacterSize(50);
+		text.setCharacterSize(60);
 		text.setPosition(Vector2f(200.f, 400.f));
 	}
 	else
@@ -1291,9 +1300,9 @@ int Leaderboard::Run(RenderWindow& window)
 		for (int i = 0; i < len; i++)
 		{
 			texts[i].setFont(*font);
-			texts[i].setCharacterSize(50);
+			texts[i].setCharacterSize(60);
 			texts[i].setString(to_string(i + 1) + ". " + table_of_the_names[i] + " - " + to_string(table_of_the_scores[i]));
-			texts[i].setPosition(Vector2f(200.f, 400.f + i * 100.f));
+			texts[i].setPosition(Vector2f(250.f, 150.f + i * 100.f));
 
 
 		}
