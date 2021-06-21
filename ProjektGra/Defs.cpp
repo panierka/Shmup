@@ -390,6 +390,7 @@ void Player::setHP(int _amount)
 void Player::death()
 {
 	game_state = 1;
+	sound1.play_sound("explosion");
 }
 
 void Character::take_hit(int _amount)
@@ -498,6 +499,7 @@ Enemy::Enemy(Vector2f pos, Sprite* s, bool b, Vector2i frame):
 	projectile_collision_mask = 3;
 
 	waves.change_enemies_alive(1);
+	sound1.play_sound("egg");
 }
 
 void Enemy::collide(unique_ptr<PhysicalObject>& coll)

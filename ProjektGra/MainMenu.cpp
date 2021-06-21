@@ -29,6 +29,7 @@ void Game::spawn_fly()
 		float angle = e.angle_to_player();
 		e.call_animation(1);
 		e.shoot("enemy-bullet", Vector2i(25, 25), 10, angle - 12.5f, 25.f, 2, 3, 8);
+		sound1.play_sound("buzzing");
 	};
 	e->attacks.push_back(f);
 
@@ -86,6 +87,7 @@ void Game::spawn_block1()
 		float angle = e.angle_to_player();
 		e.call_animation(1);
 		e.shoot("enemy-bullet", Vector2i(25, 25), 12, 0, 0, 1, 3, 8);
+		sound1.play_sound("small_enemy_shot");
 	};
 	e->attacks.push_back(f);
 
@@ -139,6 +141,7 @@ void Game::spawn_block3()
 		float angle = e.angle_to_player();
 		e.call_animation(1);
 		e.shoot("enemy-bullet", Vector2i(25, 25), 12, -15, 15, 3, 3, 8);
+		sound1.play_sound("small_enemy_shot");
 	};
 	e->attacks.push_back(f);
 
@@ -172,6 +175,7 @@ void Game::spawn_block4()
 		float angle = e.angle_to_player();
 		e.call_animation(1);
 		e.shoot("enemy-bullet", Vector2i(25, 25), 10, angle, 0, 1, 3, 8);
+		sound1.play_sound("small_enemy_shot");
 	};
 	e->attacks.push_back(f);
 
@@ -200,12 +204,14 @@ void Game::spawn_priest()
 	{
 		e.call_animation(1);
 		e.shoot("enemy-bullet", Vector2i(25, 25), 12, -33, 11, 6, 3, 8);
+		sound1.play_sound("priest_shot");
 	};
 
 	void (*f1)(Enemy&) = [](Enemy& e)
 	{
 		e.call_animation(2);
 		spawn_block1();
+		sound1.play_sound("priest");
 	};
 
 	e->attacks.push_back(f);
@@ -236,12 +242,14 @@ void Game::spawn_prince()
 	{
 		e.call_animation(1);
 		e.shoot("enemy-bullet", Vector2i(25, 25), 12, -45, 90, 4, 3, 8);
+		sound1.play_sound("different_sides_enemy");
 	};
 
 	void (*f1)(Enemy&) = [](Enemy& e)
 	{
 		e.call_animation(2);
 		e.shoot("enemy-bullet", Vector2i(25, 25), 12, 0, 90, 4, 3, 8);
+		sound1.play_sound("different_sides_enemy");
 	};
 
 	e->attacks.push_back(f);
@@ -427,12 +435,14 @@ void Menu::move_up()
 		text[current_position].setFillColor(Color::White);
 		current_position--;
 		text[current_position].setFillColor(Color::Color(255, 128, 0, 255));
+		sound1.play_sound("change_position");
 	}
 	else if (current_position == 0)
 	{
 		text[0].setFillColor(Color::White);
 		current_position = NUMBER_OF_ELEMENTS - 1;
 		text[current_position].setFillColor(Color::Color(255, 128, 0, 255));
+		sound1.play_sound("change_position");
 	}
 }
 
@@ -443,12 +453,14 @@ void Menu::move_down()
 		text[current_position].setFillColor(Color::White);
 		current_position++;
 		text[current_position].setFillColor(Color::Color(255, 128, 0, 255));
+		sound1.play_sound("change_position");
 	}
 	else if (current_position == NUMBER_OF_ELEMENTS - 1)
 	{
 		text[NUMBER_OF_ELEMENTS - 1].setFillColor(Color::White);
 		current_position = 0;
 		text[current_position].setFillColor(Color::Color(255, 128, 0, 255));
+		sound1.play_sound("change_position");
 	}
 }
 
@@ -489,7 +501,15 @@ int MainMenu::Run(RenderWindow& window)
 	sound1.add_sound("boss-thunder", "../Assets/Sounds/boss-thunder.wav", 65);
 	sound1.add_sound("boss-gun", "../Assets/Sounds/boss-gun.wav", 55);
 	sound1.add_sound("boss-piano", "../Assets/Sounds/boss-piano.wav", 100);
-
+	sound1.add_sound("small_enemy_shot", "../Assets/Sounds/small_enemy_shot.wav", 50);
+	sound1.add_sound("buzzing", "../Assets/Sounds/buzzing.wav", 50);
+	sound1.add_sound("different_sides_enemy", "../Assets/Sounds/different_sides_enemy.wav", 50);
+	sound1.add_sound("priest_shot", "../Assets/Sounds/priest_shot.wav", 50);
+	sound1.add_sound("priest", "../Assets/Sounds/priest.wav", 50);
+	sound1.add_sound("explosion", "../Assets/Sounds/explosion.wav", 40);
+	sound1.add_sound("change_position", "../Assets/Sounds/change_position.wav", 20);
+	sound1.add_sound("menu_click", "../Assets/Sounds/menu_click.wav", 50);
+	sound1.add_sound("egg", "../Assets/Sounds/egg.wav", 15);
 
 	while (window.isOpen())
 	{
@@ -499,7 +519,6 @@ int MainMenu::Run(RenderWindow& window)
 		{
 			if (_event.type == Event::Closed)
 			{
-				cout << sound1.volume["upgrade"] << endl;
 				window.close();
 			}
 
@@ -519,29 +538,35 @@ int MainMenu::Run(RenderWindow& window)
 				}
 				if (_event.key.code == Keyboard::Enter && menu.current_position == 0)
 				{
+					sound1.play_sound("menu_click");
 					return 1;
 				}
 				if (_event.key.code == Keyboard::Enter && menu.current_position == 1)
 				{
+					sound1.play_sound("menu_click");
 					show_volume_interface = true;
 					menu.text1[1].setString(menu.print_string(sound_volume));
 				}
 				if (_event.key.code == Keyboard::Enter && menu.current_position == 2)
 				{
+					sound1.play_sound("menu_click");
 					show_volume_interface = true;
 					menu.text1[1].setString(menu.print_string(music_volume));
 				}
 				if (_event.key.code == Keyboard::Enter && menu.current_position == 3)
 				{
+					sound1.play_sound("menu_click");
 					show_volume_interface = true;
 					menu.text1[1].setString(menu.print_string(general_volume));
 				}
 				if (_event.key.code == Keyboard::Enter && menu.current_position == 4)
 				{
+					sound1.play_sound("menu_click");
 					return 6;
 				}
 				if (_event.key.code == Keyboard::Enter && menu.current_position == 5)
 				{
+					sound1.play_sound("menu_click");
 					//window.close();
 					return -1;
 				}
@@ -698,39 +723,47 @@ int Game::Run(RenderWindow& window)
 				}
 				if (_event.key.code == Keyboard::Down)
 				{
+					sound1.play_sound("change_position");
 					show_volume_interface = false;
 					pause_action_index = 2;
 				}
 				if (_event.key.code == Keyboard::Up)
 				{
+					sound1.play_sound("change_position");
 					show_volume_interface = false;
 					pause_action_index = 3;
 				}
 				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 0)
 				{
+					sound1.play_sound("menu_click");
 					pause_action_index = 4;
 				}
 				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 1)
 				{
+					sound1.play_sound("menu_click");
 					return 2;
 				}
 				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 2)
 				{
+					sound1.play_sound("menu_click");
 					show_volume_interface = true;
 					pause_menu.text1[1].setString(pause_menu.print_string(sound_volume));
 				}
 				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 3)
 				{
+					sound1.play_sound("menu_click");
 					show_volume_interface = true;
 					pause_menu.text1[1].setString(pause_menu.print_string(music_volume));
 				}
 				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 4)
 				{
+					sound1.play_sound("menu_click");
 					show_volume_interface = true;
 					pause_menu.text1[1].setString(pause_menu.print_string(general_volume));
 				}
 				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 5)
 				{
+					sound1.play_sound("menu_click");
 					return 0;
 				}
 				if (show_volume_interface)

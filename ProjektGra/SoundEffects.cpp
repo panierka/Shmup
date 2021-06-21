@@ -46,7 +46,7 @@ void Sounds::play_sound(string soundname)
 	pointer->play();
 	list1.push_back(move(pointer));
 
-	if(list1.size() >= 35)
+	if(list1.size() >= 70)
 	{
 		list1.pop_front();
 	}
