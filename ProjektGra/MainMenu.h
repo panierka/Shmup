@@ -121,6 +121,8 @@ private:
 	Text text;
 	String name;
 	Text text1;
+	Text text2;
+	Text text3;
 public:
 	SaveResultScreen(int);
 	virtual ~SaveResultScreen();
