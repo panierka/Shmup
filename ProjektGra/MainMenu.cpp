@@ -2,6 +2,7 @@
 Vector2f enemy_spawn_pos = (Vector2f)SCREEN_SIZE / 2.f + Vector2f(0, -450);
 SetVolume setVolume;
 
+bool main_bag = true;
 bool boss = false;
 bool escape = true;
 bool no_data = true;
@@ -299,8 +300,8 @@ void Game::spawn_boss()
 {
 	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos + Vector2f(0, 150), generate_sprite(TextureAtlas::texture_atlas["BOSS"], Vector2f(100.f, 100.f)), true, Vector2i(200, 200));
 	w_main_background->stop();
-	w_main_background->set_volume(0);
 	boss = true;
+	/*w_main_background->set_volume(0);*/
 	w_boss_background->change_background("../Assets/Sounds/bosssoundtrack.wav");
 	e->animations.push_back(new AnimationClip(0, 2, 8, *e, true));
 	e->animations.push_back(new AnimationClip(3, 2, 10, *e, false));
@@ -486,6 +487,7 @@ int MainMenu::Run(RenderWindow& window)
 {
 	Menu menu;
 	bool exit_menu = false;
+	main_bag = true;
 
 	sound1.add_sound("hit", "../Assets/Sounds/Hit.wav", 20);
 	sound1.add_sound("glass", "../Assets/Sounds/Glass.wav", 29);
@@ -542,8 +544,13 @@ int MainMenu::Run(RenderWindow& window)
 				}
 				if (_event.key.code == Keyboard::Enter && menu.current_position == 0)
 				{
-					sound1.play_sound("menu_click");
-					w_main_background->change_background("../Assets/Sounds/soundtrack1.wav");
+					if (main_bag)
+					{
+						w_main_background->change_background("../Assets/Sounds/soundtrack1.wav");
+						sound1.play_sound("menu_click");
+					}
+					main_bag = false;
+					cout << main_bag << endl;
 					return 1;
 				}
 				if (_event.key.code == Keyboard::Enter && menu.current_position == 1)
@@ -702,14 +709,12 @@ int Game::Run(RenderWindow& window)
 	window.setFramerateLimit(60);
 	bool pause_game = false;
 	int pause_action_index = 0;
-
+	/*main_bag = true;*/
 	game_state = 0;
-
 	// sprawdzenie zdarzeñ okna
 	while (window.isOpen())
 	{
 		Event _event;
-
 		pause_action_index = 0;
 
 		while (window.pollEvent(_event))
@@ -725,11 +730,9 @@ int Game::Run(RenderWindow& window)
 				if (_event.key.code == Keyboard::Escape)
 				{
 					pause_game = true;
-					if (boss)
-					{
-						w_boss_background->pause();
-						/*w_main_background->pause();*/
-					}
+					w_boss_background->pause();
+					w_main_background->pause();
+					main_bag = true;
 				}
 				if (_event.key.code == Keyboard::Down)
 				{
@@ -745,9 +748,20 @@ int Game::Run(RenderWindow& window)
 				}
 				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 0)
 				{
-					sound1.play_sound("menu_click");
+					if (main_bag)
+					{
+						sound1.play_sound("menu_click");
+						if (boss)
+						{
+							w_boss_background->start();
+						}
+						else
+						{
+							w_main_background->start();
+						}
+					}
+					main_bag = false;
 					pause_action_index = 4;
-					w_main_background->start();
 				}
 				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 1)
 				{
@@ -849,7 +863,10 @@ int Game::Run(RenderWindow& window)
 
 			if (game_state == 1)
 			{
-				w_main_background->stop();
+				if (boss)
+					w_boss_background->stop();
+				else
+					w_main_background->stop();
 				w_defeat_background->change_background("../Assets/Sounds/defeatsoundtrack.wav");
 				return 3;
 			}

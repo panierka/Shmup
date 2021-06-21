@@ -21,7 +21,7 @@ private:
 	bool active;
 
 	int current_wave = -1;
-	int enemy_counts_per_wave[5] = {1, 1, 1, 1, 1}; //{ 7, 14, 19, 25, 33 };
+	int enemy_counts_per_wave[5] = { 7, 14, 19, 25, 33 };
 
 	int enemies_alive = 0;
 

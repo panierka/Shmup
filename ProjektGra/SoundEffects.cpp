@@ -16,11 +16,11 @@ void BackgroundMusic::change_background(string file_path)
 void BackgroundMusic::start()
 {
 	music->play();
+	cout << "----------------" << endl;
 }
 
 BackgroundMusic::~BackgroundMusic()
 {
-
 }
 
 void BackgroundMusic::pause()
