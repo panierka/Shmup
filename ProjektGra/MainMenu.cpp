@@ -1181,6 +1181,8 @@ int SaveResultScreen::Run(RenderWindow& window)
 				}
 				else
 				{
+					if (_event.text.unicode == 32)
+						_event.text.unicode = 95;
 					name += _event.text.unicode;
 				}
 				text1.setString(name);
