@@ -9,14 +9,14 @@ int game_state{};
 
 Sounds sound1{};
 BackgroundMusic main_background{};
-BackgroundMusic* wsk1 = &main_background;
+BackgroundMusic* w_main_background = &main_background;
 BackgroundMusic defeat_background{};
-BackgroundMusic* wsk2 = &defeat_background;
+BackgroundMusic* w_defeat_background = &defeat_background;
 BackgroundMusic victory_background{};
-BackgroundMusic* wsk3 = &victory_background;
+BackgroundMusic* w_victory_background = &victory_background;
 BackgroundMusic boss_background{};
-BackgroundMusic* wsk4 = &boss_background;
-BackgroundMusic* tab[4] = {wsk1, wsk2, wsk3, wsk4 };
+BackgroundMusic* w_boss_background = &boss_background;
+BackgroundMusic* tab[4] = {w_main_background, w_defeat_background, w_victory_background, w_boss_background };
 
 // funkcja do wyznaczania d³ugoœci wektorów
 template<typename T>

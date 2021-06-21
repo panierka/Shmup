@@ -42,10 +42,10 @@ extern BackgroundMusic main_background;
 extern BackgroundMusic defeat_background;
 extern BackgroundMusic victory_background;
 extern BackgroundMusic boss_background;
-extern BackgroundMusic* wsk1;
-extern BackgroundMusic* wsk2;
-extern BackgroundMusic* wsk3;
-extern BackgroundMusic* wsk4;
+extern BackgroundMusic* w_main_background;
+extern BackgroundMusic* w_defeat_background;
+extern BackgroundMusic* w_victory_background;
+extern BackgroundMusic* w_boss_background;
 extern BackgroundMusic* tab[4];
 extern std::vector<unique_ptr<Timer>> timers;
 

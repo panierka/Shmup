@@ -30,6 +30,7 @@ void WaveSpawner::next_wave()
 	}
 	else if (current_wave == 5)
 	{
+		w_main_background->pause();
 		boss();
 	}
 }
