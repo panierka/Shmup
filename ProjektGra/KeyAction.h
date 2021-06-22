@@ -4,6 +4,7 @@
 
 class Player;
 
+// klasa, której celem jest sprawdzenie zachowañ dla naciœniêcia/trzymania danego klawisza
 class KeyAction
 {
 public:
@@ -21,6 +22,7 @@ public:
 	~KeyAction();
 };
 
+// klasa obs³uguj¹ca wprowadzanie ruchów przez gracza
 class InputHandler
 {
 public:
@@ -28,6 +30,8 @@ public:
 
 private:
 	std::vector<KeyAction*> defined_actions;
+
+	// nastêpne poruszenie siê prawo/lewo
 	static sf::Vector2f next_move;
 
 public:

@@ -7,6 +7,7 @@ class PhysicalObject;
 class Character;
 class Enemy;
 
+// klasa wywo³ywalna z zewn¹trz
 class Callable
 {
 public:
@@ -15,6 +16,7 @@ public:
 	virtual ~Callable();
 };
 
+// callable, tylko od razu zintegrowane z timerem
 class CallableTimer : public Callable
 {
 public:
@@ -25,9 +27,11 @@ public:
 	virtual ~CallableTimer();
 };
 
+// obs³uga efektu "migania" postaci po trafieniu
 class BlinkEffect : public CallableTimer
 {
 public:
+	// na ile postaæ jest przykryta biel¹
 	float tint_value;
 
 public:
@@ -38,6 +42,7 @@ public:
 	virtual void function();
 };
 
+// obs³uga losowa ataku przypisana do przeciwnika i timera z konkretnym interwa³em
 class AttackTimer : public CallableTimer
 {
 public:
@@ -50,6 +55,7 @@ public:
 	virtual void function();
 };
 
+// funkcjonalnie jest to klasa ob³uguj¹ca czas niewra¿liwoœci gracza przy uniku
 class PlayerInvFrames : public CallableTimer
 {
 public:
@@ -59,10 +65,12 @@ public:
 	virtual void function();
 };
 
+// obs³uga ³adowania siê akcji pod spacj¹ gracza
 class InvFramesCharger : public CallableTimer
 {
 public:
 	bool fully_charged = false;
+	// o ile jest dodawane co interwa³
 	float charge_value = 3.1f;
 
 private:
@@ -78,10 +86,14 @@ private:
 	void set_ready();
 };
 
+// obs³uga jednej animacji 
 class AnimationClip : public CallableTimer
 {
 private:
+	// klatka pocz¹tkowa
 	unsigned int starting_index;
+
+	// klatki w ogóle
 	unsigned int frames;
 
 	unsigned int current_frame;
@@ -89,13 +101,12 @@ private:
 public:
 	PhysicalObject& obj;
 	bool idle;
-
-	//float frames_per_second;
 	
 public:
 	virtual void function();
 
 public:
+	// pobiera docelowy framerate
 	AnimationClip(int s_i, int f, float _fps, PhysicalObject&, bool);
 	~AnimationClip();
 

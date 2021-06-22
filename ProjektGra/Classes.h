@@ -76,10 +76,14 @@ public:
 	virtual ~GameObject();
 
 	virtual void set_position(Vector2f);
+
+	// ró¿ne pochodne klasy bêd¹ w ró¿ny sposób radzi³y sobie z dojœciem do granic ekranu - np gracz nie mo¿e ich przejœæ, przeciwnik odbija siê, pocisk niszczy siê
 	virtual Vector2f handle_borders(Vector2f);
 
 	void set_move(Vector2f dir, float s, float t);
 	void set_move(Vector2f dir, float s, float t, bool norm);
+
+	// wywo³anie ruchu z param. dt
 	void execute_move(float);
 
 	virtual void render(RenderWindow*);
@@ -126,6 +130,7 @@ class Projectile : public PhysicalObject
 {
 private:
 	int damage;
+	// wchodzi w interakcjê z obiektami o takim identyfikatorze kolizji
 	int target_collision_mask;
 
 	const float base_velocity = 10.f;
@@ -149,6 +154,7 @@ public:
 	std::string hit_sound = "hit";
 
 protected:
+	// czy "patrzy" w górê, czy w dó³, informacja potrzebna przy strzelaniu, aby wyznaczyæ zwrot pocisku
 	int facing_direction_y{};
 	int projectile_collision_mask;
 
@@ -165,7 +171,10 @@ public:
 
 	void add_max_health(int _max);
 
+	// zmieñ zdrowie o argument
 	virtual void setHP(int _amount);
+
+	// bierze pod uwagê shader z odpowiednim efektem
 	virtual void render(RenderWindow*);
 };
 
@@ -176,6 +185,8 @@ public:
 	PlayerInvFrames* inv_frames;
 	InvFramesCharger* inv_charger;
 
+	// statystyki
+	
 	int stat_damage = 10;
 	int stat_damage_special = 4;
 	float stat_speed = 6.5f;
@@ -203,6 +214,7 @@ public:
 	void upgrade_stat(Stat s);
 };
 
+// ulepszalne cechy gracza
 enum Stat : int
 {
 	HEALTH,
