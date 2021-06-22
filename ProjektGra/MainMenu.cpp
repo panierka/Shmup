@@ -550,7 +550,6 @@ int MainMenu::Run(RenderWindow& window)
 						sound1.play_sound("menu_click");
 					}
 					main_bag = false;
-					cout << main_bag << endl;
 					return 1;
 				}
 				if (_event.key.code == Keyboard::Enter && menu.current_position == 1)
@@ -684,23 +683,6 @@ int Game::Run(RenderWindow& window)
 	Clock clock;
 	float _frame_time = clock.getElapsedTime().asSeconds();
 
-	/*sound1.add_sound("pogchamp", "../Assets/Sounds/Soundtrack.wav", 20);*/
-	//sound1.add_sound("pogchamp1", "../Assets/Sounds/plantLoud.wav", 100);
-
-
-
-	//for (map<string, int>::iterator i = sound1.volume.begin(); i != sound1.volume.end(); i++)
-	//{
-	//	cout << i->first << endl;
-	//	cout << i->second << endl;
-	//	/*i->second = i->second * 0.1;*/
-	//	cout << "pog" << endl;
-	//}
-	/*cout << sound1.volume["no-ammo"];*/
-	/*sound1.play_sound("pogchamp");*/
-	//sound1.play_sound("pogchamp1");
-		/*BackgroundMusic background;*/
-
 	PauseMenu pause_menu;
 
 	waves = WaveSpawner();
@@ -709,8 +691,22 @@ int Game::Run(RenderWindow& window)
 	window.setFramerateLimit(60);
 	bool pause_game = false;
 	int pause_action_index = 0;
-	/*main_bag = true;*/
+
 	game_state = 0;
+
+
+	print("");
+	print("start rozgrywki!");
+	print("-------------------");
+	print("A, D - ruch");
+	print("Spacja - unik i odnowienie amunicji");
+	print("K - atak normalny");
+	print("L - atak specjalny");
+	print("ESC - menu");
+	print("Enter - zaakceptowanie");
+	print("-------------------");
+	print("");
+
 	// sprawdzenie zdarzeñ okna
 	while (window.isOpen())
 	{
@@ -897,14 +893,6 @@ int Game::Run(RenderWindow& window)
 				break;
 			}
 
-
-
-			/*if(Keyboard::isKeyPressed(Keyboard::Down))
-			{
-				pause_menu.move_down();
-			}
-			*/
-
 			window.clear(Color(0, 0, 0, 255));
 			pause_menu.print_menu(window);
 			if (show_volume_interface)
@@ -916,12 +904,7 @@ int Game::Run(RenderWindow& window)
 		}
 	}
 
-	/*for (std::size_t i = 0; i < Engine::objects.size(); i++)
-	{
-		Engine::objects[i].reset();
-	}*/
-
-	return -1; //EXIT_SUCCESS;
+	return -1; 
 }
 
 
@@ -983,92 +966,6 @@ Game::~Game()
 {
 
 }
-//int PauseMenu::Run(RenderWindow& window)
-//{
-//
-//}
-
-//int Menu::Run(RenderWindow& window)
-//{
-//
-//}
-
-//MainMenu::MainMenu()
-//{
-//
-//}
-//
-//MainMenu::MainMenu(int screen_size_x, int screen_size_y)
-//{
-//	font = new Font();
-//	font->loadFromFile("../Assets/arial.ttf");
-//	text[0].setFont(*font);
-//	text[0].setString("Play");
-//	text[0].setPosition(Vector2f(400u, 350u));
-//	text[1].setFont(*font);
-//	text[1].setString("Leaderboard");
-//	text[1].setPosition(Vector2f(400u, 450u));
-//	text[2].setFont(*font);
-//	text[2].setString("Exit");
-//	text[2].setPosition(Vector2f(400u, 550u));
-//	current_position = 0;
-//	text[current_position].setFillColor(Color::Red);
-//}
-//
-//MainMenu::~MainMenu()
-//{
-//	delete font;
-//}
-//
-//void MainMenu::print_menu(RenderWindow& window)
-//{
-//	for (int i = 0; i < NUMBER_OF_ELEMENTS; i++)
-//	{
-//		window.draw(text[i]);
-//	}
-//}
-//
-//void MainMenu::move_up()
-//{
-//	if (current_position  > 0)
-//	{
-//		text[current_position].setFillColor(Color::White);
-//		current_position--;
-//		text[current_position].setFillColor(Color::Red);
-//	}
-//}
-//
-//void MainMenu::move_down()
-//{
-//	if (current_position + 1 < NUMBER_OF_ELEMENTS)
-//	{
-//		text[current_position].setFillColor(Color::White);
-//		current_position++;
-//		text[current_position].setFillColor(Color::Red);
-//	}
-//}
-
-//PauseMenu::PauseMenu(int screen_size_x, int screen_size_y):MainMenu()
-//{
-//	font1 = new Font();
-//	font1->loadFromFile("../Assets/arial.ttf");
-//	text[0].setFont(*font1);
-//	text[0].setString("Resume");
-//	text[0].setPosition(Vector2f(400u, 350u));
-//	text[1].setFont(*font1);
-//	text[1].setString("Restart");
-//	text[1].setPosition(Vector2f(400u, 450u));
-//	text[2].setFont(*font1);
-//	text[2].setString("Exit");
-//	text[2].setPosition(Vector2f(400u, 550u));
-//	current_position = 0;
-//	text[current_position].setFillColor(Color::Red);
-//}
-//
-//PauseMenu::~PauseMenu()
-//{
-//	delete font1;
-//}
 
 Restart::Restart()
 {
@@ -1082,6 +979,7 @@ Restart::~Restart()
 
 int Restart::Run(RenderWindow& window)
 {
+	w_main_background->start();
 	return 1;
 }
 
@@ -1100,6 +998,13 @@ int EndScreen::Run(RenderWindow& window)
 {
 	Sprite endScreen;
 	endScreen.setTexture(*TextureAtlas::texture_atlas[screen_key]);
+
+	print("");
+	print("-------------------");
+	print("ESC - menu");
+	print("R - restart");
+	print("-------------------");
+	print("");
 
 	while (window.isOpen())
 	{
@@ -1161,8 +1066,6 @@ SaveResultScreen::~SaveResultScreen()
 
 int SaveResultScreen::Run(RenderWindow& window)
 {
-	//font = new Font();
-	//font->loadFromFile("../Assets/doves.ttf");
 	w_victory_background->stop();
 	w_defeat_background->stop();
 	bool typing = true;
@@ -1173,6 +1076,12 @@ int SaveResultScreen::Run(RenderWindow& window)
 	name = "";
 	text.setString(to_string(DisplayHP::score) + "$");
 	text.setCharacterSize(60);
+
+	print("");
+	print("-------------------");
+	print("Enter - zaakceptuj pseudonim");
+	print("-------------------");
+	print("");
 
 	while (window.isOpen())
 	{
@@ -1344,16 +1253,7 @@ int Leaderboard::Run(RenderWindow& window)
 
 
 		}
-		//}
-		//else
-		//{
-		//	for (int i = 0; i < 5; i++)
-		//	{
-		//		text1.setFont(*font);
-		//		text1.setString(to_string(i + 1) + ". " + table_of_the_names[i] + " - " + to_string(table_of_the_scores[i]));
-		//		text1.setPosition(Vector2f(200.f + i * 200.f, 400.f));
-		//	}
-		//}
+
 		delete[size_without_the_last_one] table_of_the_scores;
 		delete[size_without_the_last_one] table_of_the_names;
 	}

@@ -43,5 +43,7 @@ int main()
 		screen = Screens[screen]->Run(window);
 	}
 
+	print("koniec");
+
 	return EXIT_SUCCESS;
 }

@@ -75,11 +75,6 @@ AttackTimer::AttackTimer(float _time, Enemy& _me) :
 	me(_me), CallableTimer(_time, this, true, false)
 {
 	_me.attack_timer = this;
-
-	if (me.attacks.size() <= 0)
-	{
-		print("brak zdefiniowanych atakow u przeciwnika");
-	}
 }
 
 AttackTimer::~AttackTimer()

@@ -7,7 +7,7 @@ using namespace sf;
 class Engine;
 class GameObject;
 class PhysicalObject;
-enum Stat;
+enum Stat : int;
 
 class Engine
 {

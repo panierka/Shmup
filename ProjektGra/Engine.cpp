@@ -81,7 +81,6 @@ void Engine::update(float dt)
 		{
 			if (objects.size() <= i || objects.size() <= j)
 			{
-				print("zly zakres");
 				continue;
 			}
 

@@ -98,8 +98,6 @@ void WaveSpawner::change_enemies_alive(int i)
 	
 	if (enemies_alive == 0 && !active)
 	{
-		print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-
 		Engine::set_stat_upgrades(possible_stats);
 
 		if (current_wave == 5)

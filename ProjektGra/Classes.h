@@ -52,12 +52,11 @@ extern std::vector<unique_ptr<Timer>> timers;
 extern int game_state;
 
 // podstawowy obiekt istniej¹cy w grze: porusza siê i ma jak¹œ grafikê
-class GameObject: public std::enable_shared_from_this<GameObject>
+class GameObject
 {
 public:
 	Vector2f position;
 	Sprite* sprite;
-	std::shared_ptr<GameObject> shared_this = nullptr;
 
 protected:
 	Vector2f direction;
@@ -75,8 +74,6 @@ private:
 public:
 	GameObject(Vector2f, Sprite*, bool);
 	virtual ~GameObject();
-
-	virtual void start();
 
 	virtual void set_position(Vector2f);
 	virtual Vector2f handle_borders(Vector2f);
@@ -113,7 +110,6 @@ private:
 public:
 	PhysicalObject(Vector2f v, Sprite* s, bool b, Vector2i);
 	virtual ~PhysicalObject();
-	virtual void start();
 
 	void create_collider(Vector2f _offset, Vector2f _size);
 	virtual void collide(std::unique_ptr<PhysicalObject>& physical_object);
@@ -232,7 +228,6 @@ public:
 	Enemy(Vector2f pos, Sprite* s, bool b, Vector2i frame);
 	~Enemy();
 
-	virtual void collide(unique_ptr<PhysicalObject>&);
 	virtual Vector2f handle_borders(Vector2f);
 
 	float angle_to_player();

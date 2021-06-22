@@ -4,7 +4,7 @@
 #include <string>
 #include <map>
 #include <list>
-#include <iostream>
+
 using namespace sf;
 using namespace std;
 

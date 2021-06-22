@@ -51,8 +51,6 @@ public:
 	float dt_mod;
 
 	WaveUnit();
-	/*WaveUnit(const WaveUnit&) = default;
-	WaveUnit& operator=(const WaveUnit&) = default;*/
 	WaveUnit(bool, float);
 };
 

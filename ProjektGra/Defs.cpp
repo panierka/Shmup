@@ -59,17 +59,7 @@ GameObject::GameObject(Vector2f v, Sprite* s, bool b) :
 
 GameObject::~GameObject()
 {
-	print("DTOR");
-
-	//Engine::objects.erase(std::remove(Engine::objects.begin(), Engine::objects.end(), shared_from_this()));
-
 	delete sprite;
-}
-
-void GameObject::start()
-{
-	shared_this = shared_from_this();
-	//Engine::objects.push_back(shared_this);
 }
 
 // odpowiednia pozycja dla obiektu w logice i sprite'a
@@ -200,9 +190,7 @@ void Timer::stop()
 
 Timer::~Timer()
 {
-	// timers.erase(std::remove(timers.begin(), timers.end(), this));
-	
-	print("usunieto timer");
+
 }
 
 void Timer::destroy()
@@ -250,10 +238,6 @@ PhysicalObject::PhysicalObject(Vector2f v, Sprite* s, bool b, Vector2i _frame_si
 
 PhysicalObject::~PhysicalObject()
 {
-	print("PO: DTOR");
-
-	//Engine::phy_objects.erase(std::remove(Engine::phy_objects.begin(), Engine::phy_objects.end(), std::dynamic_pointer_cast<PhysicalObject>(shared_from_this())));
-
 	delete collider;
 	
 	for (auto e : animations)
@@ -264,12 +248,6 @@ PhysicalObject::~PhysicalObject()
 	animations.clear();
 }
 
-void PhysicalObject::start()
-{
-	GameObject::start();
-
-	//Engine::phy_objects.push_back(std::dynamic_pointer_cast<PhysicalObject>(shared_this));
-}
 
 void PhysicalObject::create_collider(Vector2f _offset, Vector2f _size)
 {
@@ -474,29 +452,6 @@ void Character::render(RenderWindow* w)
 void PhysicalObject::collide(std::unique_ptr<PhysicalObject>& coll)
 {
 
-	//FloatRect participant1 = collider->getGlobalBounds();
-	//FloatRect participant2 = coll->collider->getGlobalBounds();
-
-	if (collider->intersects(*coll->collider))
-	{
-		switch (coll->collision_marker)
-		{
-		case (1): // gracz
-			print("kolizja - gracz");
-			break;
-		case (2): // pocisk gracza
-			print("kolizja - pocisk gracza");
-			break;
-		case (3): // pocisk wroga
-			print("kolizja - pocisk przeciwnika");
-			break;
-		case (4): // wróg
-			print("kolizja - przeciwnik");
-			break;
-		default:
-			break;
-		}
-	}
 }
 
 Enemy::Enemy(Vector2f pos, Sprite* s, bool b, Vector2i frame):
@@ -508,30 +463,6 @@ Enemy::Enemy(Vector2f pos, Sprite* s, bool b, Vector2i frame):
 
 	waves.change_enemies_alive(1);
 	sound1.play_sound("egg");
-}
-
-void Enemy::collide(unique_ptr<PhysicalObject>& coll)
-{
-	if (collider->intersects(*coll->collider))
-	{
-		switch (coll->collision_marker)
-		{
-		case (1): // gracz
-			print("kolizja - gracz");
-			break;
-		case (2): // pocisk gracza
-			print("kolizja - pocisk gracza");
-			break;
-		case (3): // pocisk wroga
-			print("kolizja - pocisk przeciwnika");
-			break;
-		case (4): // wróg
-			print("kolizja - przeciwnik");
-			break;
-		default:
-			break;
-		}
-	}
 }
 
 Enemy::~Enemy()
@@ -598,17 +529,14 @@ Projectile::Projectile(Vector2f pos, Sprite* s, Vector2i _frame, int _damage, fl
 
 Projectile::~Projectile()
 {
-	print("PROJ: DTOR");
+
 }
 
 Vector2f Projectile::handle_borders(Vector2f _pos)
 {
 	if (-_pos.x > BULLET_BOUNDS_SIZE.x || -_pos.y > BULLET_BOUNDS_SIZE.y || _pos.x > SCREEN_SIZE.x + BULLET_BOUNDS_SIZE.x || _pos.y > SCREEN_SIZE.y + BULLET_BOUNDS_SIZE.y)
 	{
-		print("DEATH DEATH DEATH");
-		
 		destroy_this = true;
-		//PhysicalObject::~PhysicalObject();
 	}
 
 	return _pos;

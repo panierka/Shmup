@@ -1,2 +1,3 @@
 Wojtek   166810;;
 student:((   0;;
+stood   0;;
