@@ -577,7 +577,6 @@ int MainMenu::Run(RenderWindow& window)
 				}
 				if (_event.key.code == Keyboard::Enter && menu.current_position == 5)
 				{
-					sound1.play_sound("menu_click");
 					//window.close();
 					return -1;
 				}
