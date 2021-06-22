@@ -608,7 +608,6 @@ int MainMenu::Run(RenderWindow& window)
 								menu.text1[1].setString(menu.print_string(general_volume));
 								break;
 							}
-							/*sound1.play_sound("pogchamp1");*/	//nie dzia³a, bo dŸwiêk wczytywany dopiero przy pierwszej rozgrywce
 						}
 						if (_event.key.code == Keyboard::Left && menu.current_position2 == 0)
 						{
@@ -816,7 +815,6 @@ int Game::Run(RenderWindow& window)
 							pause_menu.text1[1].setString(pause_menu.print_string(general_volume));
 							break;
 						}
-						/*sound1.play_sound("pogchamp1");*/	//nie dzia³a, bo dŸwiêk wczytywany dopiero przy pierwszej rozgrywce
 					}
 					if (_event.key.code == Keyboard::Left && pause_menu.current_position2 == 0)
 					{
@@ -1110,7 +1108,6 @@ int SaveResultScreen::Run(RenderWindow& window)
 					{
 						return 2;
 					}
-					/*typing = false;*/
 				}
 			}
 
@@ -1122,7 +1119,6 @@ int SaveResultScreen::Run(RenderWindow& window)
 					{
 						name.erase(name.getSize() - 1, 1);
 					}
-					//name = myString.substr(0, myString.size() - 1);
 				}
 				else
 				{
@@ -1131,7 +1127,6 @@ int SaveResultScreen::Run(RenderWindow& window)
 					name += _event.text.unicode;
 				}
 				text1.setString(name);
-				/*return 0;*/
 			}
 		}
 		window.clear();
@@ -1240,8 +1235,6 @@ int Leaderboard::Run(RenderWindow& window)
 
 		int len = size_without_the_last_one <= 5 ? size_without_the_last_one : 5;
 
-		//if (size_without_the_last_one <= 5)
-		//{
 
 
 		for (int i = 0; i < len; i++)
@@ -1276,7 +1269,6 @@ int Leaderboard::Run(RenderWindow& window)
 		window.clear();
 		if (no_data)
 			window.draw(text);
-		//window.draw(text1);
 
 		for(int i = 0; i < 5; i++)
 		{
