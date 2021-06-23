@@ -37,8 +37,10 @@ public:
 public:
 	BlinkEffect(Character*);
 	~BlinkEffect();
-	void activate();
 
+	// start
+	void activate();
+	// stop
 	virtual void function();
 };
 

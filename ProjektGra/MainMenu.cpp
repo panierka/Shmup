@@ -843,7 +843,7 @@ int Game::Run(RenderWindow& window)
 
 		if (!pause_game)
 		{
-			// dynamiczne kalkulowanie realnego delta t miêdzy kolejnymi klatkami z "wyg³adzaniem"
+			// dynamiczne kalkulowanie realnego delta t miêdzy kolejnymi klatkami
 			_frame_time = clock.restart().asSeconds();
 
 			waves.spawn(_frame_time);
@@ -851,8 +851,7 @@ int Game::Run(RenderWindow& window)
 			// sprawdzenie akcji gracza
 			input.check_input();
 
-			// wyœwietlanie poprawnych informacji na ekranie
-
+			// aktualizacja logiki gry
 			engine.update(_frame_time);
 
 			// wykonanie siê obliczeñ czasomierzy

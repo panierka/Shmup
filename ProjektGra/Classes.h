@@ -291,6 +291,7 @@ Sprite* generate_sprite(Texture*);
 // globalny przeskok w czasomierzach
 void tick_timers(float);
 
+// klasa do przechowywania tekstur
 class TextureAtlas
 {
 public:

@@ -48,6 +48,7 @@ void WaveSpawner::set_wave(int n)
 		wave_data.push_back(w);
 	}
 
+	// kolejnoœæ wrogów losowa
 	std::random_shuffle(wave_data.begin(), wave_data.end());
 
 	inwave_index = wave_data.size() - 1;
@@ -138,6 +139,7 @@ void WaveSpawner::check_upgrade()
 
 	InputHandler::player->upgrade_stat(possible_stats[i]);
 
+	// losowe statystyki do ulepszenia
 	std::random_shuffle(possible_stats.begin(), possible_stats.end());
 
 	intermission = false;

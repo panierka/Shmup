@@ -42,7 +42,7 @@ void InputHandler::check_input()
 	player->set_move(next_move, player->stat_speed, 1.f);
 }
 
-
+// tutaj zostaj¹ dodane poprzez lambdy akcje do wykonania po naciœniêciu/przytrzymaniu danych przycisków
 InputHandler::InputHandler(Player* _player)
 { 
 	player = _player;
@@ -91,10 +91,13 @@ InputHandler::InputHandler(Player* _player)
 
 					int bonus_damage = 0;
 
+					// im wiêcej amunicji zosa³o, tym wiêcej obra¿eñ zada ka¿dy pocisk
 					while (player->try_use_ammo())
 					{
 						bonus_damage += player->stat_damage / 6;
 					}
+
+					// losowanie kierunków pocisków
 
 					for (int i = -2; i <= 2; i++)
 					{
@@ -139,6 +142,7 @@ InputHandler::InputHandler(Player* _player)
 			}
 		}));
 
+	// przydatne miêdzy falami
 	defined_actions.push_back(new KeyAction(Keyboard::Enter, false, []()
 		{
 			waves.check_upgrade();

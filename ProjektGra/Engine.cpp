@@ -37,7 +37,6 @@ std::vector<std::unique_ptr<Sprite>> Engine::stat_upgrades{};
 
 Engine::~Engine()
 {
-	//delete window;
 	delete background;
 	delete line1;
 	delete line2;
@@ -75,6 +74,7 @@ void Engine::update(float dt)
 		objects[i]->execute_move(dt);
 	}
 
+	// sprawdzenie kolizji miêdzy obiektami
 	for (int i = 0; i < objects.size(); i++)
 	{
 		for (int j = 0; j < objects.size(); j++)
@@ -103,20 +103,6 @@ void Engine::update(float dt)
 	window->draw(*DisplayHP::ammo_text);
 	window->draw(*DisplayHP::wave_text);
 	window->draw(*DisplayHP::score_text);
-
-	//
-	//for (int i = 0; i < objects.size(); i++)
-	//{
-	//	RectangleShape r;
-	//	r.setSize(Vector2f(objects[i]->collider->width, objects[i]->collider->height));
-	//	//r.setOrigin(Vector2f(objects[i]->collider->width, objects[i]->collider->height) / 2.f);
-	//	//r.setOrigin(Vector2f(50, 50));
-	//	r.setPosition(Vector2f(objects[i]->collider->left, objects[i]->collider->top));
-	//	r.setFillColor(Color::Color(0, 255, 0, 100));
-
-	//	window->draw(r);
-	//}
-	//
 
 	window->display();
 }

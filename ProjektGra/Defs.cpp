@@ -111,7 +111,7 @@ void GameObject::execute_move(float _deltaT)
 		return;
 	}
 
-	// nastêpuje tu równie¿ normalizowanie kierunku ruchu
+	// nastêpuje tu równie¿ "normalizowanie" kierunku ruchu, które funkcjonalnie jest u¿ywane w ruchu na jednej osi jednoczeœnie
 
 	float mod = normalize ? (travel_time * mag): 1.f;
 
