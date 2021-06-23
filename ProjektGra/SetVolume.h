@@ -9,6 +9,7 @@ extern double music_volume;
 extern double general_volume;
 extern bool first_calculation;
 
+//klasa do zmiany poziomu g³oœnoœci
 class SetVolume
 {
 public:

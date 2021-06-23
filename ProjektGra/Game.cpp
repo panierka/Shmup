@@ -4,7 +4,6 @@
 #include<iostream>
 #include<cstdlib>
 
-//Player& player = Player();
 
 WaveSpawner waves{};
 
@@ -17,6 +16,7 @@ int main()
 	// stworzenie okna gry
 	RenderWindow window(VideoMode(SCREEN_SIZE.x + 275u, SCREEN_SIZE.y), "Gra", Style::Titlebar | Style::Close);
 
+	//utworzenie odpowiednich ekranów i dodanie ich do wektora
 	MainMenu main_menu;
 	Screens.push_back(&main_menu); // 0
 	Game game;
@@ -35,10 +35,10 @@ int main()
 
 	Leaderboard leaderboard;
 	Screens.push_back(&leaderboard); //6
-
+	//kolejnoœæ dodania ekranów do wektora jest bardzo istotna - bêdziemy siê odnosiæ w pêtli do indeksów poszczególnych ekranów w wektorze
 	TextureAtlas atlas;
 	
-	while (screen >= 0)
+	while (screen >= 0) //pêtla wykonuje siê dopóki któryœ z ekranów nie zwróci -1, wtedy program siê koñczy
 	{
 		screen = Screens[screen]->Run(window);
 	}

@@ -31,7 +31,7 @@ void Game::spawn_fly()
 		float angle = e.angle_to_player();
 		e.call_animation(1);
 		e.shoot("enemy-bullet", Vector2i(25, 25), 10, angle - 12.5f, 25.f, 2, 3, 8);
-		sound1.play_sound("buzzing");
+		sound1.play_sound("buzzing"); 
 	};
 	e->attacks.push_back(f);
 	
@@ -60,7 +60,7 @@ void Game::spawn_fatman()
 		float angle = e.angle_to_player();
 		e.call_animation(1);
 		e.shoot("enemy-bullet", Vector2i(25, 25), 10, angle, 45, 8, 3, 8);
-		sound1.play_sound("fat");
+		sound1.play_sound("fat"); 
 	};
 	e->attacks.push_back(f);
 
@@ -89,7 +89,7 @@ void Game::spawn_block1()
 		float angle = e.angle_to_player();
 		e.call_animation(1);
 		e.shoot("enemy-bullet", Vector2i(25, 25), 12, 0, 0, 1, 3, 8);
-		sound1.play_sound("small_enemy_shot");
+		sound1.play_sound("small_enemy_shot"); 
 	};
 	e->attacks.push_back(f);
 
@@ -299,10 +299,10 @@ void Game::spawn_sniper()
 void Game::spawn_boss()
 {
 	std::unique_ptr<Enemy> e = make_unique <Enemy>(enemy_spawn_pos + Vector2f(0, 150), generate_sprite(TextureAtlas::texture_atlas["BOSS"], Vector2f(100.f, 100.f)), true, Vector2i(200, 200));
-	w_main_background->stop();
+	w_main_background->stop(); //zatrzymanie g³ównej muzyki w tle
 	boss = true;
 	/*w_main_background->set_volume(0);*/
-	w_boss_background->change_background("../Assets/Sounds/bosssoundtrack.wav");
+	w_boss_background->change_background("../Assets/Sounds/bosssoundtrack.wav"); //rozpoczêcie unikalnego t³a dla fali z bossem
 	e->animations.push_back(new AnimationClip(0, 2, 8, *e, true));
 	e->animations.push_back(new AnimationClip(3, 2, 10, *e, false));
 	e->animations.push_back(new AnimationClip(6, 2, 10, *e, false));
@@ -370,7 +370,7 @@ Menu::Menu()
 {
 	font = new Font();
 	font->loadFromFile("../Assets/doves.ttf");
-	text[0].setFont(*font);
+	text[0].setFont(*font); //ustawienie w odpowiednim miejscu w oknie elementów menu
 	text[0].setString("PLAY");
 	text[0].setPosition(Vector2f(200u, 200u));
 	text[1].setFont(*font);
@@ -410,6 +410,7 @@ Menu::~Menu()
 	delete font;
 }
 
+//funkcja do wypisania dynamicznie zmieniaj¹cego siê poziomu g³oœnoœci
 string Menu::print_string(int volume)
 {
 	string circles{};
@@ -433,13 +434,14 @@ void Menu::print_menu(RenderWindow& window)
 	}
 }
 
+//funkcja do poruszania siê w górê menu
 void Menu::move_up()
 {
 	if (current_position > 0)
 	{
-		text[current_position].setFillColor(Color::White);
+		text[current_position].setFillColor(Color::White);	//zmiana koloru pola, na którym znajdowa³ siê gracz na bia³y
 		current_position--;
-		text[current_position].setFillColor(Color::Color(255, 128, 0, 255));
+		text[current_position].setFillColor(Color::Color(255, 128, 0, 255)); //zmiana koloru pola, na którym znajduje siê gracz na pomarañczowy
 		sound1.play_sound("change_position");
 	}
 	else if (current_position == 0)
@@ -450,7 +452,7 @@ void Menu::move_up()
 		sound1.play_sound("change_position");
 	}
 }
-
+//funkcja do poruszania siê w dó³ menu
 void Menu::move_down()
 {
 	if (current_position + 1 < NUMBER_OF_ELEMENTS)
@@ -468,7 +470,7 @@ void Menu::move_down()
 		sound1.play_sound("change_position");
 	}
 }
-
+//funkcje wykorzystywane w starym systemie zmiany g³oœnoœci - nadal dzia³aj¹, ale nie widaæ ich efektu
 void Menu::move_right_to_volume()
 {
 	text1[0].setFillColor(Color::White);
@@ -483,12 +485,14 @@ void Menu::move_left_to_volume()
 	text1[current_position2].setFillColor(Color::Red);
 }
 
+//funkcja wykonuj¹ca siê w momencie w³¹czenia menu
 int MainMenu::Run(RenderWindow& window)
 {
 	Menu menu;
 	bool exit_menu = false;
 	main_bag = true;
 
+	//dodanie wszystkich dŸwiêków
 	sound1.add_sound("hit", "../Assets/Sounds/Hit.wav", 20);
 	sound1.add_sound("glass", "../Assets/Sounds/Glass.wav", 29);
 	sound1.add_sound("shot", "../Assets/Sounds/normal-shot.wav", 18);
@@ -517,6 +521,7 @@ int MainMenu::Run(RenderWindow& window)
 	sound1.add_sound("menu_click", "../Assets/Sounds/menu_click.wav", 50);
 	sound1.add_sound("egg", "../Assets/Sounds/egg.wav", 15);
 
+	//g³ówna pêtla menu
 	while (window.isOpen())
 	{
 		Event _event;
@@ -532,45 +537,46 @@ int MainMenu::Run(RenderWindow& window)
 			{
 				menu.text1[0].setString("Down");
 				menu.text1[2].setString("Up");
-				if (_event.key.code == Keyboard::Down)
+				if (_event.key.code == Keyboard::Down)	//wciœniêcie strza³ki w dó³ spowoduje przemieszczenie siê gracza w dó³ menu
 				{
-					show_volume_interface = false;
+					show_volume_interface = false;	//przemieszczenie siê w menu powoduje znikniêcie interfejsu zmiany g³oœnoœci 
 					menu.move_down();
 				}
-				if (_event.key.code == Keyboard::Up)
+				if (_event.key.code == Keyboard::Up) //wciœniêcie strza³ki w górê spowoduje przemieszczenie siê gracza w górê menu
 				{
-					show_volume_interface = false;
+					show_volume_interface = false;	
 					menu.move_up();
 				}
-				if (_event.key.code == Keyboard::Enter && menu.current_position == 0)
+				if (_event.key.code == Keyboard::Enter && menu.current_position == 0) //wciœniêcie przycisku play - rozpoczêcie rozgrywki
 				{
 					if (main_bag)
 					{
-						w_main_background->change_background("../Assets/Sounds/soundtrack1.wav");
+						w_main_background->change_background("../Assets/Sounds/soundtrack1.wav"); //w³¹czenie g³ównej muzyki w tle
 						sound1.play_sound("menu_click");
 					}
 					main_bag = false;
 					return 1;
 				}
-				if (_event.key.code == Keyboard::Enter && menu.current_position == 1)
+				//interfejsy zmiany g³oœnoœci
+				if (_event.key.code == Keyboard::Enter && menu.current_position == 1) //dŸwiêk
 				{
 					sound1.play_sound("menu_click");
 					show_volume_interface = true;
 					menu.text1[1].setString(menu.print_string(sound_volume));
 				}
-				if (_event.key.code == Keyboard::Enter && menu.current_position == 2)
+				if (_event.key.code == Keyboard::Enter && menu.current_position == 2) //tlo
 				{
 					sound1.play_sound("menu_click");
 					show_volume_interface = true;
 					menu.text1[1].setString(menu.print_string(music_volume));
 				}
-				if (_event.key.code == Keyboard::Enter && menu.current_position == 3)
+				if (_event.key.code == Keyboard::Enter && menu.current_position == 3) //wszystko
 				{
 					sound1.play_sound("menu_click");
 					show_volume_interface = true;
 					menu.text1[1].setString(menu.print_string(general_volume));
 				}
-				if (_event.key.code == Keyboard::Enter && menu.current_position == 4)
+				if (_event.key.code == Keyboard::Enter && menu.current_position == 4) //leaderboard - zmiana ekranu
 				{
 					sound1.play_sound("menu_click");
 					return 6;
@@ -578,21 +584,21 @@ int MainMenu::Run(RenderWindow& window)
 				if (_event.key.code == Keyboard::Enter && menu.current_position == 5)
 				{
 					//window.close();
-					return -1;
+					return -1;	//wyjœcie z programu
 				}
 				if (show_volume_interface)
 				{
 						if (_event.key.code == Keyboard::Left)
 						{
-							menu.move_left_to_volume();
+							menu.move_left_to_volume();	//strza³ka w lewo - przejœcie w lewo
 						}
 						if (_event.key.code == Keyboard::Right)
 						{
-							menu.move_right_to_volume();
+							menu.move_right_to_volume();	//strza³ka w prawo - przejœcie w prawo
 						}
 						if (_event.key.code == Keyboard::Right && menu.current_position2 == 2)
 						{
-							switch (menu.current_position)
+							switch (menu.current_position)	//odpowiednie funkcje s¹ wywo³ywane dla ró¿nych g³oœnoœci
 							{
 							case (1):
 								setVolume.turn_up(sound_volume);
@@ -664,10 +670,7 @@ int Game::Run(RenderWindow& window)
 
 	_player->hit_sound = "hit-player";
 
-	//_player->start();
-
 	Engine::objects.push_back(std::move(_player));
-	//player = *_player;
 
 	Texture t1, t3;
 
@@ -721,10 +724,10 @@ int Game::Run(RenderWindow& window)
 			{
 				pause_menu.text1[0].setString("Down");
 				pause_menu.text1[2].setString("Up");
-				if (_event.key.code == Keyboard::Escape)
+				if (_event.key.code == Keyboard::Escape) //przycisk Escape zatrzymuje rozgrywkê i pokazuje interfejs pauzy
 				{
 					pause_game = true;
-					w_boss_background->pause();
+					w_boss_background->pause();	//zatrzymanie muzyki
 					w_main_background->pause();
 					main_bag = true;
 				}
@@ -740,7 +743,7 @@ int Game::Run(RenderWindow& window)
 					show_volume_interface = false;
 					pause_action_index = 3;
 				}
-				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 0)
+				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 0) //wznowienie rozgrywki
 				{
 					if (main_bag)
 					{
@@ -757,13 +760,14 @@ int Game::Run(RenderWindow& window)
 					main_bag = false;
 					pause_action_index = 4;
 				}
-				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 1)
+				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 1)	//uruchomienie ekranu restartu
 				{
 					w_main_background->stop();
 					w_main_background->start();
 					sound1.play_sound("menu_click");
 					return 2;
 				}
+				//zmiana g³oœnoœci
 				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 2)
 				{
 					sound1.play_sound("menu_click");
@@ -782,7 +786,7 @@ int Game::Run(RenderWindow& window)
 					show_volume_interface = true;
 					pause_menu.text1[1].setString(pause_menu.print_string(general_volume));
 				}
-				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 5)
+				if (_event.key.code == Keyboard::Enter && pause_menu.current_position == 5)	//wyjœcie
 				{
 					sound1.play_sound("menu_click");
 					return 0;
@@ -854,7 +858,7 @@ int Game::Run(RenderWindow& window)
 			// wykonanie siê obliczeñ czasomierzy
 			tick_timers(_frame_time);
 
-			if (game_state == 1)
+			if (game_state == 1)//pora¿ka - zatrzymanie t³a i rozpoczêcie muzyki dla pora¿ki
 			{
 				if (boss)
 					w_boss_background->stop();
@@ -863,7 +867,7 @@ int Game::Run(RenderWindow& window)
 				w_defeat_background->change_background("../Assets/Sounds/defeatsoundtrack.wav");
 				return 3;
 			}
-			else if (game_state == 2)
+			else if (game_state == 2)//zwyciêstwo - zatrzymanie t³a i rozpoczêcie muzyki dla zwyciêstwa
 			{
 				w_boss_background->stop();
 				w_victory_background->change_background("../Assets/Sounds/victorysoundtrack.wav");
@@ -904,7 +908,7 @@ int Game::Run(RenderWindow& window)
 	return -1; 
 }
 
-
+//ekran pauzy - wypisanie wszystkich elementów pauzy na ekran
 PauseMenu::PauseMenu() :Menu()
 {
 	font1 = new Font();
@@ -974,7 +978,7 @@ Restart::~Restart()
 
 }
 
-int Restart::Run(RenderWindow& window)
+int Restart::Run(RenderWindow& window) //ekran restartu - zatrzymanie t³a i powrót do ekranu gry
 {
 	w_main_background->start();
 	return 1;
@@ -1016,10 +1020,10 @@ int EndScreen::Run(RenderWindow& window)
 
 			if (_event.type == Event::KeyReleased)
 			{
-				if (_event.key.code == Keyboard::Escape)
+				if (_event.key.code == Keyboard::Escape)//przekierowanie do ekranu zapisu
 				{ 
 					escape = true;
-					return 5;
+					return 5; 
 					//return 0;
 				}
 				else if (_event.key.code == Keyboard::R)
@@ -1038,7 +1042,7 @@ int EndScreen::Run(RenderWindow& window)
 
 	return -1;
 }
-
+//ekran zapisu - wypisanie informacji i oczekiwanie na wpisanie przez gracza imienia
 SaveResultScreen::SaveResultScreen(int score)
 {
 	font = new Font();
@@ -1061,6 +1065,7 @@ SaveResultScreen::~SaveResultScreen()
 	delete font;
 }
 
+//ekran zapisu
 int SaveResultScreen::Run(RenderWindow& window)
 {
 	w_victory_background->stop();
@@ -1096,23 +1101,23 @@ int SaveResultScreen::Run(RenderWindow& window)
 				{
 					fstream file;
 					file.open("Results.txt", ios::app);
-					file << name.toAnsiString() << "   " << DisplayHP::score << ";;" << endl;	//zapisanie wyniku
+					file << name.toAnsiString() << "   " << DisplayHP::score << ";;" << endl;	//zapisanie wyniku 
 					file.close();
 
-					if (escape)
+					if (escape) //powrót do menu
 					{
 						return 0;
 					}
-					else
+					else //powrót do ekranu restartu
 					{
 						return 2;
 					}
 				}
 			}
 
-			if (_event.type == Event::TextEntered && typing)
+			if (_event.type == Event::TextEntered && typing) //obs³uga wpisywania imienia
 			{
-				if (_event.text.unicode == '\b')
+				if (_event.text.unicode == '\b') //obs³uga usuwania wypisanego tekstu
 				{
 					if(name.getSize() > 0)
 					{
@@ -1121,7 +1126,7 @@ int SaveResultScreen::Run(RenderWindow& window)
 				}
 				else
 				{
-					if (_event.text.unicode == 32)
+					if (_event.text.unicode == 32)	//rozwi¹zanie problemu spacji - zastêpowanie jej w nazwie gracza pod³og¹
 						_event.text.unicode = 95;
 					name += _event.text.unicode;
 				}
@@ -1150,6 +1155,7 @@ Leaderboard::~Leaderboard()
 	delete font;
 }
 
+//ekran rankinug
 int Leaderboard::Run(RenderWindow& window)
 {
 	int size{};
@@ -1208,6 +1214,7 @@ int Leaderboard::Run(RenderWindow& window)
 			name.clear();
 		}
 		file.close();
+		//implementacja algorytmu sortowania
 		for (int j = 0; j < size_without_the_last_one; j++)
 		{
 			name_replacement = j;
@@ -1261,13 +1268,13 @@ int Leaderboard::Run(RenderWindow& window)
 			}
 			if (_event.key.code == Keyboard::Escape)
 			{
-				return 0;
+				return 0;	//wyjœcie do menu
 			}
 
 		}
 		window.clear();
 		if (no_data)
-			window.draw(text);
+			window.draw(text);	//wyœwietlenie odpowiedniego napisu w przypadku braku danych
 
 		for(int i = 0; i < 5; i++)
 		{

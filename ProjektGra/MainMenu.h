@@ -10,12 +10,14 @@
 
 extern bool escape;
 
+//klasa u¿ywana przez program do prze³¹czania ekranów, dziedziczona przez wszystkie ekrany
 class cScreen
 {
 public:
 	virtual int Run(RenderWindow& window) = 0;
 };
 
+//ekran g³ównego menu
 class MainMenu : public cScreen
 {
 public:
@@ -24,14 +26,14 @@ public:
 	~MainMenu();
 };
 
-class Menu //: public cScreen
+//klasa menu z wszystkimi cechami
+class Menu 
 {
 private:
 	Font* font;
 public:
 	Menu();
 	~Menu();
-	/*virtual int Run(RenderWindow& window);*/
 	void print_menu(RenderWindow& window);
 	void move_up();
 	void move_down();
@@ -44,6 +46,7 @@ public:
 	Text text1[3];
 };
 
+//ekran gry
 class Game :public cScreen
 {
 public:
@@ -66,32 +69,17 @@ private:
 	static float random_dir();
 };
 
-
-//class MainMenu // <--------------------------------------------------------
-//{
-//public:
-//	MainMenu(int screen_size_x, int screen_size_y);
-//	MainMenu();
-//	~MainMenu();
-//	void print_menu(RenderWindow& window);
-//	void move_up();
-//	void move_down();
-//	int current_position;
-//	Text text[NUMBER_OF_ELEMENTS]{};
-//private:
-//	Font* font;
-//};
-
+//klasa pauzy dziedzicz¹ca po menu
 class PauseMenu: public Menu
 {
 public:
 	PauseMenu();
 	virtual ~PauseMenu();
-	/*virtual int Run(RenderWindow& window);*/
 private:
 	Font* font1;
 };
 
+//restart, po którego aktywowaniu nastêpuje przeniesienie do ekranu gry
 class Restart : public cScreen
 {
 public:
@@ -101,6 +89,7 @@ public:
 	virtual int Run(RenderWindow& window);
 };
 
+//ekran koñca gry
 class EndScreen : public cScreen
 {
 private:
@@ -113,6 +102,7 @@ public:
 	virtual int Run(RenderWindow& window);
 };
 
+//ekran zapisu
 class SaveResultScreen : public cScreen
 {
 private:
@@ -129,6 +119,7 @@ public:
 	virtual int Run(RenderWindow& window);
 };
 
+//ekran rankingu
 class Leaderboard : public cScreen
 {
 private:
