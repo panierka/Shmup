@@ -1,5 +1,6 @@
 # Shmup
-Shoot 'em up game written in C++ with SFML library.
+Shoot 'em up game written in C++ with SFML library. 
+Game text is in **Polish** only.
 
 ## Rules
 Player has to shoot down hordes of monsters, before they travel to the bottom of the screen, while simultaneously doding dangerous attacks in a bullet-hell style scenario. 
