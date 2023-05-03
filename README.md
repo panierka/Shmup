@@ -37,6 +37,13 @@ After each wave a reward will spawn, oferring 3 distinct upgrades to choose from
 | `Enter` | Choose Upgrade | 
 | `Esc` | Pause |
 
+## Requirements
+
+- Project was made using SFML-2.5.1 (x64)
+- It uses sfml's graphics, window, audio and system .lib files, so you need to put those in the project space (and their debug counterparts, for Debug builds)
+- Put `<your path to sfml>/include` in General > Aditional Include Directiories
+- Put `<your path to sfml>/lib` in Linker > General > Aditional Library Directiories
+
 ## Attributions
 - Used font comes from free font pack - "divide by zero" http://fonts.tom7.com/
 - SFX have been taken from https://freesound.org/. They are on Creative Commons 0 licences.
